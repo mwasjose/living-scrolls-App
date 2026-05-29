@@ -276,23 +276,24 @@ export function getMilestones(planType: ReadingPlanType, totalDays: number): Rea
   const milestones: ReadingPlanProgress['milestones'] = baseMilestones.map((m, i) => ({
     id: `milestone-${i}`,
     ...m,
+    description: m.spiritualSignificance,
     achieved: false,
   }));
   
   // Add plan-specific milestones
   if (planType === 'torah-cycle') {
     milestones.push(
-      { id: 'torah-1', dayNumber: 13, title: 'Bereishit Complete', achieved: false, spiritualSignificance: 'Completed Genesis' },
-      { id: 'torah-2', dayNumber: 26, title: 'Shemot Complete', achieved: false, spiritualSignificance: 'Completed Exodus' },
-      { id: 'torah-3', dayNumber: 52, title: 'Full Chumash', achieved: false, spiritualSignificance: 'Completed all Five Books' }
+      { id: 'torah-1', dayNumber: 13, title: 'Bereishit Complete', achieved: false, description: 'Completed Genesis', spiritualSignificance: 'Completed Genesis' },
+      { id: 'torah-2', dayNumber: 26, title: 'Shemot Complete', achieved: false, description: 'Completed Exodus', spiritualSignificance: 'Completed Exodus' },
+      { id: 'torah-3', dayNumber: 52, title: 'Full Chumash', achieved: false, description: 'Completed all Five Books', spiritualSignificance: 'Completed all Five Books' }
     );
   }
-  
+
   if (planType === 'one-year-bible') {
     milestones.push(
-      { id: 'bible-1', dayNumber: 90, title: 'Quarterway', achieved: false, spiritualSignificance: 'One quarter of Scripture explored' },
-      { id: 'bible-2', dayNumber: 180, title: 'Halfway', achieved: false, spiritualSignificance: 'Half of Scripture studied' },
-      { id: 'bible-3', dayNumber: 365, title: 'Complete Journey', achieved: false, spiritualSignificance: 'Full year of Scripture' }
+      { id: 'bible-1', dayNumber: 90, title: 'Quarterway', achieved: false, description: 'One quarter of Scripture explored', spiritualSignificance: 'One quarter of Scripture explored' },
+      { id: 'bible-2', dayNumber: 180, title: 'Halfway', achieved: false, description: 'Half of Scripture studied', spiritualSignificance: 'Half of Scripture studied' },
+      { id: 'bible-3', dayNumber: 365, title: 'Complete Journey', achieved: false, description: 'Full year of Scripture', spiritualSignificance: 'Full year of Scripture' }
     );
   }
   

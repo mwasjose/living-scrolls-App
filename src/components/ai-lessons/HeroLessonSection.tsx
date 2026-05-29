@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { AILesson } from '@/lib/models';
 import { Bookmark, Clock, ArrowRight } from 'lucide-react';
 
@@ -24,10 +25,11 @@ export function HeroLessonSection({ lesson, onContinue, onSave }: HeroLessonSect
       {/* Hero image with overlay */}
       {lesson.heroImage && (
         <div className="absolute inset-0 -z-20 overflow-hidden rounded-[40px]">
-          <img
+          <Image
             src={lesson.heroImage}
             alt={lesson.heroImageAlt || lesson.title}
-            className="h-full w-full object-cover opacity-10"
+            fill
+            className="object-cover opacity-10"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-midnight via-midnight/50 to-transparent" />
         </div>
@@ -129,11 +131,11 @@ export function HeroLessonSection({ lesson, onContinue, onSave }: HeroLessonSect
             <div className="flex justify-between">
               <div>
                 <p className="text-xs text-slate-500">Views</p>
-                <p className="text-lg font-semibold text-white">{lesson.views.toLocaleString()}</p>
+                <p className="text-lg font-semibold text-white">{(lesson.views ?? 0).toLocaleString()}</p>
               </div>
               <div>
                 <p className="text-xs text-slate-500">Saved</p>
-                <p className="text-lg font-semibold text-white">{lesson.saves.toLocaleString()}</p>
+                <p className="text-lg font-semibold text-white">{(lesson.saves ?? 0).toLocaleString()}</p>
               </div>
             </div>
           </div>

@@ -197,7 +197,14 @@ export type LessonCategory =
   | 'Overcoming Temptation'
   | 'Discipleship'
   | 'Biblical Leadership'
-  | 'Messianic Teachings';
+  | 'Messianic Teachings'
+  | 'Faith'
+  | 'Wisdom'
+  | 'Prayer'
+  | 'Hebrew'
+  | 'Covenant'
+  | 'Messianic'
+  | 'Spiritual Growth';
 
 export interface AILesson {
   id: string;
@@ -205,7 +212,7 @@ export interface AILesson {
   subtitle?: string;
   category: LessonCategory;
   excerpt: string;
-  heroScripture: string;
+  heroScripture?: string;
   heroScriptureText?: string;
   content: string;
   htmlContent?: string; // Rich HTML content for reading page
@@ -243,15 +250,15 @@ export interface AILesson {
   previousLessonId?: string;
   
   // Engagement
-  views: number;
-  saves: number;
-  shares: number;
+  views?: number;
+  saves?: number;
+  shares?: number;
   averageRating?: number;
   userRating?: number; // 1-5
   
   // AI and Personalization
   generatedBy?: 'user-request' | 'ai-automated' | 'human-curated';
-  isAIGenerated: boolean;
+  isAIGenerated?: boolean;
   aiPrompt?: string; // The prompt used to generate
   personalizedFor?: string[]; // User IDs
   

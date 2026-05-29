@@ -90,11 +90,11 @@ export default function HomePage() {
         </motion.div>
         <motion.div initial={{ opacity: 0, x: 24 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7, delay: 0.1 }} className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-6">
           <h2 className="text-lg font-semibold tracking-[0.12em] uppercase text-[var(--accent)]">Featured scripture</h2>
-          <p className="mt-4 text-[var(--text-muted)]">"Your word is a lamp to my feet and a light to my path." — Psalm 119:105</p>
+          <p className="mt-4 text-[var(--text-muted)]">Your word is a lamp to my feet and a light to my path. — Psalm 119:105</p>
           <div className="mt-8 grid gap-4 sm:grid-cols-2">
             <div className="rounded-lg border border-[var(--border)] bg-[var(--bg-elevated)] p-6">
               <p className="text-sm uppercase tracking-[0.18em] text-[var(--accent)]">Messianic invitation</p>
-              <p className="mt-4 text-xl font-semibold text-[var(--text-primary)]">Delve into living Torah and discover each day's quiet revival.</p>
+              <p className="mt-4 text-xl font-semibold text-[var(--text-primary)]">Delve into living Torah and discover daily quiet revival.</p>
             </div>
             <div className="grid gap-3">
               <div className="rounded-lg border border-[var(--border)] bg-[var(--bg-elevated)] p-4 text-sm text-[var(--text-primary)]">

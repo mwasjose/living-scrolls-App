@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { LessonSeries, AILesson } from '@/lib/models';
 import { ChevronRight, BookOpen, Zap } from 'lucide-react';
 
@@ -31,10 +32,11 @@ export function LessonSeriesCard({
       {/* Header with cover */}
       <div className="relative overflow-hidden h-40 bg-gradient-to-br from-gold/20 to-amber-500/10">
         {series.coverImage && (
-          <img
+          <Image
             src={series.coverImage}
             alt={series.title}
-            className="h-full w-full object-cover opacity-20 group-hover:scale-110 transition duration-500"
+            fill
+            className="object-cover opacity-20 group-hover:scale-110 transition duration-500"
           />
         )}
 

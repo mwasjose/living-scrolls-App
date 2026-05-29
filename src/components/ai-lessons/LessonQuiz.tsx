@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
-import { QuizQuestion, QuizResponse, LessonQuiz } from '@/services/aiLessonGenerationService';
+import type { QuizQuestion, QuizResponse, LessonQuiz } from '@/services/aiLessonGenerationService';
 import { CheckCircle, XCircle, ChevronRight, ChevronLeft, Flag } from 'lucide-react';
 
 interface LessonQuizProps {
@@ -122,7 +122,7 @@ export function LessonQuiz({ quiz, onSubmit, lessonId, userId }: LessonQuizProps
                 <CheckCircle className="mx-auto h-16 w-16 text-green-400" />
               </motion.div>
               <h2 className="text-3xl font-bold text-white">Excellent Work!</h2>
-              <p className="text-slate-300">You've demonstrated strong understanding of this teaching.</p>
+              <p className="text-slate-300">You&apos;ve demonstrated strong understanding of this teaching.</p>
             </>
           ) : (
             <>

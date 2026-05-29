@@ -203,7 +203,7 @@ export function SpiritualJourneyVisualizer({ progress, planTitle }: SpiritualJou
           className="rounded-[24px] border-2 border-gold/30 bg-gradient-to-r from-gold/10 to-transparent p-6 shadow-soft"
         >
           <p className="text-center text-lg italic text-slate-100">
-            "Be strong and courageous. The journey continues, and every step draws you closer to Elohim."
+            Be strong and courageous. The journey continues, and every step draws you closer to Elohim.
           </p>
         </motion.div>
       )}

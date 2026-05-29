@@ -73,8 +73,8 @@ export async function getRecommendationsForUser(
       if (lesson.isFeature) score += 2;
 
       // Boost based on engagement
-      score += Math.log(lesson.views + 1) * 0.1;
-      score += Math.log(lesson.saves + 1) * 0.2;
+      score += Math.log((lesson.views ?? 0) + 1) * 0.1;
+      score += Math.log((lesson.saves ?? 0) + 1) * 0.2;
 
       return { lesson, score };
     })

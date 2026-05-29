@@ -25,31 +25,30 @@ export default function ReadingPlansPage() {
   const activePlan = (profile?.activeReadingPlan as ReadingPlanType | undefined) || selectedPlan || null;
   const activePlanData = activePlan ? SACRED_READING_PLANS[activePlan] : null;
 
-  const defaultProgress = activePlan
-    ? {
-        userId: user?.uid ?? '',
-        planId: activePlan,
-        planType: activePlan,
-        startDate: new Date().toISOString().split('T')[0],
-        currentDay: 0,
-        completedDays: 0,
-        totalDays: activePlanData?.totalDays ?? 30,
-        percentComplete: 0,
-        streakDays: profile?.streakDays ?? 0,
-        lastReadingDate: undefined,
-        missedDays: 0,
-        journalEntries: profile?.journalEntries?.length ?? 0,
-        status: 'active' as const,
-        milestones: getMilestones(activePlan, activePlanData?.totalDays ?? 30),
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      }
-    : undefined;
+  const activeProgress = useMemo(() => {
+    const defaultProgress = activePlan
+      ? {
+          userId: user?.uid ?? '',
+          planId: activePlan,
+          planType: activePlan,
+          startDate: new Date().toISOString().split('T')[0],
+          currentDay: 0,
+          completedDays: 0,
+          totalDays: activePlanData?.totalDays ?? 30,
+          percentComplete: 0,
+          streakDays: profile?.streakDays ?? 0,
+          lastReadingDate: undefined,
+          missedDays: 0,
+          journalEntries: profile?.journalEntries?.length ?? 0,
+          status: 'active' as const,
+          milestones: getMilestones(activePlan, activePlanData?.totalDays ?? 30),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        }
+      : undefined;
 
-  const activeProgress = useMemo(
-    () => (activePlan && profile?.readingPlans?.[activePlan] ? profile.readingPlans[activePlan] : defaultProgress),
-    [activePlan, profile?.readingPlans, defaultProgress]
-  );
+    return activePlan && profile?.readingPlans?.[activePlan] ? profile.readingPlans[activePlan] : defaultProgress;
+  }, [activePlan, profile?.readingPlans, user?.uid, profile?.streakDays, profile?.journalEntries?.length, activePlanData?.totalDays]);
 
   const journalEntries = profile?.journalEntries ?? [];
 

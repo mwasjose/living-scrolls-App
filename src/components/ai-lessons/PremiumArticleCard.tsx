@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { AILesson } from '@/lib/models';
 import { Bookmark, BookmarkCheck, Clock, Eye, Share2 } from 'lucide-react';
 import { useState } from 'react';
@@ -34,11 +35,12 @@ export function PremiumArticleCard({
       >
         {/* Hero image */}
         {lesson.heroImage && (
-          <div className="mb-4 overflow-hidden rounded-[16px]">
-            <img
+          <div className="mb-4 overflow-hidden rounded-[16px] relative h-32">
+            <Image
               src={lesson.heroImage}
               alt={lesson.title}
-              className="h-32 w-full object-cover transition duration-500 group-hover:scale-105"
+              fill
+              className="object-cover transition duration-500 group-hover:scale-105"
             />
           </div>
         )}
@@ -86,10 +88,11 @@ export function PremiumArticleCard({
         {/* Hero image */}
         {lesson.heroImage && (
           <div className="relative overflow-hidden h-64">
-            <img
+            <Image
               src={lesson.heroImage}
               alt={lesson.title}
-              className="h-full w-full object-cover transition duration-500 group-hover:scale-110"
+              fill
+              className="object-cover transition duration-500 group-hover:scale-110"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-midnight via-transparent to-transparent" />
           </div>
@@ -120,7 +123,7 @@ export function PremiumArticleCard({
               {showEngagement && (
                 <div className="flex items-center gap-1">
                   <Eye className="h-4 w-4" />
-                  <span>{lesson.views.toLocaleString()}</span>
+                  <span>{(lesson.views ?? 0).toLocaleString()}</span>
                 </div>
               )}
             </div>
@@ -150,10 +153,11 @@ export function PremiumArticleCard({
       {/* Hero image */}
       {lesson.heroImage && (
         <div className="relative overflow-hidden h-48">
-          <img
+          <Image
             src={lesson.heroImage}
             alt={lesson.title}
-            className="h-full w-full object-cover transition duration-500 group-hover:scale-110"
+            fill
+            className="object-cover transition duration-500 group-hover:scale-110"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-midnight/50 to-transparent" />
 
@@ -194,11 +198,11 @@ export function PremiumArticleCard({
               <div className="flex items-center gap-3">
                 <div className="flex items-center gap-1">
                   <Eye className="h-3 w-3" />
-                  <span>{lesson.views.toLocaleString()}</span>
+                  <span>{(lesson.views ?? 0).toLocaleString()}</span>
                 </div>
                 <div className="flex items-center gap-1">
                   <Bookmark className="h-3 w-3" />
-                  <span>{lesson.saves.toLocaleString()}</span>
+                  <span>{(lesson.saves ?? 0).toLocaleString()}</span>
                 </div>
               </div>
             )}

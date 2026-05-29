@@ -62,13 +62,13 @@ export default function AILessonsPage() {
 
   // Trending lessons
   const trendingLessons = useMemo(
-    () => allLessons.filter((l) => l.isTrending).sort((a, b) => b.views - a.views).slice(0, 6),
+    () => allLessons.filter((l) => l.isTrending).sort((a, b) => (b.views ?? 0) - (a.views ?? 0)).slice(0, 6),
     [allLessons]
   );
 
   // Popular lessons (by saves)
   const popularLessons = useMemo(() => {
-    return [...allLessons].sort((a, b) => b.saves - a.saves).slice(0, 8);
+    return [...allLessons].sort((a, b) => (b.saves ?? 0) - (a.saves ?? 0)).slice(0, 8);
   }, [allLessons]);
 
   // Recently added lessons
@@ -79,10 +79,16 @@ export default function AILessonsPage() {
   }, [allLessons]);
 
   // Recommended for user
-  const recommendedLessons = useMemo(
-    () => getRecommendationsForUser(profile || null, allLessons, 6),
-    [profile, allLessons]
-  );
+  const [recommendedLessons, setRecommendedLessons] = useState<AILesson[]>([]);
+
+  useEffect(() => {
+    const loadRecommendations = async () => {
+      const recommendations = await getRecommendationsForUser(profile || null, allLessons, 6);
+      setRecommendedLessons(recommendations);
+    };
+
+    loadRecommendations();
+  }, [profile, allLessons]);
 
   // Saved articles
   const userSavedArticles = useMemo(() => {
@@ -315,10 +321,11 @@ export default function AILessonsPage() {
       {/* Saved Articles Library Tab */}
       {currentPage === 'saved' && (
         <SavedArticlesLibrary
-          savedArticles={userSavedArticles.map((article, idx) => ({
-            id: `saved-${idx}`,
+          savedArticles={userSavedArticles.map((article) => ({
+            id: article.id,
             userId: user?.uid || '',
-            article: article,
+            article,
+            articleId: article.id,
             savedAt: new Date(),
             isRead: false,
           }))}

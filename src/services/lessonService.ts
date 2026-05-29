@@ -123,7 +123,7 @@ const SAMPLE_LESSONS: AILesson[] = [
   },
 ];
 
-const SAMPLE_CATEGORIES: Record<LessonCategory, { count: number; description: string }> = {
+const SAMPLE_CATEGORIES: Partial<Record<LessonCategory, { count: number; description: string }>> = {
   'Faith & Growth': { count: 24, description: 'Build unshakeable faith and spiritual growth' },
   'Prayer & Devotion': { count: 18, description: 'Deepen your prayer practice and devotional life' },
   'Relationships': { count: 15, description: 'Biblical wisdom for all relationships' },
@@ -211,14 +211,14 @@ export const lessonService = {
    * Get trending lessons
    */
   getTrendingLessons: async (): Promise<AILesson[]> => {
-    return SAMPLE_LESSONS.filter((l) => l.isTrending).sort((a, b) => b.views - a.views);
+    return SAMPLE_LESSONS.filter((l) => l.isTrending).sort((a, b) => (b.views ?? 0) - (a.views ?? 0));
   },
 
   /**
    * Get popular lessons (by saves)
    */
   getPopularLessons: async (): Promise<AILesson[]> => {
-    return [...SAMPLE_LESSONS].sort((a, b) => b.saves - a.saves);
+    return [...SAMPLE_LESSONS].sort((a, b) => (b.saves ?? 0) - (a.saves ?? 0));
   },
 
   /**
@@ -269,7 +269,7 @@ export const lessonService = {
   incrementViewCount: async (lessonId: string): Promise<void> => {
     const lesson = SAMPLE_LESSONS.find((l) => l.id === lessonId);
     if (lesson) {
-      lesson.views += 1;
+      lesson.views = (lesson.views ?? 0) + 1;
     }
   },
 
@@ -279,7 +279,7 @@ export const lessonService = {
   incrementSaveCount: async (lessonId: string): Promise<void> => {
     const lesson = SAMPLE_LESSONS.find((l) => l.id === lessonId);
     if (lesson) {
-      lesson.saves += 1;
+      lesson.saves = (lesson.saves ?? 0) + 1;
     }
   },
 };

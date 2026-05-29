@@ -20,7 +20,7 @@ interface CategoryGridProps {
 }
 
 const getCategoryColor = (name: LessonCategory): string => {
-  const colors: Record<LessonCategory, string> = {
+  const colors: Partial<Record<LessonCategory, string>> = {
     'Faith & Growth': 'from-amber-500/20 to-orange-500/10',
     'Prayer & Devotion': 'from-purple-500/20 to-pink-500/10',
     'Relationships': 'from-rose-500/20 to-pink-500/10',
@@ -50,7 +50,7 @@ const getCategoryColor = (name: LessonCategory): string => {
 };
 
 const getCategoryIcon = (name: LessonCategory): string => {
-  const icons: Record<LessonCategory, string> = {
+  const icons: Partial<Record<LessonCategory, string>> = {
     'Faith & Growth': '🌱',
     'Prayer & Devotion': '🙏',
     'Relationships': '💞',

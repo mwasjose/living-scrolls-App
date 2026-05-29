@@ -21,7 +21,7 @@ export const lessonEngagementService = {
 
       // Update user engagement metrics
       await updateUserEngagementMetrics(userId, response.lessonId, {
-        quizCompleted: true,
+        completed: true,
         quizScore: response.percentScore,
       });
     } catch (error) {
@@ -45,7 +45,6 @@ export const lessonEngagementService = {
       // Update user engagement metrics
       await updateUserEngagementMetrics(userId, reflection.lessonId, {
         reflectionSubmitted: true,
-        spiritualMood: reflection.mood,
       });
     } catch (error) {
       console.error('Error saving reflection:', error);
@@ -262,7 +261,7 @@ async function updateUserEngagementMetrics(
       articleId: lessonId,
       views: (existing?.views || 0) + 1,
       timeSpent: (existing?.timeSpent || 0) + 5, // Approximate 5 min per interaction
-      completed: updates.quizCompleted || existing?.completed || false,
+      completed: updates.completed || existing?.completed || false,
       highlighted: existing?.highlighted || [],
       notes: existing?.notes || [],
       reflectionSubmitted: updates.reflectionSubmitted || existing?.reflectionSubmitted || false,

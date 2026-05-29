@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { useEffect, useState, useMemo } from 'react';
+import Image from 'next/image';
 import { useParams, useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 import { AILesson } from '@/lib/models';
@@ -132,13 +133,9 @@ export default function LessonDetailPage() {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.7 }}
-          className="overflow-hidden rounded-[32px] h-96 lg:h-[500px]"
+          className="overflow-hidden rounded-[32px] h-96 lg:h-[500px] relative"
         >
-          <img
-            src={lesson.heroImage}
-            alt={lesson.title}
-            className="h-full w-full object-cover"
-          />
+          <Image src={lesson.heroImage} alt={lesson.title} fill className="object-cover" />
         </motion.div>
       )}
 
@@ -177,7 +174,7 @@ export default function LessonDetailPage() {
               </div>
               <div>
                 <p className="text-xs uppercase tracking-widest text-slate-500">Engagement</p>
-                <p className="mt-1 text-white font-semibold">{lesson.views.toLocaleString()} views</p>
+                <p className="mt-1 text-white font-semibold">{(lesson.views ?? 0).toLocaleString()} views</p>
               </div>
             </div>
           </div>
@@ -376,11 +373,11 @@ export default function LessonDetailPage() {
               <div className="mt-2 space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span className="text-slate-400">Views</span>
-                  <span className="font-semibold text-white">{lesson.views.toLocaleString()}</span>
+                  <span className="font-semibold text-white">{(lesson.views ?? 0).toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-400">Saved</span>
-                  <span className="font-semibold text-white">{lesson.saves.toLocaleString()}</span>
+                  <span className="font-semibold text-white">{(lesson.saves ?? 0).toLocaleString()}</span>
                 </div>
               </div>
             </div>

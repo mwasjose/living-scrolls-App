@@ -70,6 +70,8 @@ export function PersonalSpiritualJournal({
         planId: '',
         readingDayId: '',
         date: new Date().toISOString().split('T')[0],
+        highlightedVerses: [],
+        bookmarkedInsights: [],
         ...newEntry,
       });
 
@@ -225,7 +227,7 @@ export function PersonalSpiritualJournal({
 
           {/* Gratitude Items */}
           <div className="space-y-3 rounded-[24px] border border-white/10 bg-midnight/40 p-6 shadow-soft">
-            <label className="text-sm uppercase tracking-widest text-gold">I'm Grateful For...</label>
+            <label className="text-sm uppercase tracking-widest text-gold">Grateful For...</label>
             <div className="flex gap-2">
               <input
                 type="text"
