@@ -1,0 +1,37 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    match /triviaQuestions/{questionId} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.token.admin == true;
+    }
+
+    match /readingPlans/{planId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    match /torahPortions/{portionId} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.token.admin == true;
+    }
+
+    match /torah_reflections/{reflectionId} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.token.admin == true;
+    }
+
+    match /lessons/{lessonId} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.token.admin == true;
+    }
+
+    match /{document=**} {
+      allow read: if true;
+    }
+  }
+}
