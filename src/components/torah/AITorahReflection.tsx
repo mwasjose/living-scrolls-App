@@ -125,7 +125,7 @@ export function AITorahReflection({
   }
 
   return (
-    <article className="space-y-8 rounded-[32px] border border-gold/30 bg-gradient-to-br from-cream via-cream/90 to-olive/5 p-8 shadow-soft">
+    <article className="space-y-8 rounded-[32px] border border-accent bg-gradient-to-br from-cream via-cream/90 to-olive/5 p-8 shadow-soft">
       {/* Summary */}
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-3">
         <p className="flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-olive">
@@ -139,7 +139,7 @@ export function AITorahReflection({
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="rounded-[24px] border border-bronze/20 bg-cream/95 p-6">
         <div className="space-y-4">
           <div className="flex items-center gap-2">
-            <Lightbulb size={18} className="text-gold" />
+            <Lightbulb size={18} className="text-accent" />
             <h3 className="text-sm uppercase tracking-[0.28em] text-olive">Hebraic Insight</h3>
           </div>
           <div className="space-y-3">
@@ -156,9 +156,9 @@ export function AITorahReflection({
       </motion.div>
 
       {/* Messianic Connection */}
-      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="space-y-3 rounded-[24px] border border-gold/20 bg-gradient-to-br from-gold/5 to-transparent p-6">
+      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="space-y-3 rounded-[24px] border border-accent bg-gradient-to-br from-accent-soft to-transparent p-6">
         <div className="flex items-center gap-2">
-          <Heart size={18} className="text-gold" />
+          <Heart size={18} className="text-accent" />
           <h3 className="text-sm uppercase tracking-[0.28em] text-deep">Messianic Connection</h3>
         </div>
         <p className="leading-8 text-deep/85">{reflection.messianicConnection}</p>
@@ -176,7 +176,7 @@ export function AITorahReflection({
       {reflection.wordStudy.length > 0 && (
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="space-y-4">
           <div className="flex items-center gap-2">
-            <Zap size={18} className="text-gold" />
+            <Zap size={18} className="text-accent" />
             <h3 className="text-sm uppercase tracking-[0.28em] text-olive">Hebrew Word Study</h3>
           </div>
           <div className="grid gap-4 md:grid-cols-2">
@@ -208,7 +208,7 @@ export function AITorahReflection({
       {reflection.reflectionQuestions.length > 0 && (
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }} className="space-y-4">
           <div className="flex items-center gap-2">
-            <MessageCircle size={18} className="text-gold" />
+            <MessageCircle size={18} className="text-accent" />
             <h3 className="text-sm uppercase tracking-[0.28em] text-olive">Reflection Questions</h3>
           </div>
           <div className="space-y-3">

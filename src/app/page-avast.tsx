@@ -35,13 +35,13 @@ export default function HomePage() {
             <div className="flex flex-col gap-4 sm:flex-row">
               <Link
                 href="/dashboard"
-                className="btn-avast-primary text-xs sm:text-sm w-full sm:w-auto justify-center inline-flex"
+                className="btn-primary text-xs sm:text-sm w-full sm:w-auto justify-center inline-flex"
               >
                 Enter the scrolls
               </Link>
               <Link
                 href="/register"
-                className="btn-avast-secondary text-xs sm:text-sm w-full sm:w-auto justify-center inline-flex"
+                className="btn-secondary text-xs sm:text-sm w-full sm:w-auto justify-center inline-flex"
               >
                 Begin your journey
               </Link>

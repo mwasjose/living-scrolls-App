@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight, Headphones, Minus, Plus, Search, Settings2 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import { ReadingPanel } from '@/components/scripture/ReadingPanel';
 import { ScriptureTextViewer } from '@/components/scripture/ScriptureTextViewer';
 import { useScripturePassage } from '@/hooks/useScripturePassage';
 import { BIBLE_BOOKS, buildChapterReference } from '@/lib/scripture';
@@ -19,6 +18,8 @@ export default function BibleReaderPage() {
   const [translation, setTranslation] = useState('kjv');
   const [fontSize, setFontSize] = useState(21);
   const [searchQuery, setSearchQuery] = useState('');
+  const [immersiveMode, setImmersiveMode] = useState(false);
+  const [readingProgress, setReadingProgress] = useState(0);
   const contentRef = useRef<HTMLDivElement | null>(null);
 
   const selectedBook = useMemo(() => BIBLE_BOOKS.find((b) => b.name === book) || BIBLE_BOOKS[0], [book]);
@@ -34,26 +35,20 @@ export default function BibleReaderPage() {
     return candidates.map((chapterNumber) => {
       const ref = buildChapterReference(book, chapterNumber);
       return {
+        chapterNumber,
         id: `reader-${book}-${chapterNumber}`.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
-        label: chapterNumber === chapter ? 'Current Reading' : chapterNumber < chapter ? 'Previous Reading' : 'Next Reading',
+        label: chapterNumber === chapter ? 'Current' : chapterNumber < chapter ? 'Previous' : 'Next',
         title: ref,
         reference: ref,
-        verses: ref,
         summary:
           chapterNumber === chapter
             ? 'Continue through the selected chapter with verse controls, highlights, bookmarks, and copying.'
             : 'Open this adjacent reading to preview the surrounding chapter without leaving your current place.',
-        commentary: `Read ${ref} in context. Watch for repeated phrases, transitions, promises, commands, and covenant themes.`,
-        studyNotes: [
-          'Use Previous and Next verse controls to move slowly through the passage.',
-          'Highlight verses you want to revisit and bookmark verses for future study.',
-        ],
-        historicalBackground: 'Chapter divisions help navigation, while the reading flow is best understood by listening for paragraph and narrative movement.',
-        crossReferences: ['Psalm 119:105', '2 Timothy 3:16-17', 'Luke 24:27'],
       };
     });
   }, [book, chapter, selectedBook.chapters]);
   const [activeReadingId, setActiveReadingId] = useState('');
+  const activeReadingTitle = adjacentReadings.find((reading) => reading.id === activeReadingId)?.title || reference;
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -73,119 +68,176 @@ export default function BibleReaderPage() {
     setActiveReadingId(adjacentReadings.some((reading) => reading.id === saved) ? saved || currentId : currentId);
   }, [adjacentReadings, book, chapter]);
 
-  const changeBook = (nextBook: string) => {
-    setBook(nextBook);
-    setChapter(1);
-  };
+  useEffect(() => {
+    const handleScroll = () => {
+      const root = contentRef.current;
+      if (!root) return;
+      const totalHeight = root.scrollHeight - window.innerHeight;
+      const scrollTop = Math.max(0, window.scrollY - root.offsetTop + 48);
+      const progress = totalHeight > 0 ? Math.min(100, Math.max(0, (scrollTop / totalHeight) * 100)) : 0;
+      setReadingProgress(progress);
+    };
+
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [reference]);
 
   return (
     <div className="py-4 sm:py-10">
       <div className="max-w-4xl mx-auto w-full px-4 sm:px-6">
-        <article 
-          ref={contentRef} 
-          className="rounded-[40px] border border-sacred bg-sacred-cream shadow-glow overflow-hidden flex flex-col min-h-[85vh]"
+        <article
+          ref={contentRef}
+          className={`rounded-[28px] border border-[var(--border)] bg-[var(--surface)] shadow-soft overflow-hidden flex flex-col min-h-[78vh] ${immersiveMode ? 'shadow-[0_40px_120px_-55px_rgba(15,23,42,0.9)]' : ''}`}
         >
-          {/* Immersive Unified Sticky Header */}
-          <header className="sticky top-0 z-20 bg-sacred-cream/90 backdrop-blur-2xl border-b border-sacred/10 px-6 py-6 sm:px-10 sm:py-8 transition-all">
-            <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-              {/* Title and Metadata */}
-              <div className="space-y-1">
-                <h1 className="text-3xl sm:text-5xl font-bold text-sacred-primary font-serif tracking-tight">{reference}</h1>
-                <div className="flex items-center gap-3 text-[10px] sm:text-xs font-bold text-secondary uppercase tracking-[0.2em] opacity-80">
-                  <Badge variant="outline" className="bg-secondary/5 text-secondary border-sacred/20">{passage.translation || translation.toUpperCase()}</Badge>
-                  <span className="opacity-30">/</span>
+          <header className={`sticky top-0 z-20 bg-[var(--surface)]/95 backdrop-blur-lg border-b border-[var(--border)] px-5 py-5 sm:px-8 sm:py-6 transition-all ${immersiveMode ? 'shadow-[0_25px_80px_-45px_rgba(0,0,0,0.55)]' : ''}`}>
+            <div className="flex flex-col gap-5 xl:flex-row xl:items-end xl:justify-between">
+              <div className="space-y-2">
+                <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--surface-soft)] px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--accent)]">
+                  <span>{immersiveMode ? 'Immersive Reading' : 'Bible Reader'}</span>
+                </div>
+                <h1 className="text-3xl sm:text-4xl font-bold text-[var(--text-primary)] font-serif tracking-tight">{reference}</h1>
+                <div className="flex flex-wrap items-center gap-3 text-[10px] sm:text-xs font-bold uppercase tracking-[0.18em] text-[var(--text-secondary)] opacity-80">
+                  <Badge variant="outline" className="bg-[var(--surface-soft)] text-[var(--accent)] border-[var(--border)]">
+                    {passage.translation || translation.toUpperCase()}
+                  </Badge>
+                  <span className="opacity-50">/</span>
                   <span>{passage.verses.length} Verses</span>
                 </div>
+                <p className="mt-2 text-sm text-[var(--text-secondary)] opacity-80">
+                  {activeReadingId ? `${activeReadingTitle} · ${chapter}/${selectedBook.chapters}` : 'Ready to continue your next reading journey.'}
+                </p>
               </div>
 
-              {/* Navigation Controls */}
-              <div className="flex flex-wrap items-center gap-3">
-                <div className="flex items-center gap-2 bg-olive/5 p-1 rounded-2xl border border-sacred/10">
-                  <select
-                    value={book}
-                    onChange={(e) => changeBook(e.target.value)}
-                    className="bg-transparent text-xs font-bold px-3 py-2 outline-none text-sacred-primary cursor-pointer hover:bg-sacred-cream/80 rounded-xl transition-all"
-                  >
-                    {BIBLE_BOOKS.map((b) => <option key={b.name} value={b.name}>{b.name}</option>)}
-                  </select>
-                  <select
-                    value={chapter}
-                    onChange={(e) => setChapter(Number(e.target.value))}
-                    className="bg-transparent text-xs font-bold px-3 py-2 outline-none text-sacred-primary cursor-pointer border-l border-sacred/10 hover:bg-sacred-cream/80 rounded-r-xl transition-all"
-                  >
-                    {Array.from({ length: selectedBook.chapters }, (_, i) => i + 1).map((c) => (
-                      <option key={c} value={c}>Chapter {c}</option>
-                    ))}
-                  </select>
+              <div className="flex flex-wrap items-center gap-2">
+                <div className="flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--surface-soft)] px-2 py-1 text-[11px] text-[var(--text-secondary)]">
+                  <span>{selectedBook.name}</span>
+                  <span className="h-4 w-px bg-[var(--border)]" />
+                  <span>Ch {chapter}</span>
                 </div>
-
-                <div className="flex items-center gap-1">
-                  <button
-                    onClick={() => setChapter((v) => Math.max(1, v - 1))}
-                    disabled={chapter === 1}
-                    className="p-2.5 rounded-full hover:bg-olive/10 disabled:opacity-10 transition-colors text-sacred-primary"
-                    aria-label="Previous Chapter"
-                  >
-                    <ChevronLeft size={24} />
-                  </button>
-                  <button
-                    onClick={() => setChapter((v) => Math.min(selectedBook.chapters, v + 1))}
-                    disabled={chapter === selectedBook.chapters}
-                    className="p-2.5 rounded-full hover:bg-olive/10 disabled:opacity-10 transition-colors text-sacred-primary"
-                    aria-label="Next Chapter"
-                  >
-                    <ChevronRight size={24} />
-                  </button>
-                </div>
+                <button
+                  onClick={() => setChapter((v) => Math.max(1, v - 1))}
+                  disabled={chapter === 1}
+                  className="p-2 rounded-full hover:bg-[var(--surface-soft)] disabled:opacity-30 transition-colors text-[var(--text-secondary)]"
+                  aria-label="Previous Chapter"
+                >
+                  <ChevronLeft size={20} />
+                </button>
+                <button
+                  onClick={() => setChapter((v) => Math.min(selectedBook.chapters, v + 1))}
+                  disabled={chapter === selectedBook.chapters}
+                  className="p-2 rounded-full hover:bg-[var(--surface-soft)] disabled:opacity-30 transition-colors text-[var(--text-secondary)]"
+                  aria-label="Next Chapter"
+                >
+                  <ChevronRight size={20} />
+                </button>
               </div>
             </div>
 
-            {/* Reading Preferences Overlay */}
-            <div className="mt-6 pt-6 border-t border-sacred/10 flex flex-col md:flex-row md:items-center justify-between gap-6">
-               <div className="flex items-center gap-4 sm:gap-8">
-                  <div className="flex items-center gap-4 bg-olive/5 rounded-full px-5 py-2 border border-sacred/10">
-                    <button onClick={() => setFontSize(s => Math.max(14, s - 1))} className="text-secondary hover:text-sacred-primary transition-colors"><Minus size={16}/></button>
-                    <span className="text-[10px] sm:text-xs font-bold text-secondary w-12 text-center uppercase tabular-nums">{fontSize}px</span>
-                    <button onClick={() => setFontSize(s => Math.min(36, s + 1))} className="text-secondary hover:text-sacred-primary transition-colors"><Plus size={16}/></button>
+            <div className="mt-6 grid gap-4 sm:grid-cols-[1.5fr_1fr] items-center">
+              <div className="rounded-[22px] border border-[var(--border)] bg-[var(--surface-soft)] p-4">
+                <div className="flex items-center justify-between gap-4">
+                  <div className="flex items-center gap-2">
+                    <button onClick={() => setFontSize((s) => Math.max(14, s - 1))} className="rounded-full p-2 text-[var(--accent)] hover:bg-[var(--surface)] transition-colors">
+                      <Minus size={16} />
+                    </button>
+                    <span className="text-xs font-bold uppercase tracking-[0.2em] text-[var(--text-secondary)]">{fontSize}px</span>
+                    <button onClick={() => setFontSize((s) => Math.min(36, s + 1))} className="rounded-full p-2 text-[var(--accent)] hover:bg-[var(--surface)] transition-colors">
+                      <Plus size={16} />
+                    </button>
                   </div>
                   <select
                     value={translation}
                     onChange={(e) => setTranslation(e.target.value)}
-                    className="text-[10px] font-bold uppercase tracking-[0.2em] bg-transparent outline-none text-secondary cursor-pointer hover:text-sacred-primary transition-colors"
+                    className="rounded-full border border-[var(--border)] bg-transparent px-3 py-2 text-[11px] font-bold uppercase tracking-[0.18em] text-[var(--text-secondary)] outline-none"
                   >
-                    {translations.map((t) => <option key={t.id} value={t.id}>{t.label} Edition</option>)}
+                    {translations.map((t) => (
+                      <option key={t.id} value={t.id}>{t.label} Edition</option>
+                    ))}
                   </select>
-               </div>
-               
-               <div className="flex items-center gap-3 w-full md:w-auto">
-                 <div className="relative flex-1 md:w-48">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-secondary/40" size={16} />
-                    <input 
-                      type="text"
-                      placeholder="Jump to verse..."
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full bg-olive/5 border border-sacred/10 rounded-full py-2 pl-10 pr-4 text-xs font-bold text-sacred-primary outline-none focus:ring-2 focus:ring-gold/20 transition-all placeholder:text-secondary/30"
-                    />
-                 </div>
-                 <button className="p-2.5 rounded-full hover:bg-olive/10 text-secondary/60 hover:text-sacred-primary transition-colors" title="Audio Reading"><Headphones size={20}/></button>
-                 <button className="p-2.5 rounded-full hover:bg-olive/10 text-secondary/60 hover:text-sacred-primary transition-colors" title="Reading Settings"><Settings2 size={20}/></button>
-               </div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <div className="relative flex-1">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-secondary)]" size={16} />
+                  <input
+                    type="text"
+                    placeholder="Jump to verse..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full rounded-full border border-[var(--border)] bg-[var(--surface)] py-2 pl-10 pr-4 text-xs font-semibold text-[var(--text-primary)] outline-none focus:ring-2 focus:ring-[var(--accent)] transition-all placeholder:text-[var(--text-secondary)]/50"
+                  />
+                </div>
+                <button className="rounded-full border border-[var(--border)] bg-[var(--surface-soft)] p-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors" title="Audio Reading">
+                  <Headphones size={18} />
+                </button>
+                <button className="rounded-full border border-[var(--border)] bg-[var(--surface-soft)] p-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors" title="Reading Settings">
+                  <Settings2 size={18} />
+                </button>
+              </div>
+            </div>
+
+            <div className="mt-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="rounded-[22px] border border-[var(--border)] bg-[var(--surface-soft)] px-4 py-3 text-sm text-[var(--text-secondary)]">
+                <span className="font-semibold text-[var(--text-primary)]">{selectedBook.name} · Chapter {chapter} of {selectedBook.chapters}</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setImmersiveMode((value) => !value)}
+                className="inline-flex items-center justify-center rounded-full bg-[var(--accent)] px-4 py-3 text-sm font-semibold text-slate-950 transition hover:bg-emerald-400"
+              >
+                {immersiveMode ? 'Exit Immersive Mode' : 'Enter Immersive Mode'}
+              </button>
+            </div>
+            <div className="mt-4">
+              <div className="h-2 overflow-hidden rounded-full bg-slate-800/70">
+                <div className="h-full rounded-full bg-emerald-400 transition-all" style={{ width: `${readingProgress}%` }} />
+              </div>
+              <p className="mt-2 text-xs text-[var(--text-secondary)]">Reading progress: {Math.round(readingProgress)}%</p>
             </div>
           </header>
 
-          {/* Immersive Fluid Reading Area */}
-          <section className="flex-1 py-8 sm:py-12">
-            <div className="max-w-3xl mx-auto">
-              <ScriptureTextViewer 
-                passage={passage} 
-                loading={loading} 
-                fontSize={fontSize} 
+          <section className={`flex-1 ${immersiveMode ? 'py-10 sm:py-14' : 'py-8 sm:py-12'}`}>
+            <div className={`mx-auto ${immersiveMode ? 'max-w-4xl px-4 sm:px-6' : 'max-w-3xl'}`}>
+              <ScriptureTextViewer
+                passage={passage}
+                loading={loading}
+                fontSize={fontSize}
                 searchQuery={searchQuery}
-                storageKey={`chapter:${reference}:${translation}`} 
+                storageKey={`chapter:${reference}:${translation}`}
               />
             </div>
           </section>
+          {immersiveMode ? (
+            <div className="sticky bottom-0 left-0 right-0 z-10 border-t border-[var(--border)] bg-[var(--surface)]/95 backdrop-blur-lg px-4 py-3 sm:px-6">
+              <div className="mx-auto flex flex-wrap items-center justify-between gap-3 max-w-4xl">
+                <div className="flex items-center gap-2 text-xs uppercase tracking-[0.24em] text-[var(--text-secondary)]">
+                  <span>Immersive Focus</span>
+                  <span className="h-4 w-px bg-[var(--border)]" />
+                  <span>{reference}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setChapter((v) => Math.max(1, v - 1))}
+                    disabled={chapter === 1}
+                    className="rounded-full border border-[var(--border)] bg-[var(--surface-soft)] px-3 py-2 text-sm font-semibold text-[var(--text-secondary)] hover:bg-[var(--surface)] disabled:opacity-40 transition"
+                  >
+                    <ChevronLeft size={18} />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setChapter((v) => Math.min(selectedBook.chapters, v + 1))}
+                    disabled={chapter === selectedBook.chapters}
+                    className="rounded-full border border-[var(--border)] bg-[var(--surface-soft)] px-3 py-2 text-sm font-semibold text-[var(--text-secondary)] hover:bg-[var(--surface)] disabled:opacity-40 transition"
+                  >
+                    <ChevronRight size={18} />
+                  </button>
+                </div>
+              </div>
+            </div>
+          ) : null}
         </article>
       </div>
     </div>

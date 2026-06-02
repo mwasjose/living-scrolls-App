@@ -49,15 +49,15 @@ export default function ProfilePage() {
 
   if (!user) {
     return (
-      <div className="rounded-2xl border border-white/10 bg-parchment/5 p-10 shadow-soft backdrop-blur-xl text-center">
-        <p className="text-sm uppercase tracking-[0.28em] text-gold">Profile</p>
+      <div className="rounded-2xl border border-border bg-secondary p-10 shadow-soft backdrop-blur-xl text-center">
+        <p className="text-sm uppercase tracking-[0.28em] text-accent">Profile</p>
         <h1 className="mt-4 text-3xl font-semibold text-white">Sign in to view your spiritual progress.</h1>
         <p className="mt-4 text-slate-200/90">Your Wisdom XP, badges, and Torah consistency are waiting.</p>
         <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-          <Link href="/login" className="inline-flex rounded-full bg-gold px-6 py-3 text-sm font-semibold text-slate-950 transition hover:bg-[#b58f45]">
+          <Link href="/login" className="inline-flex rounded-full bg-accent px-6 py-3 text-sm font-semibold text-slate-950 transition hover:bg-[#b58f45]">
             Sign in
           </Link>
-          <Link href="/register" className="inline-flex rounded-full border border-white/15 bg-white/5 px-6 py-3 text-sm text-white transition hover:border-gold/60">
+          <Link href="/register" className="inline-flex rounded-full border border-border bg-card-soft px-6 py-3 text-sm text-white transition hover:border-accent">
             Create account
           </Link>
         </div>
@@ -67,27 +67,27 @@ export default function ProfilePage() {
 
   return (
     <div className="space-y-8 py-6">
-      <section className="rounded-2xl border border-white/10 bg-parchment/5 p-8 shadow-soft backdrop-blur-xl">
+      <section className="rounded-2xl border border-border bg-secondary p-8 shadow-soft backdrop-blur-xl">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <p className="text-sm uppercase tracking-[0.28em] text-gold">Profile</p>
+            <p className="text-sm uppercase tracking-[0.28em] text-accent">Profile</p>
             <h1 className="mt-4 text-3xl font-semibold text-white">{profile?.displayName ?? user.email}</h1>
             <p className="mt-4 max-w-2xl text-slate-200/90">Your spiritual identity, progress, and the fruits of your study journey.</p>
           </div>
           <button
             type="button"
             onClick={() => signOutUser()}
-            className="inline-flex rounded-full bg-white/10 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/20"
+            className="inline-flex rounded-full bg-card-soft px-5 py-3 text-sm font-semibold text-white transition hover:bg-surface-soft"
           >
             Sign out
           </button>
         </div>
       </section>
 
-      <section className="rounded-2xl border border-white/10 bg-midnight/80 p-8 shadow-soft">
+      <section className="rounded-2xl border border-border bg-surface-soft p-8 shadow-soft">
         <div className="grid gap-6 lg:grid-cols-2 lg:items-end">
           <div>
-            <p className="text-sm uppercase tracking-[0.28em] text-gold">Profile settings</p>
+            <p className="text-sm uppercase tracking-[0.28em] text-accent">Profile settings</p>
             <p className="mt-2 text-slate-200/90">Edit your display name and keep your Living Scrolls identity fresh.</p>
           </div>
           <div className="flex flex-col gap-4 sm:flex-row sm:justify-end">
@@ -95,7 +95,7 @@ export default function ProfilePage() {
               type="button"
               onClick={handleSave}
               disabled={saving}
-              className="rounded-full bg-gold px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-[#b58f45] disabled:cursor-not-allowed disabled:opacity-60"
+              className="rounded-full bg-accent px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-[#b58f45] disabled:cursor-not-allowed disabled:opacity-60"
             >
               {saving ? 'Saving…' : 'Save changes'}
             </button>
@@ -107,7 +107,7 @@ export default function ProfilePage() {
             <input
               value={displayName}
               onChange={(event) => setDisplayName(event.target.value)}
-              className="mt-3 w-full rounded-xl border border-white/10 bg-[#09121f] px-4 py-3 text-white outline-none focus:border-gold/60"
+              className="mt-3 w-full rounded-xl border border-border bg-[#09121f] px-4 py-3 text-white outline-none focus:border-accent"
               placeholder="Your spiritual name"
               type="text"
             />
@@ -117,7 +117,7 @@ export default function ProfilePage() {
             <input
               value={user.email ?? ''}
               readOnly
-              className="mt-3 w-full rounded-xl border border-white/10 bg-[#09121f]/70 px-4 py-3 text-slate-300 outline-none"
+              className="mt-3 w-full rounded-xl border border-border bg-[#09121f]/70 px-4 py-3 text-slate-300 outline-none"
             />
           </div>
         </div>
@@ -125,25 +125,25 @@ export default function ProfilePage() {
       </section>
 
       <div className="grid gap-6 lg:grid-cols-3">
-        <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} className="rounded-2xl border border-white/10 bg-midnight/80 p-6 shadow-glow">
-          <p className="text-sm uppercase tracking-[0.24em] text-gold">Level</p>
+        <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} className="rounded-2xl border border-border bg-surface-soft p-6 shadow-soft">
+          <p className="text-sm uppercase tracking-[0.24em] text-accent">Level</p>
           <p className="mt-4 text-4xl font-semibold text-white">{profile?.level ?? 1}</p>
         </motion.div>
-        <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.1 }} className="rounded-2xl border border-white/10 bg-midnight/80 p-6 shadow-glow">
-          <p className="text-sm uppercase tracking-[0.24em] text-gold">Wisdom XP</p>
+        <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.1 }} className="rounded-2xl border border-border bg-surface-soft p-6 shadow-soft">
+          <p className="text-sm uppercase tracking-[0.24em] text-accent">Wisdom XP</p>
           <p className="mt-4 text-4xl font-semibold text-white">{profile?.wisdomXP ?? 0}</p>
         </motion.div>
-        <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.2 }} className="rounded-2xl border border-white/10 bg-midnight/80 p-6 shadow-glow">
-          <p className="text-sm uppercase tracking-[0.24em] text-gold">Consistency</p>
+        <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.2 }} className="rounded-2xl border border-border bg-surface-soft p-6 shadow-soft">
+          <p className="text-sm uppercase tracking-[0.24em] text-accent">Consistency</p>
           <p className="mt-4 text-4xl font-semibold text-white">{profile?.streakDays ?? 0}d</p>
         </motion.div>
       </div>
 
-      <div className="rounded-2xl border border-white/10 bg-midnight/80 p-6 shadow-soft">
-        <p className="text-sm uppercase tracking-[0.24em] text-gold">Badges earned</p>
+      <div className="rounded-2xl border border-border bg-surface-soft p-6 shadow-soft">
+        <p className="text-sm uppercase tracking-[0.24em] text-accent">Badges earned</p>
         <div className="mt-4 flex flex-wrap gap-3">
           {profile?.badges?.map((badge) => (
-            <span key={badge} className="rounded-full bg-gold/10 px-4 py-2 text-xs uppercase tracking-[0.24em] text-gold">
+            <span key={badge} className="rounded-full bg-accent-soft px-4 py-2 text-xs uppercase tracking-[0.24em] text-accent">
               {badge}
             </span>
           ))}

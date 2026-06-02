@@ -1,114 +1,93 @@
 ﻿'use client';
 
-import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { ScrollCard } from '@/components/cards/scroll-card';
-import { LessonCard } from '@/components/cards/lesson-card';
 
-const features = [
-  'Daily Torah reflection and spiritual missions',
-  'Messianic Bible quizzes with scholar insight',
-  'Hebrew learning cards with word study',
-  'Live scripture challenges and community circles',
+const highlights = [
+  'Continue your current parashah with a daily reading rhythm.',
+  'Capture a reflection, prayer focus, or insight in the moment.',
+  'Keep your streak moving with small, sacred habits.',
 ];
 
 export default function HomePage() {
   return (
-    <div className="space-y-12 py-6 min-h-screen bg-[var(--bg)] text-[var(--text-primary)]">
-      <section className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-6 backdrop-blur-xl lg:p-10">
-        <div className="grid gap-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
-          <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="space-y-6"
-          >
-            <span className="inline-flex rounded-lg border border-[var(--border)] bg-[var(--accent-soft)] px-4 py-1 text-xs uppercase tracking-[0.24em] text-[var(--accent)] font-bold">
-              Sacred growth platform
-            </span>
-            <h1 className="hero-title max-w-3xl leading-tight text-[var(--text-primary)] sm:text-5xl">
-              <span className="text-[var(--accent)]">Living Scrolls</span> — a cinematic sanctuary for Torah study & reflection.
-            </h1>
-            <p className="max-w-2xl text-base leading-8 text-[var(--text-muted)] sm:text-lg">
-              Journey with Yahshuah Messiah through Torah study, Bible trivia, Hebrew wisdom, and community rhythms shaped by Adonai and Ruach HaKodesh.
-            </p>
-            <div className="flex flex-col gap-4 sm:flex-row">
-              <Link
-                href="/dashboard"
-                className="btn-avast-primary text-xs sm:text-sm w-full sm:w-auto justify-center inline-flex"
-              >
-                Enter the scrolls
-              </Link>
-              <Link
-                href="/register"
-                className="btn-avast-secondary text-xs sm:text-sm w-full sm:w-auto justify-center inline-flex"
-              >
-                Begin your journey
-              </Link>
-            </div>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="space-y-6"
-          >
-            <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-6">
-              <p className="text-xs uppercase tracking-[0.28em] text-[var(--text-secondary)] font-bold">Spirit-led highlights</p>
-              <div className="mt-6 grid gap-4">
-                {features.map((feature) => (
-                  <div key={feature} className="rounded-lg border border-[var(--border)] bg-[var(--bg-elevated)] p-4 text-sm text-[var(--text-primary)]">
-                    {feature}
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="grid gap-4 sm:grid-cols-2">
-              <ScrollCard title="Torah portion cycles" subtitle="Weekly readings with commentary and insight." />
-              <LessonCard title="Daily wisdom" category="Faith" description="AI lessons tuned to deep spiritual formation." />
-            </div>
-          </motion.div>
-        </div>
-      </section>
+    <main className="min-h-screen pb-24 bg-[var(--bg)] text-[var(--text-primary)]">
+      <div className="mx-auto max-w-3xl px-5 pt-6 space-y-8">
+        {/* Greeting */}
+        <section className="space-y-2">
+          <p className="text-xs uppercase tracking-[0.24em] text-[var(--accent)] font-semibold">Daily Scroll</p>
+          <h1 className="text-2xl font-bold leading-tight">Good morning — begin with a calm rhythm</h1>
+          <p className="text-sm text-[var(--text-secondary)]">Scripture, reflection, and steady progress—designed for daily use on your phone.</p>
+        </section>
 
-      <section className="grid gap-6 lg:grid-cols-[0.75fr_1fr]">
-        <motion.div initial={{ opacity: 0, x: -24 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7 }} className="rounded-[32px] border border-[#bc6c25]/20 bg-[#fff8e4] p-6 shadow-soft">
-          <h2 className="text-lg font-semibold tracking-[0.12em] uppercase text-[#606c38]">Sacred pathways</h2>
-          <p className="mt-4 text-[#283618]/80">
-            Explore a modern scroll experience with scripture reading, Torah study, Hebrew learning, and communal prayer spaces that feel precious and timeless.
-          </p>
-          <div className="mt-6 space-y-4">
-            <div className="rounded-3xl border border-[#bc6c25]/10 bg-[#f8eed3] p-4 text-sm text-[#283618]">
-              <p className="font-semibold text-[#606c38]">AI Encouragement</p>
-              <p className="mt-2">Adonai speaks hope into your daily walk.</p>
+        {/* Today's Scripture */}
+        <section className="space-y-3">
+          <div className="flex items-start justify-between">
+            <div>
+              <p className="text-xs uppercase tracking-[0.22em] text-[var(--accent)] font-semibold">Today’s Scripture</p>
+              <h2 className="mt-1 text-lg font-semibold text-[var(--text-primary)]">Psalm 119:105</h2>
+              <p className="text-sm text-[var(--text-secondary)]">A lamp for your feet, a light for your path.</p>
             </div>
-            <div className="rounded-3xl border border-[#bc6c25]/10 bg-[#f8eed3] p-4 text-sm text-[#283618]">
-              <p className="font-semibold text-[#606c38]">Hebrew study</p>
-              <p className="mt-2">Learn bereshit, shemot, vayikra, bamidbar and devarim.</p>
+            <Link href="/bible-reader" className="rounded-full bg-[var(--accent)] px-3 py-2 text-sm font-semibold text-[var(--text-on-accent)]">
+              Read
+            </Link>
+          </div>
+        </section>
+
+        {/* Continue Reading */}
+        <section className="space-y-2">
+          <p className="text-xs uppercase tracking-[0.22em] text-[var(--accent)] font-semibold">Continue</p>
+          <div className="space-y-3">
+            <Link href="/reading-plans" className="block rounded-lg px-3 py-4">
+              <h3 className="text-base font-semibold text-[var(--text-primary)]">Your current journey</h3>
+              <p className="text-sm text-[var(--text-secondary)]">Continue the Torah cycle — Genesis • Chapter 12 • Day 34</p>
+            </Link>
+            <Link href="/ai-lessons" className="block rounded-lg px-3 py-4">
+              <h3 className="text-base font-semibold text-[var(--text-primary)]">Daily Wisdom</h3>
+              <p className="text-sm text-[var(--text-secondary)]">A short reflection to carry through the day.</p>
+            </Link>
+          </div>
+        </section>
+
+        {/* Current Torah Portion */}
+        <section className="space-y-2">
+          <p className="text-xs uppercase tracking-[0.22em] text-[var(--accent)] font-semibold">Torah Portion</p>
+          <div className="px-0 py-2">
+            <h3 className="text-base font-semibold">Parashat Chayei Sarah</h3>
+            <p className="text-sm text-[var(--text-secondary)]">Overview • Reading path • Key insights</p>
+          </div>
+        </section>
+
+        {/* Recent Activity & Prayer Focus */}
+        <section className="space-y-3">
+          <p className="text-xs uppercase tracking-[0.22em] text-[var(--accent)] font-semibold">Recent</p>
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-[var(--text-primary)]">Recent activity</p>
+                <p className="text-xs text-[var(--text-secondary)]">Reflections • Readings • Streaks</p>
+              </div>
+              <Link href="/activity" className="text-xs text-[var(--accent)] font-semibold">View</Link>
+            </div>
+
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-[var(--text-primary)]">Prayer focus</p>
+                <p className="text-xs text-[var(--text-secondary)]">Pause, offer, and commit one thing today.</p>
+              </div>
+              <Link href="/profile" className="text-xs text-[var(--accent)] font-semibold">Open</Link>
             </div>
           </div>
-        </motion.div>
-        <motion.div initial={{ opacity: 0, x: 24 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7, delay: 0.1 }} className="rounded-[32px] border border-[#bc6c25]/20 bg-[#f7eed5] p-6 shadow-soft">
-          <h2 className="text-lg font-semibold tracking-[0.12em] uppercase text-[#606c38]">Featured scripture</h2>
-          <p className="mt-4 text-[#283618]/80">“Your word is a lamp to my feet and a light to my path.” — Psalm 119:105</p>
-          <div className="mt-8 grid gap-4 sm:grid-cols-2">
-            <div className="rounded-[28px] border border-[#bc6c25]/10 bg-[#fff9e4] p-6">
-              <p className="text-sm uppercase tracking-[0.18em] text-[#606c38]">Messianic invitation</p>
-              <p className="mt-4 text-xl font-semibold text-[#283618]">Delve into living Torah and discover each day’s quiet revival.</p>
-            </div>
-            <div className="grid gap-3">
-              <div className="rounded-3xl border border-[#bc6c25]/10 bg-[#fff9e4] p-4 text-sm text-[#283618]">
-                <p className="uppercase tracking-[0.18em] text-[#606c38]">Community circles</p>
-                <p className="mt-3 text-sm">Connect with study groups and prayer hearts.</p>
-              </div>
-              <div className="rounded-3xl border border-[#bc6c25]/10 bg-[#fff9e4] p-4 text-sm text-[#283618]">
-                <p className="uppercase tracking-[0.18em] text-[#606c38]">Scripture challenges</p>
-                <p className="mt-3 text-sm">Train memory and deepen your daily reading rhythm.</p>
-              </div>
-            </div>
+        </section>
+
+        {/* Spiritual Journey */}
+        <section className="space-y-2 pb-12">
+          <p className="text-xs uppercase tracking-[0.22em] text-[var(--accent)] font-semibold">Journey</p>
+          <div>
+            <h3 className="text-base font-semibold">Momentum and milestones</h3>
+            <p className="text-sm text-[var(--text-secondary)]">Streak: 3 days • Lessons: 8</p>
           </div>
-        </motion.div>
-      </section>
-    </div>
+        </section>
+      </div>
+    </main>
   );
 }

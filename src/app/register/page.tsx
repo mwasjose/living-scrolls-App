@@ -40,7 +40,7 @@ export default function RegisterPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7 }}
-        className="glass-card w-full max-w-md rounded-2xl p-8"
+        className="card-soft w-full max-w-md rounded-2xl p-8"
       >
         <h1 className="text-center text-3xl font-bold text-[#606c38] mb-3">Begin Your Journey</h1>
         <p className="text-center text-[#606c38]/80 mb-8">Register with your email and password to save your progress and access your profile.</p>

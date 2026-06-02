@@ -96,9 +96,9 @@ export function PersonalSpiritualJournal({
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        className="rounded-[24px] border border-white/10 bg-parchment/5 p-8 shadow-soft"
+        className="rounded-[24px] border border-border bg-secondary p-8 shadow-soft"
       >
-        <p className="text-sm uppercase tracking-[0.28em] text-gold">Spiritual Journal</p>
+        <p className="text-sm uppercase tracking-[0.28em] text-accent">Spiritual Journal</p>
         <h2 className="mt-4 text-3xl font-semibold text-white">Your Personal Reflection Space</h2>
         <p className="mt-3 text-slate-200">
           Record your thoughts, gratitude, spiritual growth, and prayers as you journey through Scripture.
@@ -111,8 +111,8 @@ export function PersonalSpiritualJournal({
           onClick={() => setView('timeline')}
           className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
             view === 'timeline'
-              ? 'bg-gold/20 text-gold'
-              : 'bg-white/5 text-slate-400 hover:text-white'
+              ? 'bg-accent-soft text-accent'
+                : 'bg-card-soft text-[var(--text-secondary)] hover:text-white'
           }`}
         >
           Journal Timeline
@@ -121,8 +121,8 @@ export function PersonalSpiritualJournal({
           onClick={() => setView('new')}
           className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
             view === 'new'
-              ? 'bg-gold/20 text-gold'
-              : 'bg-white/5 text-slate-400 hover:text-white'
+              ? 'bg-accent-soft text-accent'
+                : 'bg-card-soft text-[var(--text-secondary)] hover:text-white'
           }`}
         >
           New Entry
@@ -133,7 +133,7 @@ export function PersonalSpiritualJournal({
       {view === 'timeline' && (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4">
           {entries.length === 0 ? (
-            <div className="rounded-[24px] border-2 border-dashed border-white/20 p-12 text-center">
+            <div className="rounded-[24px] border-2 border-dashed border-border p-12 text-center">
               <p className="text-slate-400">No journal entries yet</p>
               <p className="mt-2 text-sm text-slate-500">Begin writing your spiritual reflections to see them here.</p>
             </div>
@@ -146,7 +146,7 @@ export function PersonalSpiritualJournal({
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.05 }}
-                  className="rounded-[20px] border border-white/10 bg-midnight/40 p-6 shadow-soft"
+                  className="rounded-[20px] border border-border bg-surface-soft p-6 shadow-soft"
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div>
@@ -164,7 +164,7 @@ export function PersonalSpiritualJournal({
 
                   {entry.gratitudeItems.length > 0 && (
                     <div className="mt-4 space-y-2">
-                      <p className="text-xs text-gold">Gratitude</p>
+                      <p className="text-xs text-accent">Gratitude</p>
                       {entry.gratitudeItems.map((item, i) => (
                         <p key={i} className="text-sm text-slate-400">• {item}</p>
                       ))}
@@ -173,7 +173,7 @@ export function PersonalSpiritualJournal({
 
                   {entry.growthAreas.length > 0 && (
                     <div className="mt-4 space-y-2">
-                      <p className="text-xs text-gold">Areas of Growth</p>
+                      <p className="text-xs text-accent">Areas of Growth</p>
                       {entry.growthAreas.map((area, i) => (
                         <p key={i} className="text-sm text-slate-400">• {area}</p>
                       ))}
@@ -191,7 +191,7 @@ export function PersonalSpiritualJournal({
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
           {/* Spiritual Mood */}
           <div className="space-y-3">
-            <label className="text-sm uppercase tracking-widest text-gold">How do you feel spiritually today?</label>
+            <label className="text-sm uppercase tracking-widest text-accent">How do you feel spiritually today?</label>
             <div className="grid grid-cols-3 gap-2 md:grid-cols-6">
               {MOOD_OPTIONS.map((mood) => (
                 <button
@@ -200,7 +200,7 @@ export function PersonalSpiritualJournal({
                   className={`group relative flex flex-col items-center gap-2 rounded-[16px] p-3 transition-all ${
                     newEntry.spiritualMood === mood.value
                       ? `bg-gradient-to-br ${mood.color} p-3`
-                      : 'bg-white/5 hover:bg-white/10'
+                      : 'bg-card-soft hover:bg-surface-soft'
                   }`}
                 >
                   <span className="text-2xl">{mood.icon}</span>
@@ -215,19 +215,19 @@ export function PersonalSpiritualJournal({
           </div>
 
           {/* Main Reflection */}
-          <div className="space-y-3 rounded-[24px] border border-white/10 bg-midnight/40 p-6 shadow-soft">
-            <label className="text-sm uppercase tracking-widest text-gold">Your Reflection</label>
+          <div className="space-y-3 rounded-[24px] border border-border bg-surface-soft p-6 shadow-soft">
+            <label className="text-sm uppercase tracking-widest text-accent">Your Reflection</label>
             <textarea
               value={newEntry.reflection}
               onChange={(e) => setNewEntry({ ...newEntry, reflection: e.target.value })}
               placeholder="Write your spiritual reflections, insights, and thoughts about today's Scripture..."
-              className="min-h-48 w-full bg-white/5 rounded-[12px] border border-white/10 px-4 py-3 text-slate-100 placeholder-slate-500 transition-all focus:border-gold/50 focus:outline-none focus:ring-1 focus:ring-gold/20"
+              className="min-h-48 w-full bg-card-soft rounded-[12px] border border-border px-4 py-3 text-slate-100 placeholder-slate-500 transition-all focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
             />
           </div>
 
           {/* Gratitude Items */}
-          <div className="space-y-3 rounded-[24px] border border-white/10 bg-midnight/40 p-6 shadow-soft">
-            <label className="text-sm uppercase tracking-widest text-gold">Grateful For...</label>
+          <div className="space-y-3 rounded-[24px] border border-border bg-surface-soft p-6 shadow-soft">
+            <label className="text-sm uppercase tracking-widest text-accent">Grateful For...</label>
             <div className="flex gap-2">
               <input
                 type="text"
@@ -235,11 +235,11 @@ export function PersonalSpiritualJournal({
                 onChange={(e) => setCurrentGratitude(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleAddGratitude()}
                 placeholder="Add items of gratitude..."
-                className="flex-1 bg-white/5 rounded-[8px] border border-white/10 px-3 py-2 text-sm text-slate-100 placeholder-slate-500 transition-all focus:border-gold/50 focus:outline-none"
+                className="flex-1 bg-card-soft rounded-[8px] border border-border px-3 py-2 text-sm text-slate-100 placeholder-slate-500 transition-all focus:border-accent focus:outline-none"
               />
               <button
                 onClick={handleAddGratitude}
-                className="rounded-[8px] bg-gold/10 px-3 py-2 text-sm font-medium text-gold hover:bg-gold/20 transition-colors"
+                className="rounded-[8px] bg-accent-soft px-3 py-2 text-sm font-medium text-accent hover:bg-accent-soft transition-colors"
               >
                 Add
               </button>
@@ -249,7 +249,7 @@ export function PersonalSpiritualJournal({
                 {newEntry.gratitudeItems.map((item, i) => (
                   <div
                     key={i}
-                    className="flex items-center gap-2 rounded-full bg-gold/10 px-3 py-1 text-sm text-gold"
+                    className="flex items-center gap-2 rounded-full bg-accent-soft px-3 py-1 text-sm text-accent"
                   >
                     <span>{item}</span>
                     <button
@@ -270,8 +270,8 @@ export function PersonalSpiritualJournal({
           </div>
 
           {/* Growth Areas */}
-          <div className="space-y-3 rounded-[24px] border border-white/10 bg-midnight/40 p-6 shadow-soft">
-            <label className="text-sm uppercase tracking-widest text-gold">Areas for Spiritual Growth</label>
+          <div className="space-y-3 rounded-[24px] border border-border bg-surface-soft p-6 shadow-soft">
+            <label className="text-sm uppercase tracking-widest text-accent">Areas for Spiritual Growth</label>
             <div className="flex gap-2">
               <input
                 type="text"
@@ -279,11 +279,11 @@ export function PersonalSpiritualJournal({
                 onChange={(e) => setCurrentGrowth(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleAddGrowth()}
                 placeholder="What spiritual areas would you like to develop?"
-                className="flex-1 bg-white/5 rounded-[8px] border border-white/10 px-3 py-2 text-sm text-slate-100 placeholder-slate-500 transition-all focus:border-gold/50 focus:outline-none"
+                className="flex-1 bg-card-soft rounded-[8px] border border-border px-3 py-2 text-sm text-slate-100 placeholder-slate-500 transition-all focus:border-accent focus:outline-none"
               />
               <button
                 onClick={handleAddGrowth}
-                className="rounded-[8px] bg-gold/10 px-3 py-2 text-sm font-medium text-gold hover:bg-gold/20 transition-colors"
+                className="rounded-[8px] bg-accent-soft px-3 py-2 text-sm font-medium text-accent hover:bg-accent-soft transition-colors"
               >
                 Add
               </button>
@@ -293,7 +293,7 @@ export function PersonalSpiritualJournal({
                 {newEntry.growthAreas.map((area, i) => (
                   <div
                     key={i}
-                    className="flex items-center gap-2 rounded-full bg-gold/10 px-3 py-1 text-sm text-gold"
+                    className="flex items-center gap-2 rounded-full bg-accent-soft px-3 py-1 text-sm text-accent"
                   >
                     <span>{area}</span>
                     <button
@@ -314,13 +314,13 @@ export function PersonalSpiritualJournal({
           </div>
 
           {/* Prayer Notes */}
-          <div className="space-y-3 rounded-[24px] border border-white/10 bg-midnight/40 p-6 shadow-soft">
-            <label className="text-sm uppercase tracking-widest text-gold">Prayer & Meditation Notes</label>
+          <div className="space-y-3 rounded-[24px] border border-border bg-surface-soft p-6 shadow-soft">
+            <label className="text-sm uppercase tracking-widest text-accent">Prayer & Meditation Notes</label>
             <textarea
               value={newEntry.prayerNotes}
               onChange={(e) => setNewEntry({ ...newEntry, prayerNotes: e.target.value })}
               placeholder="Write your prayers, meditations, or conversations with Elohim..."
-              className="min-h-32 w-full bg-white/5 rounded-[12px] border border-white/10 px-4 py-3 text-slate-100 placeholder-slate-500 transition-all focus:border-gold/50 focus:outline-none focus:ring-1 focus:ring-gold/20"
+              className="min-h-32 w-full bg-card-soft rounded-[12px] border border-border px-4 py-3 text-slate-100 placeholder-slate-500 transition-all focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
             />
           </div>
 
@@ -328,7 +328,7 @@ export function PersonalSpiritualJournal({
           <button
             onClick={handleSaveEntry}
             disabled={saving || !newEntry.reflection.trim()}
-            className="w-full rounded-full bg-gold px-6 py-3 font-semibold text-slate-950 transition hover:bg-gold/90 disabled:opacity-60"
+            className="w-full rounded-full bg-accent px-6 py-3 font-semibold text-slate-950 transition hover:bg-accent-soft disabled:opacity-60"
           >
             {saving ? 'Saving Your Reflection...' : 'Save Journal Entry'}
           </button>

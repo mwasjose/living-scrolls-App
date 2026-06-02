@@ -7,7 +7,7 @@ import type { TorahCommentaryItem, TorahPortionDetail, TorahAliyah } from '@/lib
 
 const AITorahReflection = dynamic(() => import('./AITorahReflection').then((m) => m.AITorahReflection), {
   loading: () => (
-    <div className="space-y-4 card-sacred p-6">
+    <div className="space-y-4 rounded-[24px] border border-soft bg-surface p-6">
       <div className="h-6 w-1/2 animate-pulse rounded-full bg-surface-soft" />
       <div className="space-y-3">
         <div className="h-4 w-full animate-pulse rounded-full bg-surface-soft" />
@@ -49,7 +49,7 @@ export function CommentarySection({
   const shouldShowAI = portion && scriptureText;
 
   return (
-    <section id="commentary" className="space-y-6 section-card p-6 shadow-soft">
+    <section id="commentary" className="space-y-6">
       <div>
         <p className="text-xs uppercase tracking-[0.3em] text-secondary">Commentary & reflection</p>
         <h2 className="section-title mt-3 text-3xl text-primary">AI-powered sacred study & article-style insights.</h2>
@@ -74,11 +74,11 @@ export function CommentarySection({
       <div className="grid gap-6 xl:grid-cols-[1fr_320px]">
         <div className="space-y-5">
           {commentary.map((item) => (
-            <article key={item.id} className="card-sacred p-6">
+            <article key={item.id} className="space-y-4 border-t border-[var(--border-muted)] pt-6">
               <p className="text-xs uppercase tracking-[0.28em] text-secondary">{item.source}</p>
               <h3 className="mt-3 text-2xl font-semibold text-primary">{item.title}</h3>
               <p className="mt-4 text-sm leading-7 text-secondary">{item.excerpt}</p>
-              <div className="mt-5 rounded-3xl bg-surface p-4 text-sm leading-7 text-secondary">
+              <div className="mt-5 rounded-3xl bg-[var(--surface)]/50 p-4 text-sm leading-7 text-secondary">
                 {item.reflection}
               </div>
               {isTorahOrgSource(item.source) && (
@@ -95,7 +95,7 @@ export function CommentarySection({
           ))}
         </div>
 
-        <aside className="space-y-5 card-sacred p-6">
+        <aside className="space-y-5">
           <div>
             <p className="text-xs uppercase tracking-[0.28em] text-secondary">Brit Hadashah themes</p>
             <ul className="mt-4 space-y-3 text-sm leading-7 text-secondary">

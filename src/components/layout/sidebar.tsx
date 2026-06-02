@@ -34,15 +34,12 @@ const sidebarSections = [
     items: [
       { label: 'Trivia', href: '/trivia', icon: Brain },
       { label: 'Hebrew Learning', href: '/hebrew-learning', icon: Languages },
-      { label: 'Wisdom Feed', href: '/wisdom', icon: Sparkles },
     ],
   },
   {
-    title: 'Community',
+    title: 'Connect',
     items: [
-      { label: 'Journal', href: '/journal', icon: NotebookPen },
-      { label: 'AI Lessons', href: '/wisdom', icon: Sparkles },
-      { label: 'Community', href: '/community', icon: UsersRound },
+      { label: 'AI Lessons', href: '/ai-lessons', icon: Sparkles },
       { label: 'Profile', href: '/profile', icon: UserRound },
     ],
   },
@@ -75,7 +72,7 @@ export function Sidebar({ isOpen, isCollapsed, onClose }: SidebarProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm lg:hidden"
+            className="fixed inset-0 z-40 bg-[var(--bg)]/60 backdrop-blur-sm lg:hidden"
           />
         )}
       </AnimatePresence>
@@ -83,17 +80,17 @@ export function Sidebar({ isOpen, isCollapsed, onClose }: SidebarProps) {
       <motion.aside
         initial={false}
         animate={{
-          x: isLarge ? 0 : isOpen ? 0 : -320,
-          width: isLarge && isCollapsed ? 92 : 320,
+          x: isLarge ? 0 : isOpen ? 0 : -280,
+          width: isLarge && isCollapsed ? 92 : 280,
         }}
         transition={{ type: 'spring', damping: 26, stiffness: 220 }}
-        className={`fixed left-0 top-0 z-50 h-screen border-r border-[var(--border)] bg-[var(--bg-elevated)] p-5 shadow-soft backdrop-blur-xl lg:translate-x-0 ${
+        className={`fixed left-0 top-0 z-50 h-screen border-r border-[var(--border)] bg-[var(--background)]/95 p-4 shadow-soft backdrop-blur-xl lg:translate-x-0 ${
           isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
         }`}
       >
         <div className={`mb-8 flex items-center ${isCollapsed ? 'justify-center' : 'justify-between'} gap-3`}>
           <div className={`flex items-center gap-3 ${isCollapsed ? 'justify-center' : ''}`}>
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[var(--color-avast-cyan)] to-[var(--color-avast-cyan-dim)] text-[var(--color-avast-darker)] shadow-lg">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[var(--accent-soft)] text-[var(--accent)] shadow-sm">
               <Shield size={22} strokeWidth={2.5} />
             </div>
                 {!isCollapsed ? (
@@ -117,8 +114,8 @@ export function Sidebar({ isOpen, isCollapsed, onClose }: SidebarProps) {
         <div className="space-y-8 pb-6">
           {sidebarSections.map((section) => (
             <div key={section.title} className={isCollapsed ? 'text-center' : ''}>
-              {!isCollapsed ? <p className="mb-3 px-2 text-[10px] uppercase tracking-[0.28em] text-[var(--text-muted)] font-semibold font-title">{section.title}</p> : null}
-              <div className="space-y-2">
+              {!isCollapsed ? <p className="mb-3 text-[10px] uppercase tracking-[0.28em] text-[var(--text-muted)] font-semibold font-title">{section.title}</p> : null}
+              <div className="space-y-1">
                 {section.items.map((item) => {
                   const isActive = pathname === item.href || pathname?.startsWith(`${item.href}/`);
                   const Icon = item.icon;
@@ -129,19 +126,19 @@ export function Sidebar({ isOpen, isCollapsed, onClose }: SidebarProps) {
                       href={item.href}
                       onClick={onClose}
                       title={item.label}
-                      className={`relative flex items-center rounded-2xl px-3 py-3 text-sm transition duration-200 ${
+                      className={`group relative flex items-center gap-3 text-sm transition duration-150 ${
                         isCollapsed ? 'justify-center' : 'justify-start'
                       } ${
                         isActive
-                          ? 'bg-[var(--accent-soft)] text-[var(--accent)] shadow-[inset_0_0_0_1px_rgba(252,163,17,0.12)]'
-                          : 'text-[var(--text-muted)] hover:bg-[var(--surface-soft)] hover:text-[var(--text-secondary)]'
+                          ? 'text-[var(--accent)]'
+                          : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
                       }`}
                     >
-                      {isActive ? (
-                        <span className="absolute left-0 top-0 h-full w-1 rounded-r-full bg-[var(--accent)]" />
+                      <span className={isActive ? 'absolute left-0 top-1/2 h-5 w-0.5 -translate-y-1/2 rounded-r-sm bg-[var(--accent)]' : 'absolute left-0 top-1/2 h-5 w-0.5 -translate-y-1/2 rounded-r-sm bg-transparent'} />
+                      <Icon className={isCollapsed ? 'h-4 w-4' : 'h-4 w-4 flex-shrink-0'} strokeWidth={1.8} />
+                      {!isCollapsed ? (
+                        <span className="font-medium font-title">{item.label}</span>
                       ) : null}
-                      <Icon className={isCollapsed ? 'h-5 w-5' : 'mr-3 h-5 w-5'} strokeWidth={1.8} />
-                      {!isCollapsed ? <span className="font-medium font-title">{item.label}</span> : null}
                     </Link>
                   );
                 })}
@@ -151,9 +148,9 @@ export function Sidebar({ isOpen, isCollapsed, onClose }: SidebarProps) {
         </div>
 
         {!isCollapsed ? (
-          <div className="mt-auto rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 text-sm text-[var(--text-secondary)] shadow-sm">
-            <p className="text-xs uppercase tracking-[0.24em] text-[var(--text-muted)]">Study tip</p>
-            <p className="mt-3 text-[var(--text-primary)]">Use the sidebar to keep your reading flow and sacred missions visible at every step.</p>
+          <div className="mt-auto rounded-lg border border-[var(--border)] bg-transparent p-3 text-sm text-[var(--text-secondary)]">
+            <p className="text-xs uppercase tracking-[0.24em] text-[var(--text-muted)]">Tip</p>
+            <p className="mt-2 text-[var(--text-secondary)] text-xs leading-relaxed">Focus on one passage daily.</p>
           </div>
         ) : null}
       </motion.aside>

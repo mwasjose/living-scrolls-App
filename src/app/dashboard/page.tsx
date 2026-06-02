@@ -2,13 +2,10 @@
 
 import { motion } from 'framer-motion';
 import { useAuth } from '@/hooks/useAuth';
-import { useTorahProgress } from '@/hooks/useTorahProgress';
 import { useUserProfile } from '@/hooks/useUserProfile';
 import Link from 'next/link';
-import { BookOpen, Scroll, Brain, Languages, Bell } from 'lucide-react';
+import { BookOpen, Scroll, Brain, Languages } from 'lucide-react';
 import { VerseCard } from '@/components/cards/verse-card';
-import { ScrollCard } from '@/components/cards/scroll-card';
-import { LessonCard } from '@/components/cards/lesson-card';
 import { PrayerTrackerCard } from '@/components/cards/prayer-tracker-card';
 import { MemorizationProgressCard } from '@/components/cards/memorization-progress-card';
 
@@ -16,133 +13,159 @@ export default function DashboardPage() {
   const { user, loading } = useAuth();
   const { profile, loading: profileLoading } = useUserProfile(user?.uid ?? null);
   const displayName = profile?.displayName || user?.displayName || user?.email?.split('@')[0] || 'Beloved';
-  const { progress: torahProgressData, loading: progressLoading } = useTorahProgress(user?.uid ?? undefined);
 
-  const notifications = profile?.notifications ?? [];
-  const notificationCount = notifications.length;
-  const latestNotifications = notifications.slice(0, 3);
-
-  if (loading || profileLoading || progressLoading) {
+  if (loading || profileLoading) {
     return <div className="py-20 text-center text-[var(--accent)]">Preparing your spiritual dashboard...</div>;
   }
 
   if (!user) {
     return (
-      <div className="avast-card rounded-lg border border-[var(--border)] bg-[var(--surface)] p-10 text-center">
+      <section className="space-y-6 card-soft p-10 text-center">
         <p className="text-sm uppercase tracking-[0.28em] text-[var(--text-secondary)]">Welcome</p>
         <h1 className="mt-4 text-3xl font-semibold text-[var(--text-primary)]">Sign in to your sacred dashboard.</h1>
         <p className="mt-4 text-[var(--text-muted)]">Your personalized Torah study plan and spiritual progress await.</p>
         <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-          <Link href="/login" className="btn-avast-primary text-xs sm:text-sm">
+          <Link href="/login" className="btn-primary text-xs sm:text-sm">
             Sign in
           </Link>
-          <Link href="/register" className="btn-avast-secondary text-xs sm:text-sm">
+          <Link href="/register" className="btn-secondary text-xs sm:text-sm">
             Create account
           </Link>
         </div>
-      </div>
+      </section>
     );
   }
 
   return (
-    <div className="space-y-8 py-6">
-      <motion.section initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} className="rounded-2xl border border-bronze/20 bg-cream/90 p-6 shadow-soft">
-        <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-          <div>
-            <p className="text-sm uppercase tracking-[0.3em] text-olive">Daily spiritual pulse</p>
-            <h1 className="mt-4 text-3xl font-semibold text-deep font-title">Shalom, Mwangi.</h1>
-            <p className="mt-3 max-w-2xl text-deep/80">Your daily scroll offers scripture, mission wisdom, and the next steps for growth in Adonai’s presence.</p>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:w-[420px]">
-            <div className="rounded-xl border border-bronze/15 bg-cream/90 p-5">
-              <p className="text-sm uppercase tracking-[0.24em] text-olive">Wisdom XP</p>
-              <p className="mt-3 text-3xl font-semibold text-deep">{profile?.wisdomXP ?? 2480}</p>
-            </div>
-            <div className="rounded-xl border border-bronze/15 bg-cream/90 p-5">
-              <p className="text-sm uppercase tracking-[0.24em] text-olive">Streak</p>
-              <p className="mt-3 text-3xl font-semibold text-deep">{profile?.streakDays ?? 12} days</p>
-            </div>
-          </div>
+    <div className="space-y-16 py-6">
+      {/* Greeting Section */}
+      <motion.section initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} className="space-y-4">
+        <div>
+          <p className="text-sm uppercase tracking-[0.3em] text-[var(--accent)]">Spiritual Journey</p>
+          <h1 className="mt-2 text-4xl font-bold text-[var(--text-primary)] leading-tight">Shalom, {displayName}.</h1>
+          <p className="mt-4 text-[var(--text-secondary)] max-w-xl leading-relaxed">
+            Today&apos;s scroll offers scripture, wisdom, and opportunities for spiritual growth in Adonai&apos;s presence.
+          </p>
         </div>
       </motion.section>
 
-      <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
-        <section className="space-y-6">
-          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7 }} className="grid gap-6">
-            <VerseCard verse="Psalm 119:105" text="Your word is a lamp to my feet and a light to my path." reference="HalleluYah Scriptures" />
-          </motion.div>
 
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.1 }} className="rounded-2xl border border-bronze/15 bg-cream/90 p-6">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <div>
-                <p className="text-sm uppercase tracking-[0.24em] text-olive">Daily missions</p>
-                <p className="mt-2 text-deep/80">Nurture your heart with Scripture, reflection, and wisdom.</p>
-              </div>
-              <Link href="/journal" className="rounded-xl border border-bronze/20 bg-cream/80 px-4 py-2 text-xs uppercase tracking-[0.24em] text-olive transition hover:bg-cream/90">
-                Journal
-              </Link>
-            </div>
-            <div className="mt-6 grid gap-3">
-              <div className="rounded-xl border border-bronze/10 bg-cream/95 p-4 text-sm text-deep">Study today’s Torah portion</div>
-              <div className="rounded-xl border border-bronze/10 bg-cream/95 p-4 text-sm text-deep">Memorize Psalm 23 verse 1</div>
-              <div className="rounded-xl border border-bronze/10 bg-cream/95 p-4 text-sm text-deep">Complete 1 Messianic trivia set</div>
-              <div className="rounded-xl border border-bronze/10 bg-cream/95 p-4 text-sm text-deep">Reflect in your prayer journal</div>
-            </div>
-          </motion.div>
+      {/* Today's Scripture (Featured Card) */}
+      <motion.section initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.2 }} className="space-y-4">
+        <div>
+          <p className="text-sm uppercase tracking-[0.22em] text-[var(--accent)]">Today&apos;s Light</p>
+          <h2 className="mt-2 text-2xl font-bold text-[var(--text-primary)]">Daily Scripture</h2>
+        </div>
+        <VerseCard verse="Psalm 119:105" text="Your word is a lamp to my feet and a light to my path." reference="HalleluYah Scriptures" />
+      </motion.section>
 
-          <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.2 }} className="grid gap-4 sm:grid-cols-2">
-            <ScrollCard title="Torah portion" subtitle="Bereshit — Genesis 1 and Messianic connection." />
-            <PrayerTrackerCard userId={user.uid} />
-          </motion.div>
-          <motion.div initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.3 }} className="grid gap-4 sm:grid-cols-2">
-            <MemorizationProgressCard userId={user.uid} />
-            <LessonCard title="AI encouragement" category="Prayer" description="Receive a daily word that awakens your spiritual habits." />
-          </motion.div>
-        </section>
-
-        <aside className="space-y-6">
-          <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7, delay: 0.1 }} className="rounded-2xl border border-bronze/15 bg-cream/90 p-5">
-            <div className="flex items-center justify-between gap-3">
-              <div>
-                <p className="text-sm uppercase tracking-[0.24em] text-olive">Notifications</p>
-                <p className="mt-2 text-sm text-deep/70">Latest reminders from your journey.</p>
-              </div>
-              <div className="inline-flex items-center gap-2 rounded-full bg-olive/10 px-3 py-1 text-xs uppercase tracking-[0.24em] text-olive">
-                <Bell size={14} /> {notificationCount} new
-              </div>
+      {/* Main Content Grid */}
+      <div className="grid gap-16 lg:grid-cols-3">
+        {/* Primary Content */}
+        <div className="space-y-16 lg:col-span-2">
+          {/* Continue Reading */}
+          <motion.section initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.3 }} className="space-y-4">
+            <div>
+              <p className="text-sm uppercase tracking-[0.22em] text-[var(--accent)]">Continue</p>
+              <h2 className="mt-2 text-2xl font-bold text-[var(--text-primary)]">Your Reading Journey</h2>
             </div>
-            <div className="mt-4 space-y-3 text-sm text-deep">
-              {notificationCount > 0 ? (
-                latestNotifications.map((message) => (
-                  <div key={message.id} className="rounded-xl border border-bronze/10 bg-cream/95 p-4">
-                    <p className="font-semibold text-deep">{message.title}</p>
-                    <p className="mt-1 text-sm text-deep/80">{message.message}</p>
-                  </div>
-                ))
-              ) : (
-                <div className="rounded-xl border border-bronze/10 bg-cream/95 p-4 text-sm text-deep/70">
-                  No new notifications yet. Your next reminder will appear here after you continue your study and journal rhythm.
+            <div className="space-y-3 card p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="font-semibold text-[var(--text-primary)]">Genesis 1-10 Reading Plan</h3>
+                  <p className="mt-1 text-sm text-[var(--text-secondary)]">Chapter 3 of 40 • 24% complete</p>
                 </div>
-              )}
+                <Link href="/reading-plans" className="btn-primary text-sm font-semibold text-[var(--text-on-accent)]">
+                  Continue
+                </Link>
+              </div>
             </div>
-          </motion.div>
-          <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7, delay: 0.1 }} className="p-2">
-            <h2 className="text-lg font-semibold uppercase tracking-[0.24em] text-[var(--text-secondary)]">Quick Access</h2>
-            <div className="mt-5 flex flex-wrap gap-3">
-              <Link href="/journal" title="Journal" aria-label="Journal" className="p-2 rounded-lg hover:bg-[var(--accent-soft)] transition group">
-                <BookOpen className="h-6 w-6 text-[var(--accent)] transition group-hover:scale-110" strokeWidth={1.6} />
+          </motion.section>
+
+          {/* This Week's Torah */}
+          <motion.section initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.4 }} className="space-y-4">
+            <div>
+              <p className="text-sm uppercase tracking-[0.22em] text-[var(--accent)]">Torah Portion</p>
+              <h2 className="mt-2 text-2xl font-bold text-[var(--text-primary)]">This Week&apos;s Parashah</h2>
+            </div>
+            <div className="space-y-3 card p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="font-semibold text-[var(--text-primary)]">Parashat Bereishit</h3>
+                  <p className="mt-1 text-sm text-[var(--text-secondary)]">Genesis 1:1 - 6:8</p>
+                </div>
+                <Link href="/torah-portions" className="btn-primary text-sm font-semibold text-[var(--text-on-accent)]">
+                  Study
+                </Link>
+              </div>
+            </div>
+          </motion.section>
+
+          {/* Tracker Cards */}
+          <motion.section initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.5 }} className="grid gap-6 sm:grid-cols-2">
+            <PrayerTrackerCard userId={user.uid} />
+            <MemorizationProgressCard userId={user.uid} />
+          </motion.section>
+
+          {/* Recent Wisdom */}
+          <motion.section initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.6 }} className="space-y-4">
+            <div>
+              <p className="text-sm uppercase tracking-[0.22em] text-[var(--accent)]">Insights</p>
+              <h2 className="mt-2 text-2xl font-bold text-[var(--text-primary)]">Recent Wisdom</h2>
+            </div>
+            <div className="space-y-4">
+              <div className="space-y-4 card-soft p-4">
+                <h3 className="font-semibold text-[var(--text-primary)]">The Power of Repentance</h3>
+                <p className="text-sm text-[var(--text-secondary)]">Discover how teshuvah transforms spiritual practice</p>
+              </div>
+              <div className="space-y-4 card-soft p-4">
+                <h3 className="font-semibold text-[var(--text-primary)]">Hebrew Word Study: Shalom</h3>
+                <p className="text-sm text-[var(--text-secondary)]">Explore the depth of peace and wholeness</p>
+              </div>
+            </div>
+            <Link href="/ai-lessons" className="inline-flex rounded-full border border-[var(--accent)] bg-transparent px-4 py-2 text-sm font-semibold text-[var(--accent)] transition hover:bg-[var(--accent)]/10">
+              Explore All
+            </Link>
+          </motion.section>
+        </div>
+
+        {/* Sidebar */}
+        <aside className="space-y-8 lg:col-span-1">
+          {/* Quick Access */}
+          <motion.section initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7, delay: 0.3 }} className="space-y-3">
+            <h3 className="text-sm uppercase tracking-[0.22em] font-semibold text-[var(--text-primary)]">Quick Access</h3>
+            <div className="flex flex-wrap gap-2">
+              <Link
+                href="/reading-plans"
+                title="Plans"
+                className="flex items-center justify-center h-10 w-10 rounded-lg border border-border bg-card text-[var(--accent)] transition hover:bg-[var(--surface)]/40 hover:border-[var(--accent)]/30"
+              >
+                <BookOpen className="h-5 w-5" strokeWidth={1.5} />
               </Link>
-              <Link href="/bible-reader" title="Bible Reader" aria-label="Bible Reader" className="p-2 rounded-lg hover:bg-[var(--accent-soft)] transition group">
-                <Scroll className="h-6 w-6 text-[var(--color-avast-green)] transition group-hover:scale-110" strokeWidth={1.6} />
+              <Link
+                href="/bible-reader"
+                title="Bible Reader"
+                className="flex items-center justify-center h-10 w-10 rounded-lg border border-border bg-card text-[var(--accent)] transition hover:bg-[var(--surface)]/40 hover:border-[var(--accent)]/30"
+              >
+                <Scroll className="h-5 w-5" strokeWidth={1.5} />
               </Link>
-              <Link href="/trivia" title="Trivia" aria-label="Trivia" className="p-2 rounded-lg hover:bg-[var(--accent-soft)] transition group">
-                <Brain className="h-6 w-6 text-[var(--color-avast-cyan-light)] transition group-hover:scale-110" strokeWidth={1.6} />
+              <Link
+                href="/trivia"
+                title="Trivia"
+                className="flex items-center justify-center h-10 w-10 rounded-lg border border-border bg-card text-[var(--accent)] transition hover:bg-[var(--surface)]/40 hover:border-[var(--accent)]/30"
+              >
+                <Brain className="h-5 w-5" strokeWidth={1.5} />
               </Link>
-              <Link href="/hebrew-learning" title="Hebrew Learning" aria-label="Hebrew Learning" className="p-2 rounded-lg hover:bg-[var(--accent-soft)] transition group">
-                <Languages className="h-6 w-6 text-[var(--accent)] transition group-hover:scale-110" strokeWidth={1.6} />
+              <Link
+                href="/hebrew-learning"
+                title="Hebrew Learning"
+                className="flex items-center justify-center h-10 w-10 rounded-lg border border-border bg-card text-[var(--accent)] transition hover:bg-[var(--surface)]/40 hover:border-[var(--accent)]/30"
+              >
+                <Languages className="h-5 w-5" strokeWidth={1.5} />
               </Link>
             </div>
-          </motion.div>
+          </motion.section>
+
         </aside>
       </div>
     </div>

@@ -59,21 +59,21 @@ export function LessonCarousel({
 
         {lessons.length > itemsPerView && (
           <div className="flex gap-2">
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={handlePrevious}
-              disabled={currentIndex === 0}
-              className="rounded-full border border-white/20 bg-white/5 p-3 text-white transition hover:bg-white/10 hover:border-white/30 disabled:opacity-50 disabled:cursor-not-allowed"
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={handlePrevious}
+                disabled={currentIndex === 0}
+                className="rounded-full border border-border bg-card-soft p-3 text-white transition hover:bg-surface-soft hover:border-border disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <ChevronLeft className="h-5 w-5" />
             </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={handleNext}
-              disabled={currentIndex >= maxIndex}
-              className="rounded-full border border-white/20 bg-white/5 p-3 text-white transition hover:bg-white/10 hover:border-white/30 disabled:opacity-50 disabled:cursor-not-allowed"
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={handleNext}
+                disabled={currentIndex >= maxIndex}
+                className="rounded-full border border-border bg-card-soft p-3 text-white transition hover:bg-surface-soft hover:border-border disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <ChevronRight className="h-5 w-5" />
             </motion.button>
@@ -108,8 +108,8 @@ export function LessonCarousel({
               key={idx}
               className={`h-1 rounded-full transition ${
                 idx === Math.floor(currentIndex / 1)
-                  ? 'w-6 bg-gold'
-                  : 'w-2 bg-white/20 hover:bg-white/40'
+                  ? 'w-6 bg-accent'
+                  : 'w-2 bg-card-soft/60 hover:bg-surface-soft'
               }`}
             />
           ))}

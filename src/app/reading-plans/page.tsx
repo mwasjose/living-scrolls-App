@@ -94,14 +94,14 @@ export default function ReadingPlansPage() {
 
   if (authLoading || profileLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-bg text-white">
+      <div className="flex min-h-screen items-center justify-center bg-[var(--bg)] text-[var(--text-secondary)]">
         <div className="text-center">
           <motion.div
             animate={{ rotate: 360 }}
             transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
-            className="mx-auto mb-4 h-14 w-14 rounded-full border-2 border-gold border-t-transparent"
+            className="mx-auto mb-4 h-14 w-14 rounded-full border-2 border-[var(--accent)] border-t-transparent"
           />
-          <p className="text-slate-300">Preparing your devotional journey...</p>
+          <p className="text-[var(--text-secondary)]">Preparing your devotional journey...</p>
         </div>
       </div>
     );
@@ -113,23 +113,23 @@ export default function ReadingPlansPage() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="rounded-[32px] border border-gold/20 bg-gradient-to-br from-gold/10 to-midnight/40 p-12 text-center shadow-soft"
+          className="rounded-[28px] border border-[var(--border)] bg-[var(--surface-soft)] p-10 text-center shadow-sm"
         >
-          <p className="text-sm uppercase tracking-[0.28em] text-gold">Sacred Scripture Journey</p>
-          <h1 className="mt-4 text-5xl font-semibold text-white">A Sacred Journal Awaits</h1>
-          <p className="mt-4 max-w-3xl mx-auto text-lg text-slate-300">
+          <p className="text-sm uppercase tracking-[0.28em] text-[var(--accent)]">Sacred Scripture Journey</p>
+          <h1 className="mt-4 text-5xl font-semibold text-[var(--text-primary)]">A Sacred Journal Awaits</h1>
+          <p className="mt-4 max-w-3xl mx-auto text-lg text-[var(--text-secondary)]">
             Sign in to enter a devotional reading platform designed like a living Torah manuscript, complete with reflections, Hebraic insight, prayer, and progression.
           </p>
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link
               href="/login"
-              className="inline-flex rounded-full bg-gold px-8 py-3 text-sm font-semibold text-slate-950 transition hover:bg-gold/90"
+              className="primary-button rounded-full px-7 py-3 text-sm"
             >
               Sign In
             </Link>
             <Link
               href="/register"
-              className="inline-flex rounded-full border-2 border-gold/40 bg-gold/5 px-8 py-3 text-sm font-semibold text-gold transition hover:border-gold/60 hover:bg-gold/10"
+              className="secondary-button rounded-full px-7 py-3 text-sm"
             >
               Create Account
             </Link>
@@ -145,12 +145,12 @@ export default function ReadingPlansPage() {
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 whileHover={{ y: -4 }}
-                className="rounded-[24px] border border-white/10 bg-midnight/40 p-8 shadow-soft"
+                className="rounded-[24px] border border-[var(--border)] bg-[var(--surface)]/90 p-8 shadow-sm"
               >
-                <div className="text-4xl">{planData.icon}</div>
-                <h2 className="mt-4 text-2xl font-semibold text-white">{planData.title}</h2>
-                <p className="mt-3 text-slate-300">{planData.description}</p>
-                <p className="mt-4 text-xs text-slate-500">{planData.duration}</p>
+                <div className="text-4xl text-[var(--accent)]">{planData.icon}</div>
+                <h2 className="mt-4 text-2xl font-semibold text-[var(--text-primary)]">{planData.title}</h2>
+                <p className="mt-3 text-[var(--text-secondary)]">{planData.description}</p>
+                <p className="mt-4 text-xs text-[var(--text-muted)]">{planData.duration}</p>
               </motion.div>
             );
           })}
@@ -162,60 +162,66 @@ export default function ReadingPlansPage() {
   return (
     <div className="space-y-10 py-8">
       <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-        <div className="rounded-[32px] border border-white/10 bg-parchment/5 p-8 shadow-soft backdrop-blur-xl">
-          <p className="text-sm uppercase tracking-[0.28em] text-gold">Devotional Reading Platform</p>
-          <h1 className="mt-4 text-4xl font-semibold text-white">Your Spiritual Journal & Scripture Journey</h1>
-          <p className="mt-4 max-w-2xl text-slate-300">
+        <div className="rounded-[28px] border border-[var(--border)] bg-[var(--surface-soft)] p-8 shadow-sm backdrop-blur-xl">
+          <p className="text-sm uppercase tracking-[0.28em] text-[var(--accent)]">Devotional Reading Platform</p>
+          <h1 className="mt-4 text-4xl font-semibold text-[var(--text-primary)]">Your Spiritual Journal & Scripture Journey</h1>
+          <p className="mt-4 max-w-2xl text-[var(--text-secondary)]">
             Transform your reading plans into a living sacred journal, with daily Scripture reflections, Hebraic insight, personal prayer, and a warm Messianic companion.
           </p>
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-          <div className="rounded-[24px] border border-white/10 bg-midnight/40 p-6 shadow-soft">
-            <p className="text-xs uppercase tracking-widest text-slate-400">Spiritual Level</p>
-            <p className="mt-2 text-3xl font-semibold text-white">{profile?.level ?? 1}</p>
-            <p className="mt-1 text-sm text-slate-400">{profile?.wisdomTitle ?? 'Torah Seeker'}</p>
+          <div className="rounded-[24px] border border-[var(--border)] bg-[var(--surface)]/90 p-6 shadow-sm">
+            <p className="text-xs uppercase tracking-widest text-[var(--text-muted)]">Spiritual Level</p>
+            <p className="mt-2 text-3xl font-semibold text-[var(--text-primary)]">{profile?.level ?? 1}</p>
+            <p className="mt-1 text-sm text-[var(--text-muted)]">{profile?.wisdomTitle ?? 'Torah Seeker'}</p>
           </div>
-          <div className="rounded-[24px] border border-white/10 bg-midnight/40 p-6 shadow-soft">
-            <p className="text-xs uppercase tracking-widest text-slate-400">Current Streak</p>
-            <p className="mt-2 text-3xl font-semibold text-gold">{profile?.streakDays ?? 0}</p>
+          <div className="rounded-[24px] border border-[var(--border)] bg-[var(--surface)]/90 p-6 shadow-sm">
+            <p className="text-xs uppercase tracking-widest text-[var(--text-muted)]">Current Streak</p>
+            <p className="mt-2 text-3xl font-semibold text-[var(--accent)]">{profile?.streakDays ?? 0}</p>
           </div>
-          <div className="rounded-[24px] border border-white/10 bg-midnight/40 p-6 shadow-soft">
-            <p className="text-xs uppercase tracking-widest text-slate-400">Journal Notes</p>
-            <p className="mt-2 text-3xl font-semibold text-white">{journalEntries.length}</p>
+          <div className="rounded-[24px] border border-[var(--border)] bg-[var(--surface)]/90 p-6 shadow-sm">
+            <p className="text-xs uppercase tracking-widest text-[var(--text-muted)]">Journal Notes</p>
+            <p className="mt-2 text-3xl font-semibold text-[var(--text-primary)]">{journalEntries.length}</p>
           </div>
         </div>
       </div>
 
       <div className="flex flex-col gap-6 xl:flex-row xl:items-start">
         <div className="flex-1">
-          <div className="rounded-[32px] border border-white/10 bg-midnight/40 p-8 shadow-soft">
+          <div className="rounded-[28px] border border-[var(--border)] bg-[var(--surface-soft)] p-8 shadow-sm">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <p className="text-sm uppercase tracking-[0.28em] text-gold">Reading Experience</p>
-                <h2 className="mt-3 text-3xl font-semibold text-white">Choose your sacred journey</h2>
+                <p className="text-sm uppercase tracking-[0.28em] text-[var(--accent)]">Reading Experience</p>
+                <h2 className="mt-3 text-3xl font-semibold text-[var(--text-primary)]">Choose your sacred journey</h2>
               </div>
               <div className="flex flex-wrap gap-2">
                 <button
                   onClick={() => setView('browse')}
-                  className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
-                    view === 'browse' ? 'bg-gold text-slate-950' : 'bg-white/5 text-slate-300 hover:text-white'
+                  className={`btn-secondary rounded-full ${
+                    view === 'browse'
+                      ? 'bg-[var(--accent)] text-[var(--text-on-accent)] border-transparent hover:bg-[var(--accent-hover)]'
+                      : 'bg-[var(--surface-soft)] text-[var(--text-secondary)] hover:bg-[var(--surface)] hover:text-[var(--text-primary)]'
                   }`}
                 >
                   Browse
                 </button>
                 <button
                   onClick={() => setView('active')}
-                  className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
-                    view === 'active' ? 'bg-gold text-slate-950' : 'bg-white/5 text-slate-300 hover:text-white'
+                  className={`btn-secondary rounded-full ${
+                    view === 'active'
+                      ? 'bg-[var(--accent)] text-[var(--text-on-accent)] border-transparent hover:bg-[var(--accent-hover)]'
+                      : 'bg-[var(--surface-soft)] text-[var(--text-secondary)] hover:bg-[var(--surface)] hover:text-[var(--text-primary)]'
                   }`}
                 >
                   My Journey
                 </button>
                 <button
                   onClick={() => setView('history')}
-                  className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
-                    view === 'history' ? 'bg-gold text-slate-950' : 'bg-white/5 text-slate-300 hover:text-white'
+                  className={`btn-secondary rounded-full ${
+                    view === 'history'
+                      ? 'bg-[var(--accent)] text-[var(--text-on-accent)] border-transparent hover:bg-[var(--accent-hover)]'
+                      : 'bg-[var(--surface-soft)] text-[var(--text-secondary)] hover:bg-[var(--surface)] hover:text-[var(--text-primary)]'
                   }`}
                 >
                   History
@@ -233,12 +239,12 @@ export default function ReadingPlansPage() {
               />
 
               {selectedPlan && (
-                <div className="rounded-[24px] border border-gold/20 bg-gradient-to-br from-gold/10 to-midnight/40 p-8 shadow-soft">
+                <div className="rounded-[24px] border border-[var(--border)] bg-[var(--surface-secure)]/95 p-8 shadow-sm">
                   <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
                     <div>
-                      <p className="text-sm uppercase tracking-[0.28em] text-gold">Ready to begin</p>
-                      <h3 className="mt-3 text-2xl font-semibold text-white">{activePlanData?.title}</h3>
-                      <p className="mt-2 text-slate-300">{activePlanData?.description}</p>
+                      <p className="text-sm uppercase tracking-[0.28em] text-[var(--accent)]">Ready to begin</p>
+                      <h3 className="mt-3 text-2xl font-semibold text-[var(--text-primary)]">{activePlanData?.title}</h3>
+                      <p className="mt-2 text-[var(--text-secondary)]">{activePlanData?.description}</p>
                     </div>
                     <button
                       onClick={() => {
@@ -249,7 +255,7 @@ export default function ReadingPlansPage() {
                         }, 400);
                       }}
                       disabled={startingPlan}
-                      className="rounded-full bg-gold px-6 py-3 font-semibold text-slate-950 transition hover:bg-gold/90 disabled:opacity-60"
+                      className="primary-button rounded-full px-6 py-3 text-sm"
                     >
                       {startingPlan ? 'Starting journey...' : `Begin ${activePlanData?.title}`}
                     </button>
@@ -269,7 +275,7 @@ export default function ReadingPlansPage() {
                   />
 
                   {dailyReading && (
-                    <div className="rounded-[32px] border border-white/10 bg-parchment/5 p-8 shadow-soft">
+                    <div className="rounded-[32px] border border-border bg-secondary p-8 shadow-soft">
                       <DailyReadingExperience
                         reading={dailyReading as any}
                         onSaveReflection={async (reflection) => {
@@ -286,26 +292,26 @@ export default function ReadingPlansPage() {
                     </div>
                   )}
 
-                  <div className="rounded-[32px] border border-white/10 bg-parchment/5 p-8 shadow-soft">
-                    <h3 className="text-sm uppercase tracking-[0.28em] text-gold">Plan Focus</h3>
-                    <p className="mt-4 text-xl font-semibold text-white">{activePlanData?.spiritualFocus}</p>
-                    <p className="mt-3 text-slate-300">{activePlanData?.readingPace}</p>
+                  <div className="rounded-[32px] border border-[var(--border)] bg-[var(--surface-soft)] p-8 shadow-sm">
+                    <h3 className="text-sm uppercase tracking-[0.28em] text-[var(--accent)]">Plan Focus</h3>
+                    <p className="mt-4 text-xl font-semibold text-[var(--text-primary)]">{activePlanData?.spiritualFocus}</p>
+                    <p className="mt-3 text-[var(--text-secondary)]">{activePlanData?.readingPace}</p>
                     <div className="mt-6 grid gap-4 sm:grid-cols-2">
-                      <div className="rounded-[20px] border border-white/10 bg-midnight/40 p-5">
-                        <p className="text-xs uppercase tracking-widest text-slate-500">Duration</p>
-                        <p className="mt-2 text-lg font-semibold text-white">{activePlanData?.duration}</p>
+                      <div className="rounded-[20px] border border-[var(--border)] bg-[var(--surface)]/90 p-5">
+                        <p className="text-xs uppercase tracking-widest text-[var(--text-muted)]">Duration</p>
+                        <p className="mt-2 text-lg font-semibold text-[var(--text-primary)]">{activePlanData?.duration}</p>
                       </div>
-                      <div className="rounded-[20px] border border-white/10 bg-midnight/40 p-5">
-                        <p className="text-xs uppercase tracking-widest text-slate-500">Difficulty</p>
-                        <p className="mt-2 text-lg font-semibold text-white">{activePlanData?.difficulty}</p>
+                      <div className="rounded-[20px] border border-[var(--border)] bg-[var(--surface)]/90 p-5">
+                        <p className="text-xs uppercase tracking-widest text-[var(--text-muted)]">Difficulty</p>
+                        <p className="mt-2 text-lg font-semibold text-[var(--text-primary)]">{activePlanData?.difficulty}</p>
                       </div>
                     </div>
                   </div>
                 </>
               ) : (
-                <div className="rounded-[24px] border-2 border-dashed border-white/20 p-12 text-center">
-                  <p className="text-slate-400">There is no active plan yet.</p>
-                  <p className="mt-2 text-sm text-slate-500">Choose a sacred journey from the Browse tab to begin.</p>
+                <div className="rounded-[24px] border-2 border-dashed border-[var(--border)] p-12 text-center">
+                  <p className="text-[var(--text-secondary)]">There is no active plan yet.</p>
+                  <p className="mt-2 text-sm text-[var(--text-muted)]">Choose a sacred journey from the Browse tab to begin.</p>
                 </div>
               )}
             </div>
@@ -313,37 +319,37 @@ export default function ReadingPlansPage() {
 
           {view === 'history' && (
             <div className="space-y-6 pt-6">
-              <div className="rounded-[24px] border border-white/10 bg-midnight/40 p-8 shadow-soft">
-                <p className="text-sm uppercase tracking-[0.28em] text-gold">Spiritual Memories</p>
-                <h3 className="mt-3 text-2xl font-semibold text-white">Completed Journeys</h3>
-                <p className="mt-2 text-slate-400">Your completed Scripture journeys will appear here as sacred milestones and reflections.</p>
+              <div className="rounded-[24px] border border-[var(--border)] bg-[var(--surface-soft)] p-8 shadow-sm">
+                <p className="text-sm uppercase tracking-[0.28em] text-[var(--accent)]">Spiritual Memories</p>
+                <h3 className="mt-3 text-2xl font-semibold text-[var(--text-primary)]">Completed Journeys</h3>
+                <p className="mt-2 text-[var(--text-secondary)]">Your completed Scripture journeys will appear here as sacred milestones and reflections.</p>
               </div>
             </div>
           )}
         </div>
 
-        <aside className="w-full xl:w-[420px] rounded-[32px] border border-white/10 bg-midnight/40 p-8 shadow-soft">
+        <aside className="w-full xl:w-[420px] rounded-[32px] border border-[var(--border)] bg-[var(--surface)]/90 p-8 shadow-sm">
           <div className="space-y-6">
-            <div className="rounded-[24px] border border-white/10 bg-parchment/5 p-5">
-              <p className="text-xs uppercase tracking-widest text-slate-500">Daily encouragement</p>
-              <p className="mt-3 text-lg text-slate-900">Your Scripture journey waits today. Continue faithfully through the scrolls.</p>
+            <div className="rounded-[24px] border border-[var(--border)] bg-[var(--surface-soft)] p-5">
+              <p className="text-xs uppercase tracking-widest text-[var(--text-muted)]">Daily encouragement</p>
+              <p className="mt-3 text-lg text-[var(--text-secondary)]">Your Scripture journey waits today. Continue faithfully through the scrolls.</p>
             </div>
 
-            <div className="rounded-[24px] border border-white/10 bg-parchment/5 p-5">
-              <p className="text-xs uppercase tracking-widest text-slate-500">Spiritual journal</p>
-              <p className="mt-3 text-slate-900">Reflect on your daily reading, capture prayers, and save the insights Elohim reveals to your heart.</p>
+            <div className="rounded-[24px] border border-[var(--border)] bg-[var(--surface-soft)] p-5">
+              <p className="text-xs uppercase tracking-widest text-[var(--text-muted)]">Spiritual journal</p>
+              <p className="mt-3 text-[var(--text-secondary)]">Reflect on your daily reading, capture prayers, and save the insights Elohim reveals to your heart.</p>
             </div>
 
-            <div className="rounded-[24px] border border-white/10 bg-parchment/5 p-5">
-              <p className="text-xs uppercase tracking-widest text-slate-500">Messianic insight</p>
-              <p className="mt-3 text-slate-900">Daily commentary connects Torah themes to Yahshuah Messiah and reveals deeper meaning in your study.</p>
+            <div className="rounded-[24px] border border-[var(--border)] bg-[var(--surface-soft)] p-5">
+              <p className="text-xs uppercase tracking-widest text-[var(--text-muted)]">Messianic insight</p>
+              <p className="mt-3 text-[var(--text-secondary)]">Daily commentary connects Torah themes to Yahshuah Messiah and reveals deeper meaning in your study.</p>
             </div>
           </div>
         </aside>
       </div>
 
       {view === 'active' && (
-        <div className="rounded-[32px] border border-white/10 bg-parchment/5 p-8 shadow-soft">
+        <div className="rounded-[32px] border border-border bg-secondary p-8 shadow-soft">
           <PersonalSpiritualJournal
             entries={journalEntries as SpiritualJournalEntry[]}
             onAddEntry={async () => {

@@ -15,7 +15,7 @@ export default function Error({
   }, [error]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[400px] p-6 text-center bg-white rounded-lg border-2 border-dashed border-red-200">
+    <div className="flex flex-col items-center justify-center min-h-[400px] p-6 text-center bg-card-soft rounded-lg border-2 border-dashed border-red-200">
       <div className="w-12 h-12 bg-red-100 text-red-600 rounded-full flex items-center justify-center mb-4 text-xl font-bold">!</div>
       <h2 className="text-xl font-bold text-sacred-primary mb-2">Dashboard Data Error</h2>
       <p className="text-sacred-primary/60 mb-6 max-w-md text-sm">

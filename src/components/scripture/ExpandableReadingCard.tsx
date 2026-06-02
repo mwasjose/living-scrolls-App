@@ -42,27 +42,27 @@ export function ExpandableReadingCard({
   );
 
   return (
-    <article className="overflow-hidden rounded-[28px] border border-sacred bg-sacred-cream shadow-soft">
+    <article className="overflow-hidden rounded-[24px] border border-[var(--border)] bg-[var(--surface)] shadow-soft">
       <button
         type="button"
         onClick={() => onOpen(reading.id)}
-        className="flex w-full flex-col gap-4 p-5 text-left transition hover:bg-olive/10 sm:flex-row sm:items-center sm:justify-between"
+        className="flex w-full flex-col gap-4 p-5 text-left transition hover:bg-[var(--surface-soft)] sm:flex-row sm:items-center sm:justify-between"
         aria-expanded={active}
       >
         <div>
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-xs uppercase tracking-[0.24em] text-secondary">{reading.label}</span>
-            {completed ? <CheckCircle2 className="text-secondary" size={16} /> : null}
+            <span className="text-xs uppercase tracking-[0.24em] text-[var(--accent)]">{reading.label}</span>
+            {completed ? <CheckCircle2 className="text-[var(--accent)]" size={16} /> : null}
           </div>
-          <h3 className="mt-2 text-2xl font-semibold text-sacred-primary">{messianicNormalize(reading.title || reading.reference)}</h3>
-          <p className="mt-1 text-sm text-muted">{reading.reference}</p>
+          <h3 className="mt-2 text-2xl font-semibold text-[var(--text-primary)]">{messianicNormalize(reading.title || reading.reference)}</h3>
+          <p className="mt-1 text-sm text-[var(--text-secondary)]">{reading.reference}</p>
           {reading.hebrewName ? (
-            <p className="mt-2 font-serif text-lg text-secondary">
+            <p className="mt-2 font-serif text-lg text-[var(--text-secondary)]">
               {reading.hebrewName} {reading.transliteration ? `- ${messianicNormalize(reading.transliteration)}` : ''}
             </p>
           ) : null}
         </div>
-        <ChevronDown className={`shrink-0 text-secondary transition ${active ? 'rotate-180' : ''}`} size={22} />
+        <ChevronDown className={`shrink-0 text-[var(--accent)] transition ${active ? 'rotate-180' : ''}`} size={22} />
       </button>
 
       <AnimatePresence initial={false}>
@@ -73,8 +73,8 @@ export function ExpandableReadingCard({
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.25 }}
           >
-            <div className="border-t border-sacred p-5">
-              <p className="max-w-3xl text-sm leading-7 text-muted">{parseScriptureReferences(messianicNormalize(reading.summary))}</p>
+            <div className="border-t border-[var(--border)] p-5">
+              <p className="max-w-3xl text-sm leading-7 text-[var(--text-secondary)]">{parseScriptureReferences(messianicNormalize(reading.summary))}</p>
 
               <div className="mt-5 flex gap-2 overflow-x-auto pb-2">
                 {tabs.map((item) => (
@@ -84,8 +84,8 @@ export function ExpandableReadingCard({
                     onClick={() => setTab(item)}
                     className={`shrink-0 rounded-full border px-4 py-2 text-sm transition ${
                       tab === item
-                        ? 'border-bronze bg-gold text-deep'
-                        : 'border-sacred bg-sacred-cream text-sacred-primary hover:bg-olive/10'
+                        ? 'border-[var(--accent)] bg-[var(--accent)] text-[var(--surface)]'
+                        : 'border-[var(--border)] bg-[var(--surface-soft)] text-[var(--text-primary)] hover:bg-[var(--surface)]'
                     }`}
                   >
                     {item}
@@ -93,42 +93,42 @@ export function ExpandableReadingCard({
                 ))}
               </div>
 
-              <div className="mt-5">
+              <div className="mt-5 space-y-4">
                 {tab === 'Scripture' ? (
                   <ScriptureTextViewer passage={passage} loading={loading} storageKey={`reading:${reading.id}:${translation}`} />
                 ) : null}
                 {tab === 'Commentary' ? (
-                  <div className="rounded-3xl border border-sacred bg-sacred-cream p-5 text-sm leading-7 text-sacred-primary">
+                  <div className="rounded-[24px] border border-[var(--border)] bg-[var(--surface)] p-5 text-sm leading-7 text-[var(--text-primary)]">
                     {parseScriptureReferences(messianicNormalize(reading.commentary ||
                       'Observe how the passage advances covenant, holiness, worship, justice, or restoration. Let the plain reading lead before comparing interpretive traditions.'))}
                   </div>
                 ) : null}
                 {tab === 'Transliteration' ? (
-                  <div className="rounded-3xl border border-sacred bg-sacred-cream p-5 text-sm leading-7 text-sacred-primary">
+                  <div className="rounded-[24px] border border-[var(--border)] bg-[var(--surface)] p-5 text-sm leading-7 text-[var(--text-primary)]">
                     {reading.transliteration
                       ? `${reading.hebrewName || reading.label}: ${messianicNormalize(reading.transliteration)}`
                       : 'Hebrew transliteration is available when supplied by the reading source. Keep the reference open while studying key Hebrew terms below.'}
                   </div>
                 ) : null}
                 {tab === 'Study Notes' ? (
-                  <div className="space-y-3 rounded-3xl border border-sacred bg-sacred-cream p-5">
+                  <div className="space-y-3 rounded-[24px] border border-[var(--border)] bg-[var(--surface)] p-5">
                     {notes.map((note) => (
-                      <p key={note} className="text-sm leading-7 text-sacred-primary">
+                      <p key={note} className="text-sm leading-7 text-[var(--text-primary)]">
                         {parseScriptureReferences(messianicNormalize(note))}
                       </p>
                     ))}
                   </div>
                 ) : null}
                 {tab === 'Background' ? (
-                  <div className="rounded-3xl border border-sacred bg-sacred-cream p-5 text-sm leading-7 text-sacred-primary">
+                  <div className="rounded-[24px] border border-[var(--border)] bg-[var(--surface)] p-5 text-sm leading-7 text-[var(--text-primary)]">
                     {parseScriptureReferences(messianicNormalize(reading.historicalBackground ||
                       'This reading belongs to the synagogue cycle of Torah reading, where each aliyah marks a public ascent into the text and a focused unit for communal listening.'))}
                   </div>
                 ) : null}
                 {tab === 'Cross References' ? (
-                  <div className="flex flex-wrap gap-2 rounded-3xl border border-sacred bg-sacred-cream p-5">
+                  <div className="flex flex-wrap gap-2 rounded-[24px] border border-[var(--border)] bg-[var(--surface)] p-5">
                     {(reading.crossReferences?.length ? reading.crossReferences : ['Psalm 119:105', 'Luke 24:27', 'Romans 15:4']).map((ref) => (
-                      <span key={ref} className="rounded-full bg-olive/10 px-3 py-1 text-sm text-sacred-primary">
+                      <span key={ref} className="rounded-full bg-[var(--surface-soft)] px-3 py-1 text-sm text-[var(--text-primary)]">
                         {parseScriptureReferences(ref)}
                       </span>
                     ))}

@@ -22,7 +22,7 @@ export function MemorizationProgressCard({ userId }: MemorizationProgressCardPro
       <h3 className="mt-4 text-xl font-semibold text-deep">Your mastery of Scripture.</h3>
       <p className="mt-3 text-sm leading-7 text-deep/80">Continue to hide Adonai&apos;s Word in your heart.</p>
       <div className="mt-6 h-3 overflow-hidden rounded-full bg-olive/10">
-        <div className="h-full rounded-full bg-gradient-to-r from-gold to-[#f3d58b]" style={{ width: `${averageMastery}%` }} />
+        <div className="h-full rounded-full bg-gradient-to-r from-accent to-[#f3d58b]" style={{ width: `${averageMastery}%` }} />
       </div>
       <p className="mt-4 text-sm text-deep/70">Average mastery: {averageMastery}% across {totalVerses} verses.</p>
     </motion.div>

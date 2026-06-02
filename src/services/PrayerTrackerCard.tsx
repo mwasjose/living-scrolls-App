@@ -28,11 +28,11 @@ export function PrayerTrackerCard({ userId }: PrayerTrackerCardProps) {
   };
 
   return (
-    <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} className="rounded-[32px] border border-bronze/15 bg-cream/90 p-6 shadow-soft">
-      <p className="text-sm uppercase tracking-[0.24em] text-olive">Prayer Consistency</p>
-      <h3 className="mt-4 text-xl font-semibold text-deep">Have you prayed today?</h3>
-      <p className="mt-3 text-sm leading-7 text-deep/80">A consistent heart of prayer draws you closer to Adonai.</p>
-      <button onClick={handleTogglePrayer} disabled={profileLoading} className={`mt-6 w-full rounded-full px-4 py-3 text-sm font-semibold transition ${prayedToday ? 'bg-bronze text-white shadow-soft' : 'bg-gold text-deep hover:bg-bronze hover:text-white'}`}>
+    <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} className="rounded-[32px] border border-border bg-card p-6 shadow-soft">
+      <p className="text-sm uppercase tracking-[0.24em] text-[var(--accent)]">Prayer Consistency</p>
+      <h3 className="mt-4 text-xl font-semibold text-foreground">Have you prayed today?</h3>
+      <p className="mt-3 text-sm leading-7 text-[var(--text-secondary)]">A consistent heart of prayer draws you closer to Adonai.</p>
+      <button onClick={handleTogglePrayer} disabled={profileLoading} className={`mt-6 w-full ${prayedToday ? 'btn-secondary' : 'btn-primary'}`}>
         {prayedToday ? 'Prayer Recorded!' : 'Mark as Prayed'}
       </button>
     </motion.div>

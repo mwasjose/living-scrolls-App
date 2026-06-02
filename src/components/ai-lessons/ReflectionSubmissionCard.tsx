@@ -106,10 +106,10 @@ export function ReflectionSubmissionCard({
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         onClick={() => setIsOpen(true)}
-        className="w-full rounded-[24px] border-2 border-dashed border-gold/50 bg-gold/5 px-6 py-4 transition hover:border-gold hover:bg-gold/10"
+        className="w-full rounded-[24px] border-2 border-dashed border-accent bg-accent-soft px-6 py-4 transition hover:border-accent hover:bg-accent-soft"
       >
         <div className="flex items-center justify-center gap-2 text-white">
-          <Heart className="h-5 w-5 text-gold" />
+          <Heart className="h-5 w-5 text-accent" />
           <span className="font-semibold">Share Your Spiritual Reflection</span>
         </div>
       </motion.button>
@@ -120,11 +120,11 @@ export function ReflectionSubmissionCard({
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="rounded-[28px] border border-white/10 bg-gradient-to-br from-midnight/40 to-slate-900/30 p-8 space-y-6"
+      className="rounded-[28px] border border-border bg-card p-8 space-y-6"
     >
       {/* Header */}
       <div className="space-y-2">
-        <p className="text-sm uppercase tracking-[0.16em] text-gold">Personal Reflection</p>
+        <p className="text-sm uppercase tracking-[0.16em] text-accent">Personal Reflection</p>
         <h2 className="text-2xl font-bold text-white">Share Your Spiritual Journey</h2>
         <p className="text-slate-400">Write how this teaching touched your heart and faith</p>
       </div>
@@ -141,8 +141,8 @@ export function ReflectionSubmissionCard({
               onClick={() => setSelectedMood(mood.value)}
               className={`flex flex-col items-center gap-1 rounded-[12px] px-3 py-2 transition ${
                 selectedMood === mood.value
-                  ? 'bg-gold/20 border border-gold'
-                  : 'bg-white/5 border border-white/10 hover:bg-white/10'
+                  ? 'bg-accent-soft border border-accent'
+                    : 'bg-surface-soft border border-border hover:bg-surface'
               }`}
             >
               <span className="text-xl">{mood.emoji}</span>
@@ -162,14 +162,14 @@ export function ReflectionSubmissionCard({
           value={reflection}
           onChange={(e) => setReflection(e.target.value)}
           placeholder={`Consider:\n\n${reflectionQuestions[0]}\n${reflectionQuestions[1]}\n${reflectionQuestions[2]}`}
-          className="w-full rounded-[16px] border border-white/10 bg-white/5 p-4 text-white placeholder-slate-500 outline-none transition focus:border-gold/50 focus:bg-white/10 resize-none"
+          className="w-full rounded-[16px] border border-border bg-card-soft p-4 text-white placeholder-slate-500 outline-none transition focus:border-accent focus:bg-surface-soft resize-none"
           rows={6}
         />
         <p className="text-xs text-slate-500">{reflection.length} characters</p>
       </div>
 
       {/* Reflection prompts */}
-      <div className="rounded-[16px] bg-white/5 border border-white/10 p-4 space-y-2">
+      <div className="rounded-[16px] bg-card-soft border border-border p-4 space-y-2">
         <p className="text-xs uppercase tracking-widest text-slate-500 font-semibold">Reflection Prompts</p>
         <div className="space-y-2">
           {reflectionQuestions.map((question, idx) => (
@@ -182,9 +182,9 @@ export function ReflectionSubmissionCard({
                   [idx]: question,
                 })
               }
-              className="flex items-start gap-2 text-left p-2 rounded hover:bg-white/5 transition text-sm text-slate-300 hover:text-slate-200"
+              className="flex items-start gap-2 text-left p-2 rounded hover:bg-surface-soft transition text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
             >
-              <span className="text-gold font-semibold mt-1">{idx + 1}.</span>
+              <span className="text-accent font-semibold mt-1">{idx + 1}.</span>
               <span>{question}</span>
             </motion.button>
           ))}
@@ -197,7 +197,7 @@ export function ReflectionSubmissionCard({
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={() => setIsOpen(false)}
-          className="flex-1 rounded-full border border-white/20 bg-white/5 px-6 py-3 font-semibold text-white transition hover:bg-white/10 hover:border-white/30"
+          className="flex-1 rounded-full border border-border bg-card-soft px-6 py-3 font-semibold text-white transition hover:bg-surface-soft hover:border-border"
         >
           Cancel
         </motion.button>
@@ -207,7 +207,7 @@ export function ReflectionSubmissionCard({
           whileTap={{ scale: 0.98 }}
           onClick={handleSubmit}
           disabled={!reflection.trim() || isSubmitting}
-          className="flex-1 rounded-full bg-gold px-6 py-3 font-semibold text-slate-950 transition hover:bg-gold/90 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+          className="flex-1 rounded-full bg-accent px-6 py-3 font-semibold text-slate-950 transition hover:bg-accent-soft disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
         >
           <Send className="h-4 w-4" />
           {isSubmitting ? 'Saving...' : 'Save Reflection'}

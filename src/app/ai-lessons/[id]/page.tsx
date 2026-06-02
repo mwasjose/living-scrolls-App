@@ -95,7 +95,7 @@ export default function LessonDetailPage() {
   if (!lesson) {
     return (
       <div className="flex h-96 items-center justify-center">
-        <div className="animate-pulse text-gold">Loading...</div>
+        <div className="animate-pulse text-accent">Loading...</div>
       </div>
     );
   }
@@ -104,7 +104,7 @@ export default function LessonDetailPage() {
     <div className="space-y-12 py-6">
       {/* Scroll progress bar */}
       <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-gold to-amber-400 z-50"
+        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-accent to-amber-400 z-50"
         initial={{ scaleX: 0 }}
         animate={{ scaleX: scrollProgress / 100 }}
         style={{ transformOrigin: '0%' }}
@@ -116,7 +116,7 @@ export default function LessonDetailPage() {
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => router.back()}
-          className="rounded-full border border-white/20 bg-white/5 p-3 text-white transition hover:bg-white/10 hover:border-white/30"
+          className="rounded-full border border-border bg-card-soft p-3 text-white transition hover:bg-surface-soft hover:border-border"
         >
           <ArrowLeft className="h-5 w-5" />
         </motion.button>
@@ -150,7 +150,7 @@ export default function LessonDetailPage() {
         >
           {/* Title section */}
           <div className="space-y-4">
-            <div className="inline-flex rounded-full bg-gold/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-gold">
+            <div className="inline-flex rounded-full bg-accent-soft px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-accent">
               {lesson.category}
             </div>
 
@@ -163,7 +163,7 @@ export default function LessonDetailPage() {
             )}
 
             {/* Meta info */}
-            <div className="flex flex-wrap gap-6 pt-4 border-t border-white/10 text-sm text-slate-400">
+            <div className="flex flex-wrap gap-6 pt-4 border-t border-border text-sm text-slate-400">
               <div>
                 <p className="text-xs uppercase tracking-widest text-slate-500">Reading time</p>
                 <p className="mt-1 text-white font-semibold">{lesson.readTime} minutes</p>
@@ -186,9 +186,9 @@ export default function LessonDetailPage() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="rounded-[24px] border-l-4 border-gold bg-gold/10 p-6"
+              className="rounded-[24px] border-l-4 border-accent bg-accent-soft p-6"
             >
-              <p className="font-semibold text-gold mb-2">{lesson.heroScripture}</p>
+              <p className="font-semibold text-accent mb-2">{lesson.heroScripture}</p>
               {lesson.heroScriptureText && (
                 <p className="text-lg italic text-slate-200">{lesson.heroScriptureText}</p>
               )}
@@ -273,7 +273,7 @@ export default function LessonDetailPage() {
                       transition={{ delay: idx * 0.1 }}
                       className="flex gap-3 text-slate-300"
                     >
-                      <span className="mt-1 text-gold">✦</span>
+                      <span className="mt-1 text-accent">✦</span>
                       <span>{takeaway}</span>
                     </motion.li>
                   ))}
@@ -292,7 +292,7 @@ export default function LessonDetailPage() {
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
                       transition={{ delay: idx * 0.1 }}
-                      className="rounded-lg bg-white/5 p-4 text-slate-300 border border-white/10"
+                      className="rounded-lg bg-card-soft p-4 text-slate-300 border border-border"
                     >
                       {idx + 1}. {question}
                     </motion.li>
@@ -308,12 +308,12 @@ export default function LessonDetailPage() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="rounded-[24px] border border-white/10 bg-white/5 p-6 space-y-4"
+              className="rounded-[24px] border border-border bg-card-soft p-6 space-y-4"
             >
               <h3 className="text-xl font-bold text-white">Scripture References</h3>
               <div className="space-y-2">
                 {lesson.scriptureReferences.map((ref, idx) => (
-                  <p key={idx} className="text-gold font-semibold">
+                  <p key={idx} className="text-accent font-semibold">
                     {ref}
                   </p>
                 ))}
@@ -330,12 +330,12 @@ export default function LessonDetailPage() {
           className="space-y-6 sticky top-6 h-fit"
         >
           {/* Actions */}
-          <div className="rounded-[24px] border border-white/10 bg-white/5 p-6 space-y-3">
+          <div className="rounded-[24px] border border-border bg-card-soft p-6 space-y-3">
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={handleSave}
-              className="w-full flex items-center justify-center gap-2 rounded-full bg-gold px-6 py-3 font-semibold text-slate-950 transition hover:bg-gold/90"
+              className="w-full flex items-center justify-center gap-2 rounded-full bg-accent px-6 py-3 font-semibold text-slate-950 transition hover:bg-accent-soft"
             >
               {isSaved ? (
                 <>
@@ -354,7 +354,7 @@ export default function LessonDetailPage() {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={handleShare}
-              className="w-full flex items-center justify-center gap-2 rounded-full border border-white/20 bg-white/5 px-6 py-3 font-semibold text-white transition hover:bg-white/10 hover:border-white/30"
+              className="w-full flex items-center justify-center gap-2 rounded-full border border-border bg-card-soft px-6 py-3 font-semibold text-white transition hover:bg-surface-soft hover:border-border"
             >
               {copied ? <Check className="h-5 w-5 text-green-400" /> : <Share2 className="h-5 w-5" />}
               {copied ? 'Copied!' : 'Share'}
@@ -362,13 +362,13 @@ export default function LessonDetailPage() {
           </div>
 
           {/* Info card */}
-          <div className="rounded-[24px] border border-white/10 bg-white/5 p-6 space-y-4">
+          <div className="rounded-[24px] border border-border bg-card-soft p-6 space-y-4">
             <div>
               <p className="text-xs uppercase tracking-widest text-slate-500">Category</p>
               <p className="mt-2 font-semibold text-white">{lesson.category}</p>
             </div>
 
-            <div className="border-t border-white/10 pt-4">
+            <div className="border-t border-border pt-4">
               <p className="text-xs uppercase tracking-widest text-slate-500">Engagement</p>
               <div className="mt-2 space-y-2 text-sm">
                 <div className="flex justify-between">
@@ -383,13 +383,13 @@ export default function LessonDetailPage() {
             </div>
 
             {lesson.tags.length > 0 && (
-              <div className="border-t border-white/10 pt-4">
+              <div className="border-t border-border pt-4">
                 <p className="text-xs uppercase tracking-widest text-slate-500 mb-3">Topics</p>
                 <div className="flex flex-wrap gap-2">
                   {lesson.tags.slice(0, 5).map((tag, idx) => (
                     <span
                       key={idx}
-                      className="inline-flex rounded-full bg-slate-800/60 px-3 py-1 text-xs font-medium text-slate-300 border border-white/10"
+                      className="inline-flex rounded-full bg-slate-800/60 px-3 py-1 text-xs font-medium text-slate-300 border border-border"
                     >
                       {tag}
                     </span>

@@ -104,79 +104,59 @@ export function ScriptureTextViewer({ passage, loading, fontSize, storageKey = '
             <div
               key={key}
               id={`verse-${verse.verse}`}
-              className={`group relative px-6 sm:px-12 py-4 border-b border-sacred/5 last:border-0 transition-colors duration-300 ${
-                isHighlighted ? 'bg-gold/10' : isHovered ? 'bg-olive/5' : ''
+              className={`group relative px-6 sm:px-8 py-3 transition-all duration-200 ${
+                isHighlighted ? 'bg-accent-gold opacity-10 rounded-lg' : ''
               }`}
               onMouseEnter={() => setHoveredVerse(key)}
               onMouseLeave={() => setHoveredVerse(null)}
             >
-              {/* Inline Verse Number and Text */}
+              {/* Verse with Number */}
               <div
                 style={{
                   fontSize: fontSize ? `${fontSize}px` : undefined,
-                  lineHeight: 1.8,
+                  lineHeight: 1.9,
                 }}
-                className="relative"
+                className="relative leading-relaxed"
               >
                 <sup
-                  className={`mr-3 font-bold text-[0.55em] transition-colors select-none ${
-                    isHighlighted ? 'text-gold' : 'text-secondary'
+                  className={`mr-2 font-semibold text-[0.6em] transition-all select-none ${
+                    isHighlighted ? 'accent-gold' : 'text-[var(--text-muted)] opacity-60'
                   }`}
                 >
                   {verse.verse}
                 </sup>
-                <span className="font-serif text-lg leading-relaxed">
+                <span className="font-sacred text-[var(--text-primary)] leading-relaxed">
                   {verse.text}
                 </span>
               </div>
 
-              {/* Floating Inline Controls */}
-              <div className="absolute right-4 top-1/2 -translate-y-1/2 hidden md:flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-all duration-200">
+              {/* Floating Controls - Desktop Only */}
+              <div className="hidden md:flex absolute right-0 top-0 items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                 <button
                   type="button"
                   onClick={() => toggleSet(setHighlighted, key)}
-                  className={`p-2 rounded-full transition-all ${
+                  className={`p-1.5 rounded-md transition-all ${
                     isHighlighted
-                      ? 'bg-gold text-deep shadow-soft'
-                      : 'bg-sacred-cream border border-sacred/20 text-secondary hover:text-gold hover:border-gold/50'
+                      ? 'bg-accent-gold opacity-20 accent-gold'
+                      : 'bg-[var(--surface)]/40 text-[var(--text-secondary)] hover:bg-[var(--surface)]/60'
                   }`}
                   title="Highlight"
+                  aria-label="Highlight verse"
                 >
-                  <Highlighter size={16} />
+                  <Highlighter size={14} />
                 </button>
                 <button
                   type="button"
                   onClick={() => toggleSet(setBookmarked, key)}
-                  className={`p-2 rounded-full transition-all ${
+                  className={`p-1.5 rounded-md transition-all ${
                     isBookmarked
-                      ? 'bg-bronze text-white shadow-soft'
-                      : 'bg-sacred-cream border border-sacred/20 text-secondary hover:text-bronze hover:border-bronze/50'
+                      ? 'bg-[var(--accent)]/20 text-[var(--accent)]'
+                      : 'bg-[var(--surface)]/40 text-[var(--text-secondary)] hover:bg-[var(--surface)]/60'
                   }`}
                   title="Bookmark"
+                  aria-label="Bookmark verse"
                 >
-                  <Bookmark size={16} />
-                </button>
-              </div>
-
-              {/* Mobile Interaction - Subtle footer controls */}
-              <div className="mt-2 flex md:hidden items-center gap-4 border-t border-sacred/5 pt-2">
-                <button
-                  type="button"
-                  onClick={() => toggleSet(setHighlighted, key)}
-                  className={`flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider ${
-                    isHighlighted ? 'text-gold opacity-100' : 'text-muted opacity-60'
-                  }`}
-                >
-                  <Highlighter size={12} /> {isHighlighted ? 'Highlighted' : 'Highlight'}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => toggleSet(setBookmarked, key)}
-                  className={`flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider ${
-                    isBookmarked ? 'text-bronze opacity-100' : 'text-muted opacity-60'
-                  }`}
-                >
-                  <Bookmark size={12} /> {isBookmarked ? 'Bookmarked' : 'Bookmark'}
+                  <Bookmark size={14} />
                 </button>
               </div>
             </div>

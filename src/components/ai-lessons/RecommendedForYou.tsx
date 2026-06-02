@@ -34,7 +34,7 @@ export function RecommendedForYou({
     >
       {/* Header */}
       <div className="flex items-center gap-3">
-        <Sparkles className="h-6 w-6 text-gold" />
+        <Sparkles className="h-6 w-6 text-accent" />
         <div>
           <h2 className="text-3xl font-bold text-white">Recommended For You</h2>
           <p className="mt-1 text-sm text-slate-400">{reason}</p>
@@ -42,7 +42,7 @@ export function RecommendedForYou({
       </div>
 
       {/* Articles grid */}
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-4 lg:grid-cols-2">
         {lessons.map((lesson, idx) => (
           <motion.div
             key={lesson.id}
@@ -56,6 +56,7 @@ export function RecommendedForYou({
               onRead={() => onSelectLesson?.(lesson)}
               onSave={() => onSaveLesson?.(lesson)}
               isSaved={savedArticles.includes(lesson.id)}
+              variant="compact"
             />
           </motion.div>
         ))}

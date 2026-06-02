@@ -21,21 +21,21 @@ export function Navbar({ onOpenSidebar, onToggleSidebar, isSidebarCollapsed, the
 
   return (
     <nav
-      className={`fixed top-0 z-40 flex h-16 w-full items-center justify-between border-b border-[var(--border)] bg-[var(--bg-elevated)] px-3 text-[var(--text-primary)] backdrop-blur-xl transition-[left,width] duration-300 lg:px-6 ${
-        isSidebarCollapsed ? 'lg:left-[92px] lg:w-[calc(100%_-_92px)]' : 'lg:left-[320px] lg:w-[calc(100%_-_320px)]'
+      className={`fixed top-0 z-40 flex h-16 w-full items-center justify-between border-b border-[var(--surface-strong)] bg-[var(--background)]/95 px-3 text-[var(--text-primary)] backdrop-blur-xl transition-[left,width] duration-300 lg:px-6 ${
+        isSidebarCollapsed ? 'lg:left-[92px] lg:w-[calc(100%_-_92px)]' : 'lg:left-[280px] lg:w-[calc(100%_-_280px)]'
       }`}
     >
       <div className="flex min-w-0 flex-1 items-center gap-2 md:gap-3">
         <button
           onClick={onOpenSidebar}
-          className="rounded-2xl p-2 hover:bg-[var(--accent-soft)] transition text-[var(--text-secondary)] lg:hidden"
+          className="p-2 rounded-lg hover:text-[var(--accent)] hover:bg-[var(--card-soft)] transition text-[var(--text-secondary)] lg:hidden"
           aria-label="Open navigation"
         >
           <Menu size={18} />
         </button>
         <button
           onClick={onToggleSidebar}
-          className="rounded-2xl p-2 hover:bg-[var(--accent-soft)] transition text-[var(--text-secondary)] hidden lg:inline-flex"
+          className="p-2 rounded-lg hover:text-[var(--accent)] hover:bg-[var(--card-soft)] transition text-[var(--text-secondary)] hidden lg:inline-flex"
           aria-label="Collapse navigation"
         >
           <Menu size={18} />
@@ -47,17 +47,17 @@ export function Navbar({ onOpenSidebar, onToggleSidebar, isSidebarCollapsed, the
             <input
               type="text"
               placeholder="Search Torah, scripture, reflections..."
-              className="h-11 w-full rounded-full border border-[var(--border)] bg-[var(--surface)] px-12 text-sm text-[var(--text-primary)] outline-none transition focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--focus-ring)] placeholder:text-[var(--text-muted)]"
+              className="h-10 w-full rounded-2xl border border-[var(--border)] bg-[var(--card)] px-12 text-sm text-[var(--text-primary)] outline-none transition focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--focus-ring)] placeholder:text-[var(--text-muted)]"
             />
           </div>
         </div>
       </div>
 
-      <div className="flex shrink-0 items-center gap-2 md:gap-3">
+      <div className="flex shrink-0 items-center gap-1 md:gap-2">
         <button
           type="button"
           onClick={toggleTheme}
-          className="rounded-2xl p-2 hover:bg-[var(--accent-soft)] transition text-[var(--text-secondary)]"
+          className="p-2 rounded-lg hover:text-[var(--accent)] hover:bg-[var(--card-soft)] transition text-[var(--text-secondary)]"
           aria-label="Toggle dark mode"
         >
           {themeMode === 'dark' ? <SunMedium size={18} /> : <Moon size={18} />}
@@ -66,7 +66,7 @@ export function Navbar({ onOpenSidebar, onToggleSidebar, isSidebarCollapsed, the
           <button
             type="button"
             onClick={() => setShowNotifications((open) => !open)}
-            className="relative rounded-2xl p-2 hover:bg-[var(--accent-soft)] transition text-[var(--text-secondary)]"
+            className="relative p-2 hover:text-[var(--accent)] transition text-[var(--text-secondary)]"
             aria-haspopup="dialog"
             aria-expanded={showNotifications}
           >
@@ -76,13 +76,13 @@ export function Navbar({ onOpenSidebar, onToggleSidebar, isSidebarCollapsed, the
             )}
           </button>
           {showNotifications && (
-            <div className="absolute right-0 top-full z-50 mt-2 w-[320px] rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-3 shadow-soft">
+            <div className="absolute right-0 top-full z-50 mt-2 w-[320px] rounded-xl border border-[var(--border)] bg-[var(--bg-elevated)] p-3 shadow-soft">
               <div className="mb-3 flex items-center justify-between gap-2">
                 <p className="text-sm font-semibold text-[var(--text-primary)]">Notifications</p>
                 <button
                   type="button"
                   onClick={() => setShowNotifications(false)}
-                  className="text-xs uppercase tracking-[0.24em] text-[var(--text-secondary)]"
+                  className="text-xs uppercase tracking-[0.24em] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition"
                 >
                   Close
                 </button>
@@ -90,21 +90,21 @@ export function Navbar({ onOpenSidebar, onToggleSidebar, isSidebarCollapsed, the
               {notifications.length > 0 ? (
                 <div className="space-y-2">
                   {notifications.slice(0, 4).map((item) => (
-                    <div key={item.id} className="rounded-xl border border-[var(--border)] bg-[var(--surface-muted)] p-3">
+                    <div key={item.id} className="rounded-lg border border-[var(--border)] bg-transparent p-3 hover:bg-[var(--surface-soft)] transition">
                       <p className="text-sm font-semibold text-[var(--text-primary)]">{item.title}</p>
                       <p className="mt-1 text-xs text-[var(--text-secondary)]">{item.message}</p>
                     </div>
                   ))}
                 </div>
               ) : (
-                <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-muted)] p-4 text-sm text-[var(--text-secondary)]">
+                <div className="rounded-lg border border-[var(--border)] bg-transparent p-4 text-sm text-[var(--text-secondary)]">
                   No notifications yet. Continue your study to receive reminders and encouragement.
                 </div>
               )}
             </div>
           )}
         </div>
-        <div className="rounded-2xl p-2 hover:bg-[var(--accent-soft)] transition text-[var(--text-secondary)]">
+        <div className="rounded-2xl p-2 hover:bg-[var(--card-soft)] transition text-[var(--text-secondary)]">
           <User size={16} />
         </div>
       </div>

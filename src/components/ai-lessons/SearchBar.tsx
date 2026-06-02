@@ -10,7 +10,7 @@ interface SearchBarProps {
   onFilterChange?: (filters: SearchFilters) => void;
   recentSearches?: string[];
   trendingTopics?: string[];
-  categories?: LessonCategory[];
+  categories?: Array<LessonCategory | string>;
   selectedCategory?: LessonCategory;
 }
 
@@ -56,6 +56,12 @@ export function SearchBar({
     onFilterChange?.(newFilters);
   };
 
+  const handleCategorySelect = (category: LessonCategory | string) => {
+    const newFilters = { ...filters, category: category as LessonCategory };
+    setFilters(newFilters);
+    onFilterChange?.(newFilters);
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -69,12 +75,12 @@ export function SearchBar({
           layout
           className={`group relative overflow-hidden rounded-[20px] border transition-all duration-300 ${
             isExpanded || query
-              ? 'border-gold/50 bg-midnight/40 shadow-lg'
-              : 'border-white/10 bg-white/5 hover:border-white/20'
+              ? 'border-accent bg-surface-soft shadow-sm'
+              : 'border-border bg-card-soft hover:border-border'
           }`}
         >
           <div className="flex items-center gap-3 px-5 py-4">
-            <Search className="h-5 w-5 flex-shrink-0 text-gold" />
+            <Search className="h-5 w-5 flex-shrink-0 text-accent" />
             <input
               type="text"
               placeholder="Search the Wisdom Library..."
@@ -114,7 +120,7 @@ export function SearchBar({
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.2 }}
-              className="absolute top-full left-0 right-0 z-50 mt-2 overflow-hidden rounded-[20px] border border-gold/30 bg-gradient-to-b from-midnight to-slate-900 shadow-2xl"
+              className="absolute top-full left-0 right-0 z-50 mt-2 overflow-hidden rounded-[20px] border border-accent bg-card shadow-md"
             >
               <div className="max-h-96 overflow-y-auto p-4 space-y-4">
                 {/* Recent searches */}
@@ -130,7 +136,7 @@ export function SearchBar({
                             setQuery(search);
                             handleSearch(search);
                           }}
-                          className="flex w-full items-center gap-2 rounded-[12px] px-3 py-2 text-sm text-slate-300 hover:bg-white/5 transition"
+                          className="flex w-full items-center gap-2 rounded-[12px] px-3 py-2 text-sm text-[var(--text-secondary)] hover:bg-surface-soft transition"
                         >
                           <Clock className="h-4 w-4 text-slate-500" />
                           <span>{search}</span>
@@ -153,7 +159,7 @@ export function SearchBar({
                             setQuery(topic);
                             handleSearch(topic);
                           }}
-                          className="flex items-center gap-2 rounded-full bg-gold/10 border border-gold/30 px-4 py-2 text-sm text-gold hover:bg-gold/20 transition"
+                          className="flex items-center gap-2 rounded-full bg-accent-soft border border-accent px-4 py-2 text-sm text-accent hover:bg-accent-soft transition"
                         >
                           <TrendingUp className="h-3 w-3" />
                           <span>{topic}</span>
@@ -171,9 +177,9 @@ export function SearchBar({
                       <motion.button
                         whileHover={{ x: 4 }}
                         onClick={() => handleSearch(query)}
-                        className="flex w-full items-center gap-2 rounded-[12px] px-3 py-2 text-sm text-slate-300 hover:bg-white/5 transition"
+                        className="flex w-full items-center gap-2 rounded-[12px] px-3 py-2 text-sm text-[var(--text-secondary)] hover:bg-surface-soft transition"
                       >
-                        <Search className="h-4 w-4 text-gold" />
+                        <Search className="h-4 w-4 text-accent" />
                         <span>{`Search for "${query}"`}</span>
                       </motion.button>
                     </div>
@@ -200,8 +206,8 @@ export function SearchBar({
             onClick={() => handleDifficultyChange(difficulty as any)}
             className={`rounded-full px-4 py-2 text-xs font-medium uppercase tracking-[0.12em] transition ${
               selectedDifficulty === difficulty
-                ? 'bg-gold text-slate-950 border border-gold'
-                : 'bg-white/5 text-slate-400 border border-white/10 hover:bg-white/10 hover:border-white/20'
+                ? 'bg-accent text-slate-950 border border-accent'
+                : 'bg-card-soft text-[var(--text-secondary)] border border-border hover:bg-surface-soft hover:border-border'
             }`}
           >
             {difficulty}
@@ -209,19 +215,23 @@ export function SearchBar({
         ))}
 
         {/* Category filter - show first few */}
-        {categories.slice(0, 3).map((cat) => (
-          <motion.button
-            key={cat}
-            whileHover={{ scale: 1.05 }}
-            className={`rounded-full px-4 py-2 text-xs font-medium uppercase tracking-[0.12em] transition ${
-              selectedCategory === cat
-                ? 'bg-gold/20 text-gold border border-gold/50'
-                : 'bg-white/5 text-slate-400 border border-white/10 hover:bg-white/10 hover:border-white/20'
-            }`}
-          >
-            {cat}
-          </motion.button>
-        ))}
+        {categories.slice(0, 3).map((cat) => {
+          const categoryLabel = typeof cat === 'string' ? cat : cat;
+          return (
+            <motion.button
+              key={categoryLabel}
+              whileHover={{ scale: 1.05 }}
+              onClick={() => handleCategorySelect(categoryLabel)}
+              className={`rounded-full px-4 py-2 text-xs font-medium uppercase tracking-[0.12em] transition ${
+                selectedCategory === categoryLabel
+                  ? 'bg-accent-soft text-accent border border-accent'
+                  : 'bg-card-soft text-[var(--text-secondary)] border border-border hover:bg-surface-soft hover:border-border'
+              }`}
+            >
+              {categoryLabel}
+            </motion.button>
+          );
+        })}
       </motion.div>
     </motion.div>
   );

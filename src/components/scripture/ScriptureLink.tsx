@@ -26,7 +26,7 @@ export function ScriptureLink({ reference, translation = 'kjv' }: ScriptureLinkP
       <button
         onClick={() => setIsOpen(!isOpen)}
         onMouseEnter={() => !isOpen && setIsOpen(true)}
-        className="inline font-bold text-bronze hover:text-gold transition-colors underline decoration-dotted underline-offset-4"
+        className="inline font-bold text-bronze hover:text-accent transition-colors underline decoration-dotted underline-offset-4"
       >
         {reference}
       </button>
@@ -48,7 +48,7 @@ export function ScriptureLink({ reference, translation = 'kjv' }: ScriptureLinkP
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 10, scale: 0.95 }}
               onMouseLeave={() => setIsOpen(false)}
-              className="fixed inset-x-4 bottom-4 z-50 overflow-hidden rounded-2xl border border-sacred/20 bg-sacred-cream/95 shadow-2xl backdrop-blur-xl md:absolute md:inset-auto md:bottom-full md:left-1/2 md:-translate-x-1/2 md:mb-2 md:w-[400px]"
+              className="fixed inset-x-4 bottom-4 z-50 overflow-hidden rounded-2xl border border-sacred/20 bg-sacred-cream/95 shadow-soft backdrop-blur-xl md:absolute md:inset-auto md:bottom-full md:left-1/2 md:-translate-x-1/2 md:mb-2 md:w-[400px]"
             >
               <div className="flex items-center justify-between border-b border-sacred/10 bg-sacred/5 p-3">
                 <span className="font-serif text-sm font-bold text-sacred-primary">

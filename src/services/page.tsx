@@ -27,8 +27,8 @@ const wisdomEntries = [
 export default function WisdomPage() {
   return (
     <div className="space-y-8 py-6">
-      <section className="rounded-[32px] border border-white/10 bg-parchment/5 p-8 shadow-soft backdrop-blur-xl">
-        <p className="text-sm uppercase tracking-[0.28em] text-gold">Torah Wisdom Feed</p>
+      <section className="rounded-[32px] border border-border bg-secondary p-8 shadow-soft backdrop-blur-xl">
+        <p className="text-sm uppercase tracking-[0.28em] text-accent">Torah Wisdom Feed</p>
         <h1 className="mt-4 text-3xl font-semibold text-white">Daily insights for your spiritual journey.</h1>
         <p className="mt-4 max-w-2xl text-slate-200/90">Receive AI-generated Torah insights, Hebrew word studies, and Messianic teachings to deepen your walk with Yahshuah Messiah.</p>
       </section>

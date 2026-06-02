@@ -6,5 +6,4 @@ export const navItems = [
   { label: 'Bible Reader', href: '/bible-reader' },
   { label: 'Reading Plans', href: '/reading-plans' },
   { label: 'Trivia', href: '/trivia' },
-  { label: 'Community', href: '/community' },
 ];

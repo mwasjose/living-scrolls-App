@@ -4,12 +4,22 @@ import localFont from 'next/font/local';
 import './globals.css';
 import { AppShell } from '@/components/layout/AppShell';
 
-const fira = localFont({
+const bodyFont = localFont({
   variable: '--font-ui',
   src: [
     { path: '../../public/fonts/FiraSans-300.ttf', weight: '300', style: 'normal' },
     { path: '../../public/fonts/FiraSans-400.ttf', weight: '400', style: 'normal' },
     { path: '../../public/fonts/FiraSans-500.ttf', weight: '500', style: 'normal' },
+    { path: '../../public/fonts/FiraSans-600.ttf', weight: '600', style: 'normal' },
+    { path: '../../public/fonts/FiraSans-700.ttf', weight: '700', style: 'normal' },
+  ],
+  display: 'swap',
+});
+
+const titleFont = localFont({
+  variable: '--font-title',
+  src: [
+    { path: '../../public/fonts/FiraSans-400.ttf', weight: '400', style: 'normal' },
     { path: '../../public/fonts/FiraSans-600.ttf', weight: '600', style: 'normal' },
     { path: '../../public/fonts/FiraSans-700.ttf', weight: '700', style: 'normal' },
   ],
@@ -37,7 +47,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${fira.variable} ${notoHebrew.variable}`}>
+    <html lang="en" className={`${bodyFont.variable} ${titleFont.variable} ${notoHebrew.variable}`}>
       <body className="bg-[var(--bg)] text-[var(--text-primary)] selection:bg-[var(--accent)] selection:text-[var(--text-on-accent)] overflow-x-hidden antialiased">
         <AppShell>{children}</AppShell>
       </body>

@@ -15,15 +15,24 @@ export const firebaseConfig = {
   measurementId: "G-73NEYND3E3"
 };
 
-// Prevent duplicate Firebase initialization for Next.js 14
-export const app = !getApps().length
-  ? initializeApp(firebaseConfig)
-  : getApp();
+// Initialize Firebase only in browser environment
+let app: any = null;
+let db: any = null;
+let storage: any = null;
+let auth: any = null;
 
-// Firebase services
-export const db = getFirestore(app);
-export const storage = getStorage(app);
-export const auth = getAuth(app);
+if (typeof window !== 'undefined') {
+  app = !getApps().length
+    ? initializeApp(firebaseConfig)
+    : getApp();
+
+  // Firebase services
+  db = getFirestore(app);
+  storage = getStorage(app);
+  auth = getAuth(app);
+}
+
+export { app, db, storage, auth };
 
 // Analytics only in browser with support check
 export const initializeAnalytics = async () => {

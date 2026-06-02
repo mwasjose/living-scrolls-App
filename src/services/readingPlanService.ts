@@ -20,7 +20,7 @@ export const SACRED_READING_PLANS: Record<ReadingPlanType, Partial<ReadingPlan>>
     readingPace: '1 parashah per week',
     difficulty: 'Moderate',
     icon: '📜',
-    color: '#92D51F',
+    color: '#c19f4a',
     totalDays: 365,
   },
   'one-year-bible': {
@@ -31,7 +31,7 @@ export const SACRED_READING_PLANS: Record<ReadingPlanType, Partial<ReadingPlan>>
     readingPace: '3-4 chapters per day',
     difficulty: 'Moderate',
     icon: '📖',
-    color: '#D98B0F',
+    color: '#c19f4a',
     totalDays: 365,
   },
   '30-day-psalms': {
@@ -57,7 +57,7 @@ export const SACRED_READING_PLANS: Record<ReadingPlanType, Partial<ReadingPlan>>
     readingPace: '1 Gospel passage per day',
     difficulty: 'Gentle',
     icon: '✨',
-    color: '#92D51F',
+    color: '#c19f4a',
     totalDays: 42,
   },
   'proverbs-wisdom': {
@@ -70,7 +70,7 @@ export const SACRED_READING_PLANS: Record<ReadingPlanType, Partial<ReadingPlan>>
     readingPace: '1 chapter of Proverbs per day',
     difficulty: 'Gentle',
     icon: '💎',
-    color: '#92D51F',
+    color: '#c19f4a',
     totalDays: 31,
   },
   'messianic-prophecies': {
@@ -81,7 +81,7 @@ export const SACRED_READING_PLANS: Record<ReadingPlanType, Partial<ReadingPlan>>
     readingPace: '1 prophecy with connection per day',
     difficulty: 'Intensive',
     icon: '🌟',
-    color: '#D98B0F',
+    color: '#c19f4a',
     totalDays: 40,
   },
   'shabbat-preparation': {
@@ -107,7 +107,7 @@ export const SACRED_READING_PLANS: Record<ReadingPlanType, Partial<ReadingPlan>>
     readingPace: 'Based on feast cycle',
     difficulty: 'Moderate',
     icon: '🎉',
-    color: '#D98B0F',
+    color: '#c19f4a',
     totalDays: 70,
   },
   'hebrew-word-journey': {
@@ -120,7 +120,7 @@ export const SACRED_READING_PLANS: Record<ReadingPlanType, Partial<ReadingPlan>>
     readingPace: '1 Hebrew word per day',
     difficulty: 'Intensive',
     icon: '🔤',
-    color: '#92D51F',
+    color: '#c19f4a',
     totalDays: 60,
   },
 };

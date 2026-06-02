@@ -27,7 +27,7 @@ export default function ForgotPage() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-sacred-cream p-4 text-[#283618]">
-      <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} className="glass-card w-full max-w-3xl rounded-[32px] border border-[#bc6c25]/15 bg-[#f7eed5] p-8 shadow-soft">
+      <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} className="card-soft w-full max-w-3xl rounded-[32px] border border-[#bc6c25]/15 bg-[#f7eed5] p-8 shadow-soft">
         <p className="text-sm uppercase tracking-[0.28em] text-[#606c38]">Reset password</p>
         <h1 className="mt-4 text-3xl font-semibold text-[#283618]">Restore your connection.</h1>
         <p className="mt-3 text-[#283618]/80">Enter your email and we will send guidance to continue your spiritual study journey.</p>

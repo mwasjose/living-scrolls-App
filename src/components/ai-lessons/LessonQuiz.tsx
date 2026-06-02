@@ -108,7 +108,7 @@ export function LessonQuiz({ quiz, onSubmit, lessonId, userId }: LessonQuizProps
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="rounded-[28px] border border-white/10 bg-gradient-to-br from-midnight/40 to-slate-900/30 p-8 space-y-6"
+        className="rounded-[28px] border border-border bg-card p-8 space-y-6"
       >
         {/* Result header */}
         <div className="text-center space-y-4">
@@ -140,13 +140,13 @@ export function LessonQuiz({ quiz, onSubmit, lessonId, userId }: LessonQuizProps
         </div>
 
         {/* Score display */}
-        <div className="rounded-[20px] bg-white/5 border border-white/10 p-6 space-y-4">
+        <div className="rounded-[20px] bg-card-soft border border-border p-6 space-y-4">
           <div className="flex justify-between items-center">
             <span className="text-slate-300">Your Score</span>
-            <span className="text-4xl font-bold text-gold">{quizScore.percentScore.toFixed(0)}%</span>
+            <span className="text-4xl font-bold text-accent">{quizScore.percentScore.toFixed(0)}%</span>
           </div>
 
-          <div className="w-full bg-white/10 rounded-full h-3 overflow-hidden">
+          <div className="w-full bg-card-soft rounded-full h-3 overflow-hidden">
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: `${quizScore.percentScore}%` }}
@@ -195,7 +195,7 @@ export function LessonQuiz({ quiz, onSubmit, lessonId, userId }: LessonQuizProps
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={() => window.location.reload()}
-          className="w-full rounded-full bg-gold px-6 py-3 font-semibold text-slate-950 transition hover:bg-gold/90"
+          className="w-full rounded-full bg-accent px-6 py-3 font-semibold text-slate-950 transition hover:bg-accent-soft"
         >
           Return to Lesson
         </motion.button>
@@ -207,11 +207,11 @@ export function LessonQuiz({ quiz, onSubmit, lessonId, userId }: LessonQuizProps
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="rounded-[28px] border border-white/10 bg-gradient-to-br from-midnight/40 to-slate-900/30 p-8 space-y-8"
+      className="rounded-[28px] border border-border bg-card p-8 space-y-8"
     >
       {/* Quiz header */}
       <div className="space-y-2">
-        <p className="text-sm uppercase tracking-[0.16em] text-gold">Learning Check</p>
+        <p className="text-sm uppercase tracking-[0.16em] text-accent">Learning Check</p>
         <h2 className="text-2xl font-bold text-white">{quiz.title}</h2>
         <p className="text-slate-400">{quiz.description}</p>
       </div>
@@ -222,16 +222,16 @@ export function LessonQuiz({ quiz, onSubmit, lessonId, userId }: LessonQuizProps
           <span className="text-slate-400">
             Question {currentQuestionIndex + 1} of {quiz.questions.length}
           </span>
-          <span className="text-gold font-semibold">
+          <span className="text-accent font-semibold">
             {Object.keys(responses).length} / {quiz.questions.length} answered
           </span>
         </div>
-        <div className="w-full bg-white/10 rounded-full h-2 overflow-hidden">
+        <div className="w-full bg-card-soft rounded-full h-2 overflow-hidden">
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: `${((currentQuestionIndex + 1) / quiz.questions.length) * 100}%` }}
             transition={{ duration: 0.5 }}
-            className="h-full bg-gradient-to-r from-gold to-amber-400"
+            className="h-full bg-gradient-to-r from-accent to-amber-400"
           />
         </div>
       </div>
@@ -268,16 +268,16 @@ export function LessonQuiz({ quiz, onSubmit, lessonId, userId }: LessonQuizProps
                   onClick={() => handleAnswer(idx)}
                   className={`w-full rounded-[16px] border-2 p-4 text-left transition ${
                     responses[currentQuestion.id] === idx
-                      ? 'border-gold bg-gold/10'
-                      : 'border-white/10 bg-white/5 hover:border-white/20'
+                      ? 'border-accent bg-accent-soft'
+                        : 'border-border bg-card-soft hover:border-border'
                   }`}
                 >
                   <div className="flex items-center gap-3">
                     <div
                       className={`h-5 w-5 rounded-full border-2 flex items-center justify-center ${
                         responses[currentQuestion.id] === idx
-                          ? 'border-gold bg-gold'
-                          : 'border-white/30'
+                          ? 'border-accent bg-accent'
+                          : 'border-border'
                       }`}
                     >
                       {responses[currentQuestion.id] === idx && (
@@ -296,7 +296,7 @@ export function LessonQuiz({ quiz, onSubmit, lessonId, userId }: LessonQuizProps
               value={(responses[currentQuestion.id] as string) || ''}
               onChange={(e) => handleAnswer(e.target.value)}
               placeholder="Share your thoughts..."
-              className="w-full rounded-[16px] border border-white/10 bg-white/5 p-4 text-white placeholder-slate-500 outline-none transition focus:border-gold/50 focus:bg-white/10 resize-none"
+              className="w-full rounded-[16px] border border-border bg-card-soft p-4 text-white placeholder-slate-500 outline-none transition focus:border-accent focus:bg-surface-soft resize-none"
               rows={4}
             />
           )}
@@ -322,7 +322,7 @@ export function LessonQuiz({ quiz, onSubmit, lessonId, userId }: LessonQuizProps
           whileTap={{ scale: 0.95 }}
           onClick={handlePrevious}
           disabled={currentQuestionIndex === 0}
-          className="flex-1 rounded-full border border-white/20 bg-white/5 px-6 py-3 font-semibold text-white transition hover:bg-white/10 hover:border-white/30 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+          className="flex-1 rounded-full border border-border bg-card-soft px-6 py-3 font-semibold text-white transition hover:bg-surface-soft hover:border-border disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
         >
           <ChevronLeft className="h-4 w-4" />
           Previous
@@ -344,7 +344,7 @@ export function LessonQuiz({ quiz, onSubmit, lessonId, userId }: LessonQuizProps
             whileTap={{ scale: 0.95 }}
             onClick={handleNext}
             disabled={responses[currentQuestion.id] === undefined}
-            className="flex-1 rounded-full bg-gold px-6 py-3 font-semibold text-slate-950 transition hover:bg-gold/90 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            className="flex-1 rounded-full bg-accent px-6 py-3 font-semibold text-slate-950 transition hover:bg-accent-soft disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
             Next
             <ChevronRight className="h-4 w-4" />

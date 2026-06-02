@@ -32,8 +32,8 @@ export default function HebrewLearningPage() {
 
   return (
     <div className="mx-auto max-w-5xl space-y-12 py-6">
-      <header className="rounded-[32px] border border-white/10 bg-midnight/70 p-8 shadow-soft backdrop-blur-xl">
-        <p className="text-sm uppercase tracking-[0.28em] text-gold">Sacred Language</p>
+      <header className="rounded-[32px] border border-border bg-surface-soft p-8 shadow-soft backdrop-blur-xl">
+        <p className="text-sm uppercase tracking-[0.28em] text-accent">Sacred Language</p>
         <h1 className="mt-4 text-4xl font-semibold text-white">Hebrew Study Circle</h1>
         <p className="mt-4 max-w-2xl text-slate-300 leading-relaxed">
           Explore the visual beauty and root meanings of Lashon HaKodesh.
@@ -45,7 +45,7 @@ export default function HebrewLearningPage() {
           key={`${currentWord.id}-${viewMode}`}
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="glass-card relative flex min-h-[420px] flex-col justify-center overflow-hidden rounded-[32px] p-8 pt-24 text-center shadow-glow"
+          className="card-soft relative flex min-h-[420px] flex-col justify-center overflow-hidden rounded-[32px] p-8 pt-24 text-center shadow-soft"
         >
           <div className="absolute left-6 right-6 top-6 flex flex-wrap justify-center gap-2">
             {viewOptions.map(({ id, label, Icon }) => (
@@ -65,7 +65,7 @@ export default function HebrewLearningPage() {
             {viewMode === 'card' ? (
               <motion.div key="card" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
                 <h2 className="hebrew-text mb-8 text-7xl text-white">{currentWord.hebrew}</h2>
-                <p className="text-2xl font-serif text-gold tracking-wide">{currentWord.transliteration}</p>
+                <p className="text-2xl font-serif text-accent tracking-wide">{currentWord.transliteration}</p>
                 <p className="mt-6 text-slate-300 text-lg">{currentWord.meaning}</p>
               </motion.div>
             ) : null}
@@ -75,13 +75,13 @@ export default function HebrewLearningPage() {
                 <div className="flex justify-center gap-4">
                   {currentWord.hebrew.split('').map((char, i) => (
                     <div key={`${char}-${i}`} className="flex flex-col items-center">
-                      <span className="hebrew-text text-4xl text-gold">{char}</span>
+                      <span className="hebrew-text text-4xl text-accent">{char}</span>
                       <span className="mt-2 text-[10px] text-slate-500">Pillar {i + 1}</span>
                     </div>
                   ))}
                 </div>
-                <div className="rounded-2xl bg-white/5 p-6 text-left">
-                  <p className="mb-2 text-xs uppercase tracking-widest text-gold">Visual Hint</p>
+                <div className="rounded-2xl bg-card-soft p-6 text-left">
+                  <p className="mb-2 text-xs uppercase tracking-widest text-accent">Visual Hint</p>
                   <p className="text-sm italic text-slate-300">&quot;The shape of this word resembles a scroll unfolding from left to right.&quot;</p>
                 </div>
               </motion.div>
@@ -89,8 +89,8 @@ export default function HebrewLearningPage() {
 
             {viewMode === 'symbolic' ? (
               <motion.div key="symbolic" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} className="space-y-6">
-                <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full border border-gold/30 bg-gold/5 shadow-glow">
-                  <span className="hebrew-text text-4xl text-gold">{currentWord.hebrew[0]}</span>
+                <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full border border-accent bg-accent-soft shadow-soft">
+                  <span className="hebrew-text text-4xl text-accent">{currentWord.hebrew[0]}</span>
                 </div>
                 <p className="text-lg leading-relaxed text-slate-200">The ancient glyph represents the strength of the ox, signifying the sovereignty of Elohim.</p>
               </motion.div>
@@ -102,7 +102,7 @@ export default function HebrewLearningPage() {
           <div className="filter-panel">
             <div className="flex items-center gap-2">
               <Languages className="h-4 w-4 text-olive" strokeWidth={1.8} />
-              <h3 className="text-sm uppercase tracking-widest text-gold">Word Filters</h3>
+              <h3 className="text-sm uppercase tracking-widest text-accent">Word Filters</h3>
             </div>
             <div className="mt-4 flex flex-wrap gap-2">
               {categories.map((item) => (
@@ -122,15 +122,15 @@ export default function HebrewLearningPage() {
             </div>
           </div>
 
-          <div className="glass-card rounded-[32px] p-8">
-            <h3 className="mb-6 text-sm uppercase tracking-widest text-gold">Study Progress</h3>
+          <div className="card-soft rounded-[32px] p-8">
+            <h3 className="mb-6 text-sm uppercase tracking-widest text-accent">Study Progress</h3>
             <div className="space-y-4">
               <div className="flex justify-between text-xs text-slate-400">
                 <span>Category Mastery: {currentWord.category}</span>
                 <span>{mastery}%</span>
               </div>
-              <div className="h-2 overflow-hidden rounded-full bg-white/5">
-                <motion.div initial={{ width: 0 }} animate={{ width: `${mastery}%` }} className="h-full bg-gold shadow-glow" />
+              <div className="h-2 overflow-hidden rounded-full bg-card-soft">
+                <motion.div initial={{ width: 0 }} animate={{ width: `${mastery}%` }} className="h-full bg-accent shadow-sm" />
               </div>
             </div>
           </div>

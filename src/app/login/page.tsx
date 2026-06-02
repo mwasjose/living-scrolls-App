@@ -33,7 +33,7 @@ export default function LoginPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7 }}
-        className="glass-card w-full max-w-md rounded-[32px] p-8"
+        className="card-soft w-full max-w-md rounded-[32px] p-8"
       >
         <h1 className="text-center text-3xl font-bold text-[#606c38] mb-3">Enter the Sanctuary</h1>
         <p className="text-center text-[#606c38]/80 mb-8">Sign in to continue your spiritual journey with Living Scrolls.</p>

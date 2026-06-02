@@ -44,16 +44,16 @@ export default function MentorPage() {
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-120px)] max-w-4xl mx-auto py-4 text-[#fefae0]">
+    <div className="flex flex-col h-[calc(100vh-120px)] max-w-4xl mx-auto py-4 text-foreground">
       <header className="flex items-center justify-between mb-6 px-4">
         <div>
-          <p className="text-xs uppercase tracking-widest text-[#dda15e] mb-1 font-bold">AI Discipleship</p>
-          <h1 className="text-2xl font-semibold text-white">Spiritual Mentor</h1>
+          <p className="text-xs uppercase tracking-widest accent-gold mb-1 font-bold">AI Discipleship</p>
+          <h1 className="text-2xl font-semibold text-foreground">Spiritual Mentor</h1>
         </div>
         <select 
           value={tone} 
           onChange={(e) => setTone(e.target.value as MentorTone)}
-          className="bg-[#606c38]/40 border border-[#dda15e]/20 text-[#dda15e] rounded-full px-4 py-2 text-[10px] uppercase font-bold tracking-widest outline-none transition-all"
+          className="bg-card border border-border accent-gold rounded-full px-4 py-2 text-[10px] uppercase font-bold tracking-widest outline-none transition-all"
         >
           <option value="Encouraging">Encouraging</option>
           <option value="Scholarly">Scholarly</option>
@@ -73,10 +73,10 @@ export default function MentorPage() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
             >
-              <div className={`max-w-[85%] p-5 rounded-[24px] shadow-glow ${
+              <div className={`max-w-[85%] p-5 rounded-[24px] shadow-soft ${
                 msg.role === 'user' 
-                ? 'bg-[#dda15e]/10 border border-[#dda15e]/30 text-[#fefae0]' 
-                : 'bg-[#606c38]/40 border border-[#dda15e]/10 text-[#fefae0]/90 backdrop-blur-md'
+                ? 'bg-card-soft border border-border text-foreground' 
+                : 'bg-card border border-border text-foreground backdrop-blur-md'
               }`}>
                 <p className="text-sm leading-relaxed whitespace-pre-wrap">{msg.content}</p>
                 <p className="mt-2 text-[10px] text-slate-500 uppercase tracking-tighter">
@@ -87,11 +87,11 @@ export default function MentorPage() {
           ))}
           {isTyping && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex justify-start">
-              <div className="bg-white/5 border border-white/10 p-4 rounded-2xl">
+              <div className="bg-card-soft border border-border p-4 rounded-2xl">
                 <span className="flex gap-1">
-                  <span className="w-1.5 h-1.5 bg-gold/50 rounded-full animate-bounce" />
-                  <span className="w-1.5 h-1.5 bg-gold/50 rounded-full animate-bounce [animation-delay:0.2s]" />
-                  <span className="w-1.5 h-1.5 bg-gold/50 rounded-full animate-bounce [animation-delay:0.4s]" />
+                  <span className="w-1.5 h-1.5 bg-accent-gold opacity-50 rounded-full animate-bounce" />
+                  <span className="w-1.5 h-1.5 bg-accent-soft rounded-full animate-bounce [animation-delay:0.2s]" />
+                  <span className="w-1.5 h-1.5 bg-accent-soft rounded-full animate-bounce [animation-delay:0.4s]" />
                 </span>
               </div>
             </motion.div>
@@ -100,7 +100,7 @@ export default function MentorPage() {
       </div>
 
       <footer className="mt-auto px-4">
-        <div className="relative group p-2 rounded-[32px] bg-[#283618]/60 border border-[#dda15e]/20 shadow-glow">
+        <div className="relative group p-2 rounded-[32px] bg-[#283618]/60 border border-[#dda15e]/20 shadow-soft">
           <input 
             value={input}
             onChange={(e) => setInput(e.target.value)}
@@ -110,7 +110,7 @@ export default function MentorPage() {
           />
           <button 
             onClick={handleSend}
-            className="absolute right-4 top-1/2 -translate-y-1/2 bg-[#dda15e] text-[#283618] p-3 rounded-full hover:bg-[#bc6c25] transition-colors shadow-glow"
+            className="absolute right-4 top-1/2 -translate-y-1/2 bg-[#dda15e] text-[#283618] p-3 rounded-full hover:bg-[#bc6c25] transition-colors shadow-soft"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
           </button>

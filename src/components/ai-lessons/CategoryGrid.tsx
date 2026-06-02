@@ -31,20 +31,20 @@ const getCategoryColor = (name: LessonCategory): string => {
     'Purpose & Calling': 'from-violet-500/20 to-purple-500/10',
     'Healing & Encouragement': 'from-green-500/20 to-emerald-500/10',
     'Worship': 'from-yellow-500/20 to-amber-500/10',
-    'Identity in Elohim': 'from-gold/20 to-amber-500/10',
+    'Identity in Elohim': 'from-accent-soft to-amber-500/10',
     'Mental Strength': 'from-cyan-500/20 to-blue-500/10',
     'Daily Inspiration': 'from-amber-500/20 to-yellow-500/10',
     'Character Development': 'from-slate-500/20 to-gray-500/10',
     'Biblical Lifestyle': 'from-green-500/20 to-teal-500/10',
     'Spiritual Maturity': 'from-purple-500/20 to-indigo-500/10',
-    'Torah & Wisdom': 'from-gold/20 to-orange-500/10',
+    'Torah & Wisdom': 'from-accent-soft to-orange-500/10',
     'End Times & Prophecy': 'from-red-500/20 to-rose-500/10',
     'Family & Marriage': 'from-pink-500/20 to-rose-500/10',
     'Calling & Ministry': 'from-violet-500/20 to-purple-500/10',
     'Overcoming Temptation': 'from-orange-500/20 to-red-500/10',
     'Discipleship': 'from-blue-500/20 to-indigo-500/10',
     'Biblical Leadership': 'from-slate-500/20 to-blue-500/10',
-    'Messianic Teachings': 'from-gold/20 to-yellow-500/10',
+    'Messianic Teachings': 'from-accent-soft to-yellow-500/10',
   };
   return colors[name] || 'from-slate-500/20 to-gray-500/10';
 };
@@ -112,19 +112,19 @@ export function CategoryGrid({ categories, onSelectCategory, selectedCategory }:
         <motion.button
           key={category.id}
           variants={itemVariants}
-          whileHover={{ y: -4 }}
+          whileHover={{ y: -2 }}
           onClick={() => onSelectCategory?.(category.name)}
-          className={`group relative overflow-hidden rounded-[24px] border transition duration-300 p-6 text-left ${
+          className={`group relative overflow-hidden rounded-[18px] border transition duration-300 p-5 text-left bg-[var(--surface)]/15 ${
             selectedCategory === category.name
-              ? 'border-gold/50 bg-gold/10'
-              : 'border-white/10 hover:border-gold/30 bg-gradient-to-br'
-          } ${getCategoryColor(category.name)} shadow-soft hover:shadow-glow`}
+              ? 'border-accent bg-accent-soft'
+              : 'border-border hover:border-accent'
+          }`}
         >
           {/* Icon */}
-          <div className="mb-4 text-4xl">{getCategoryIcon(category.name)}</div>
+          <div className="mb-4 text-3xl">{getCategoryIcon(category.name)}</div>
 
           {/* Name */}
-          <h3 className="mb-2 font-semibold text-white group-hover:text-gold transition">
+          <h3 className="mb-2 text-lg font-semibold text-[var(--text-primary)] group-hover:text-accent transition">
             {category.name}
           </h3>
 
@@ -139,7 +139,7 @@ export function CategoryGrid({ categories, onSelectCategory, selectedCategory }:
           )}
 
           {/* Arrow indicator */}
-          <div className="absolute bottom-4 right-4 rounded-full bg-white/10 p-2 opacity-0 transition group-hover:opacity-100">
+          <div className="absolute bottom-4 right-4 rounded-full bg-card-soft p-2 opacity-0 transition group-hover:opacity-100">
             <ChevronRight className="h-4 w-4 text-white" />
           </div>
         </motion.button>

@@ -9,7 +9,7 @@ interface HebrewExplorerProps {
 
 export function HebrewExplorer({ keywords }: HebrewExplorerProps) {
   return (
-    <section id="hebrew" className="space-y-6 section-card p-6 shadow-soft">
+    <section id="hebrew" className="space-y-6">
       <div>
         <p className="text-xs uppercase tracking-[0.3em] text-secondary">Hebrew explorer</p>
         <h2 className="section-title mt-3 text-3xl text-primary">Visual root study with glyph animation.</h2>
@@ -22,7 +22,7 @@ export function HebrewExplorer({ keywords }: HebrewExplorerProps) {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.05 }}
-            className="group overflow-hidden card-sacred p-6"
+            className="group space-y-4 rounded-[24px] bg-[var(--surface)]/70 p-6 transition hover:bg-[var(--surface)]/90"
           >
             <div className="flex items-center gap-3">
               <div className="flex h-14 w-14 items-center justify-center rounded-3xl bg-surface-soft text-2xl font-semibold text-primary">

@@ -2,16 +2,11 @@
 
 import dynamic from 'next/dynamic';
 import { Suspense, useEffect, useMemo, useState } from 'react';
-import { motion } from 'framer-motion';
 import { useAuth } from '@/hooks/useAuth';
 import { useTorahPortion } from '@/hooks/useTorahPortion';
 import { useTorahProgress } from '@/hooks/useTorahProgress';
-import { useTorahStore } from '@/hooks/useTorahStore';
 import { TorahHero } from '@/components/torah/TorahHero';
 
-const TorahSidebar = dynamic(() => import('@/components/torah/TorahSidebar').then((module) => module.TorahSidebar), {
-  suspense: true,
-});
 const ScriptureViewer = dynamic(() => import('@/components/torah/ScriptureViewer').then((module) => module.ScriptureViewer), {
   suspense: true,
 });
@@ -31,11 +26,22 @@ function SectionSkeleton() {
 }
 
 export default function TorahPortionsPage() {
-  const { user, loading: authLoading } = useAuth();
+  const { user } = useAuth();
   const { portion, loading: portionLoading, error } = useTorahPortion();
-  const { progress, loading: progressLoading, saveProgress } = useTorahProgress(user?.uid ?? undefined);
+  const { progress, saveProgress } = useTorahProgress(user?.uid ?? undefined);
   const [activeAliyahId, setActiveAliyahId] = useState<string>('');
   const [completedAliyot, setCompletedAliyot] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (!activeAliyahId) return;
+    // smooth-scroll the scripture viewer into view when the active aliyah changes
+    try {
+      const el = document.getElementById('scripture');
+      el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } catch (e) {
+      // ignore in non-browser environments
+    }
+  }, [activeAliyahId]);
 
   useEffect(() => {
     if (portion?.aliyot?.length) {
@@ -96,36 +102,94 @@ export default function TorahPortionsPage() {
   }
 
   return (
-    <div className="space-y-8 py-6">
-      <TorahHero portion={portion} progress={completionPercent} />
+    <main className="min-h-screen bg-[var(--bg)] text-[var(--text-primary)]">
+      <div className="mx-auto max-w-3xl space-y-8 px-4 py-6 sm:px-5">
+        <TorahHero portion={portion} progress={completionPercent} />
 
-      <div className="grid gap-6 xl:grid-cols-[1.35fr_0.65fr]">
-        <div className="space-y-6">
-          <Suspense fallback={<SectionSkeleton />}>
-            <ScriptureViewer
-              aliyot={portion.aliyot}
-              activeAliyahId={activeAliyahId}
-              completedAliyotIds={completedAliyot}
-              onSelectAliyah={setActiveAliyahId}
-              onToggleCompletion={handleToggleAliyah}
-            />
-          </Suspense>
+        <section className="space-y-5">
+          <div className="flex flex-col gap-4">
+            <div>
+              <p className="text-xs uppercase tracking-[0.28em] text-[var(--accent)] font-semibold">Guided study journey</p>
+              <h2 className="mt-2 text-2xl font-semibold text-[var(--text-primary)]">Move through the portion with calm focus</h2>
+            </div>
+            <div className="rounded-[32px] border border-[var(--border)] bg-[var(--surface)]/90 p-5">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div className="space-y-2">
+                  <p className="text-sm font-semibold text-[var(--text-primary)]">Portion overview</p>
+                  <p className="text-sm leading-7 text-[var(--text-secondary)]">{portion.summary}</p>
+                </div>
+                <div className="min-w-[140px] rounded-[24px] bg-[var(--surface-soft)] px-3 py-3 text-center text-sm">
+                  <p className="font-semibold text-[var(--text-primary)]">{completionPercent}% complete</p>
+                  <p className="text-[var(--text-secondary)]">{completedAliyot.length} of {portion.aliyot.length} aliyot</p>
+                </div>
+              </div>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {portion.themes.slice(0, 4).map((theme) => (
+                  <span key={theme} className="rounded-full bg-[var(--surface-soft)] px-3 py-1 text-xs uppercase tracking-[0.24em] text-[var(--accent)]">
+                    {theme}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
 
-        </div>
+        <section className="space-y-4">
+          <div>
+            <p className="text-xs uppercase tracking-[0.28em] text-[var(--accent)] font-semibold">Insights</p>
+            <h3 className="text-xl font-semibold text-[var(--text-primary)]">Sacred themes to carry with you</h3>
+          </div>
+          <div className="space-y-4">
+            {portion.commentary.slice(0, 2).map((item) => (
+              <div key={item.id} className="rounded-[32px] border border-[var(--border)] bg-[var(--surface)]/90 p-5">
+                <p className="text-xs uppercase tracking-[0.24em] text-[var(--accent)] font-semibold">{item.source}</p>
+                <p className="mt-2 text-lg font-semibold text-[var(--text-primary)]">{item.title}</p>
+                <p className="mt-3 text-sm leading-7 text-[var(--text-secondary)]">{item.excerpt}</p>
+                <p className="mt-3 text-sm text-[var(--text-secondary)]">{item.reflection}</p>
+              </div>
+            ))}
+          </div>
+        </section>
 
-        <Suspense fallback={<div className="rounded-[32px] border border-bronze/10 bg-cream/90 p-6 shadow-soft">Loading study sidebar...</div>}>
-          <TorahSidebar
-            portion={portion}
-            progress={completionPercent}
-            completedCount={completedAliyot.length}
-            totalCount={portion.aliyot.length}
-            activeAliyahId={activeAliyahId}
-            completedAliyotIds={completedAliyot}
-            onSelectAliyah={setActiveAliyahId}
-          />
-        </Suspense>
+        <section className="space-y-4 pb-6">
+          <div>
+            <p className="text-xs uppercase tracking-[0.28em] text-[var(--accent)] font-semibold">Reflect & pray</p>
+            <h3 className="text-xl font-semibold text-[var(--text-primary)]">Bring this portion into your quiet</h3>
+          </div>
+          <div className="rounded-[32px] border border-[var(--border)] bg-[var(--surface)]/90 p-5">
+            <p className="text-sm leading-7 text-[var(--text-secondary)]">
+              Use the reading path above as a calm study guide. Pause after each aliyah, note what moves your heart, and offer a brief prayer of gratitude for the word you received.
+            </p>
+            <div className="mt-5 space-y-3 rounded-[24px] bg-[var(--surface-soft)] p-4">
+              <p className="text-sm font-semibold text-[var(--text-primary)]">Prayer anchor</p>
+              <p className="text-sm leading-7 text-[var(--text-secondary)]">
+                May the words of this portion shape my mind and steady my steps, helping me live with intention, gratitude, and sacred focus.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section className="space-y-4">
+          <div>
+            <p className="text-xs uppercase tracking-[0.28em] text-[var(--accent)] font-semibold">Immersive reading</p>
+            <h3 className="text-xl font-semibold text-[var(--text-primary)]">A living scroll experience</h3>
+          </div>
+          <div className="rounded-[32px] border border-[var(--border)] bg-[var(--surface)]/90 p-4">
+            <Suspense fallback={<SectionSkeleton />}>
+              <div className="prose prose-invert max-w-none">
+                <ScriptureViewer
+                  aliyot={portion.aliyot}
+                  activeAliyahId={activeAliyahId}
+                  completedAliyotIds={completedAliyot}
+                  onSelectAliyah={setActiveAliyahId}
+                  onToggleCompletion={handleToggleAliyah}
+                />
+              </div>
+            </Suspense>
+          </div>
+        </section>
       </div>
-    </div>
+    </main>
   );
 }
 

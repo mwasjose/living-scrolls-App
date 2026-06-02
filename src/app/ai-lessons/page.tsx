@@ -11,7 +11,6 @@ import { lessonSearchService } from '@/services/lessonSearchService';
 import { HeroLessonSection } from '@/components/ai-lessons/HeroLessonSection';
 import { SearchBar, SearchFilters } from '@/components/ai-lessons/SearchBar';
 import { CategoryGrid } from '@/components/ai-lessons/CategoryGrid';
-import { LessonCarousel } from '@/components/ai-lessons/LessonCarousel';
 import { RecommendedForYou } from '@/components/ai-lessons/RecommendedForYou';
 import { LessonGrid } from '@/components/ai-lessons/LessonGrid';
 import { SavedArticlesLibrary } from '@/components/ai-lessons/SavedArticlesLibrary';
@@ -136,7 +135,7 @@ export default function AILessonsPage() {
   if (authLoading || profileLoading) {
     return (
       <div className="flex h-96 items-center justify-center">
-        <Sparkles className="h-8 w-8 animate-pulse text-gold" />
+        <Sparkles className="h-8 w-8 animate-pulse text-accent" />
       </div>
     );
   }
@@ -151,6 +150,39 @@ export default function AILessonsPage() {
           onSave={() => handleSaveArticle(heroLesson)}
         />
       )}
+
+      {/* Top Page Controls */}
+      <motion.section
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 rounded-[24px] border border-[var(--border)] bg-[var(--surface)]/85 p-4 shadow-soft"
+      >
+        <div>
+          <p className="text-sm uppercase tracking-[0.24em] text-[var(--accent)]">Wisdom Flow</p>
+          <p className="mt-1 text-base font-semibold text-[var(--text-primary)]">Choose the content path that fits your season.</p>
+        </div>
+
+        <div className="flex flex-wrap gap-2">
+          {[
+            { key: 'browse', label: 'Browse' },
+            { key: 'search', label: 'Search' },
+            { key: 'saved', label: `Saved (${savedArticles.length})` },
+          ].map((tab) => (
+            <button
+              key={tab.key}
+              onClick={() => setCurrentPage(tab.key as 'browse' | 'search' | 'saved')}
+              className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
+                currentPage === tab.key
+                  ? 'bg-[var(--accent)] text-[var(--surface)]'
+                  : 'bg-[var(--surface-soft)] text-[var(--text-secondary)] hover:bg-[var(--surface)] hover:text-[var(--text-primary)]'
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+      </motion.section>
 
       {/* Search Bar Section */}
       <motion.section
@@ -170,6 +202,7 @@ export default function AILessonsPage() {
           recentSearches={[]}
           trendingTopics={['faith', 'prayer', 'wisdom', 'spiritual growth', 'forgiveness']}
           categories={categories.map((c) => c.name)}
+          selectedCategory={searchFilters.category}
         />
       </motion.section>
 
@@ -189,9 +222,9 @@ export default function AILessonsPage() {
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          className="rounded-[24px] border-2 border-dashed border-white/20 p-12 text-center"
+          className="rounded-[24px] border-2 border-dashed border-border p-12 text-center"
         >
-          <Sparkles className="mx-auto h-16 w-16 text-gold/30 mb-4" />
+          <Sparkles className="mx-auto h-16 w-16 text-accent/30 mb-4" />
           <p className="text-white font-semibold">No teachings found</p>
           <p className="mt-2 text-slate-400">Try different keywords or explore our categories</p>
         </motion.div>
@@ -218,6 +251,7 @@ export default function AILessonsPage() {
                 id: c.name,
                 ...c,
               }))}
+              selectedCategory={searchFilters.category}
               onSelectCategory={(cat) => {
                 handleFilterChange({ query: '', category: cat });
               }}
@@ -226,25 +260,27 @@ export default function AILessonsPage() {
 
           {/* Featured Teachings */}
           {featuredLessons.length > 0 && (
-            <LessonCarousel
+            <LessonGrid
               lessons={featuredLessons}
               title="Featured Teachings"
               subtitle="Carefully selected wisdom to deepen your faith"
               onSelectLesson={(lesson) => lessonService.incrementViewCount(lesson.id)}
               onSaveLesson={handleSaveArticle}
               savedArticles={savedArticles}
+              columns={1}
             />
           )}
 
           {/* Trending Lessons */}
           {trendingLessons.length > 0 && (
-            <LessonCarousel
+            <LessonGrid
               lessons={trendingLessons}
               title="Trending Lessons"
               subtitle="Most read among believers this week"
               onSelectLesson={(lesson) => lessonService.incrementViewCount(lesson.id)}
               onSaveLesson={handleSaveArticle}
               savedArticles={savedArticles}
+              columns={1}
             />
           )}
 
@@ -301,6 +337,7 @@ export default function AILessonsPage() {
               onSelectLesson={(lesson) => lessonService.incrementViewCount(lesson.id)}
               onSaveLesson={handleSaveArticle}
               savedArticles={savedArticles}
+              columns={1}
             />
           )}
 
@@ -313,6 +350,7 @@ export default function AILessonsPage() {
               onSelectLesson={(lesson) => lessonService.incrementViewCount(lesson.id)}
               onSaveLesson={handleSaveArticle}
               savedArticles={savedArticles}
+              columns={1}
             />
           )}
         </div>
@@ -337,50 +375,31 @@ export default function AILessonsPage() {
 
       {/* Page Navigation Tabs */}
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.5 }}
-        className="fixed bottom-8 left-1/2 -translate-x-1/2 flex gap-2 rounded-2xl border border-white/10 bg-midnight/40 backdrop-blur-xl p-1"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="mx-auto flex max-w-5xl flex-wrap items-center justify-center gap-3 rounded-[24px] border border-[var(--border)] bg-[var(--surface)]/90 p-3 shadow-soft"
       >
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => setCurrentPage('browse')}
-          className={`rounded-xl px-6 py-2.5 font-semibold transition ${
-            currentPage === 'browse'
-              ? 'bg-gold text-slate-950'
-              : 'bg-transparent text-white hover:text-gold'
-          }`}
-        >
-          Browse
-        </motion.button>
-
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => setCurrentPage('search')}
-          className={`rounded-xl px-6 py-2.5 font-semibold transition ${
-            currentPage === 'search'
-              ? 'bg-gold text-slate-950'
-              : 'bg-transparent text-white hover:text-gold'
-          }`}
-        >
-          Search
-        </motion.button>
-
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => setCurrentPage('saved')}
-          className={`rounded-xl px-6 py-2.5 font-semibold transition ${
-            currentPage === 'saved'
-              ? 'bg-gold text-slate-950'
-              : 'bg-transparent text-white hover:text-gold'
-          }`}
-        >
-          <BookMarked className="inline-block h-4 w-4 mr-1" />
-          Saved ({savedArticles.length})
-        </motion.button>
+        {[
+          { key: 'browse', label: 'Browse' },
+          { key: 'search', label: 'Search' },
+          { key: 'saved', label: 'Saved', count: savedArticles.length },
+        ].map((tab) => (
+          <motion.button
+            key={tab.key}
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            onClick={() => setCurrentPage(tab.key as 'browse' | 'search' | 'saved')}
+            className={`rounded-full px-5 py-3 text-sm font-semibold transition ${
+              currentPage === tab.key
+                ? 'bg-[var(--accent)] text-[var(--surface)]'
+                : 'bg-[var(--surface-soft)] text-[var(--text-secondary)] hover:bg-[var(--surface)] hover:text-[var(--text-primary)]'
+            }`}
+          >
+            {tab.label}
+            {tab.count !== undefined ? ` (${tab.count})` : ''}
+          </motion.button>
+        ))}
       </motion.div>
     </div>
   );
