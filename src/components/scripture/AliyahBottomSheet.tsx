@@ -18,6 +18,7 @@ export function AliyahBottomSheet({ isOpen, onClose, readings, activeReadingId, 
   const sheetRef = useRef<HTMLDivElement | null>(null);
   const [query, setQuery] = useState('');
   const [isDark, setIsDark] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
 
   useEffect(() => {
     if (isOpen) {
@@ -34,10 +35,19 @@ export function AliyahBottomSheet({ isOpen, onClose, readings, activeReadingId, 
   useEffect(() => {
     // determine preferred color scheme for themed background
     const mq = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
-    const update = () => setIsDark(!!(mq && mq.matches));
-    update();
-    mq?.addEventListener?.('change', update);
-    return () => mq?.removeEventListener?.('change', update);
+    const updateTheme = () => setIsDark(!!(mq && mq.matches));
+    updateTheme();
+    mq?.addEventListener?.('change', updateTheme);
+
+    const sizeQuery = window.matchMedia && window.matchMedia('(min-width: 1024px)');
+    const updateSize = () => setIsDesktop(!!(sizeQuery && sizeQuery.matches));
+    updateSize();
+    sizeQuery?.addEventListener?.('change', updateSize);
+
+    return () => {
+      mq?.removeEventListener?.('change', updateTheme);
+      sizeQuery?.removeEventListener?.('change', updateSize);
+    };
   }, []);
 
   useEffect(() => {
@@ -75,24 +85,27 @@ export function AliyahBottomSheet({ isOpen, onClose, readings, activeReadingId, 
             style={{ background: 'rgba(6,8,5,0.28)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' }}
           />
 
-          {/* Bottom sheet (themed) */}
+          {/* Bottom sheet / desktop command panel (themed) */}
           <motion.div
-            initial={{ y: '100%' }}
-            animate={{ y: 0 }}
-            exit={{ y: '100%' }}
+            initial={isDesktop ? { opacity: 0, y: 16 } : { y: '100%' }}
+            animate={isDesktop ? { opacity: 1, y: 0 } : { y: 0 }}
+            exit={isDesktop ? { opacity: 0, y: 16 } : { y: '100%' }}
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-            className="fixed inset-x-0 bottom-0 z-50 max-h-[85vh] w-full rounded-t-3xl px-4 pb-safe pt-3 shadow-xl sm:inset-x-auto sm:mx-auto sm:w-[480px]"
+            className={isDesktop
+              ? 'fixed right-6 top-1/2 z-50 w-[min(480px,calc(100%-3rem))] -translate-y-1/2 rounded-3xl px-5 py-4 shadow-[0_18px_60px_rgba(6,8,5,0.25)]'
+              : 'fixed inset-x-0 bottom-0 z-50 max-h-[85vh] w-full rounded-t-3xl px-4 pb-safe pt-3 shadow-xl sm:inset-x-auto sm:mx-auto sm:w-[480px]'
+            }
             ref={sheetRef}
             role="dialog"
             aria-modal="true"
             style={isDark ? {
               background: 'linear-gradient(180deg, rgba(24,31,21,0.98), rgba(18,24,16,0.96))',
-              border: '1px solid rgba(255,255,255,0.03)',
-              boxShadow: '0 8px 30px rgba(10,12,8,0.55), 0 2px 8px rgba(16,185,129,0.04)'
+              border: '1px solid rgba(255,255,255,0.05)',
+              boxShadow: isDesktop ? '0 20px 60px rgba(3,6,3,0.26), 0 0 0 1px rgba(16,185,129,0.04)' : '0 8px 30px rgba(10,12,8,0.55), 0 2px 8px rgba(16,185,129,0.04)'
             } : {
               background: 'linear-gradient(180deg, #faf7f0, #f5f1e8)',
-              border: '1px solid rgba(34,30,22,0.06)',
-              boxShadow: '0 8px 30px rgba(14,12,10,0.08)'
+              border: '1px solid rgba(34,30,22,0.08)',
+              boxShadow: isDesktop ? '0 20px 60px rgba(14,12,10,0.10)' : '0 8px 30px rgba(14,12,10,0.08)'
             }}
           >
             <div className="mx-auto max-w-2xl">
@@ -104,7 +117,7 @@ export function AliyahBottomSheet({ isOpen, onClose, readings, activeReadingId, 
                 <div>
                   <p className="text-xs uppercase tracking-[0.28em] text-[var(--accent)]">Choose Aliyah</p>
                   <div className="mt-1 text-sm font-semibold text-[var(--text-primary)]">
-                    <div className="truncate">{readings[activeIndex]?.parentTitle ?? ''}</div>
+                    <div className="truncate">{readings[activeIndex]?.reference}</div>
                     <div className="mt-0.5 text-xs text-[var(--text-secondary)]">Current: {readings[activeIndex]?.label}</div>
                   </div>
                 </div>

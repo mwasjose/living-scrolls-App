@@ -38,6 +38,7 @@ export function ReadingPanel({
   const activeIndex = readings.findIndex((r) => r.id === activeReadingId);
   const active = readings[activeIndex] || readings[0];
   const total = readings.length;
+  const showSearch = readings.length >= 7;
 
   return (
     <section className="space-y-4 w-full">
@@ -47,6 +48,7 @@ export function ReadingPanel({
         readings={readings}
         activeReadingId={activeReadingId}
         onSelectReading={onSelectReading}
+        showSearch={showSearch}
       />
 
       <div className="flex items-start justify-between gap-2">
