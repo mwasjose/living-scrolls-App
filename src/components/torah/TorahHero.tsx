@@ -4,9 +4,10 @@ import type { TorahPortionDetail } from '@/lib/models';
 
 interface TorahHeroProps {
   portion: TorahPortionDetail;
+  progress?: number;
 }
 
-export function TorahHero({ portion }: TorahHeroProps) {
+export function TorahHero({ portion, progress = 0 }: TorahHeroProps) {
   return (
     <section className="space-y-6 pb-8">
       <div className="space-y-4">
@@ -20,6 +21,8 @@ export function TorahHero({ portion }: TorahHeroProps) {
         <div className="flex flex-wrap items-center gap-3 text-sm text-[var(--text-secondary)]">
           <span className="text-xs uppercase tracking-[0.28em] text-[var(--accent)] font-semibold">References</span>
           <span>{portion.references}</span>
+          <span className="h-1 w-1 rounded-full bg-[var(--border)]" />
+          <span className="text-xs uppercase tracking-[0.28em] text-[var(--text-secondary)]">Progress {Math.round(progress)}%</span>
         </div>
       </div>
     </section>

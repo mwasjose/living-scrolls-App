@@ -1,0 +1,24 @@
+  ▲ Next.js 14.2.5
+  - Environments: .env.local
+
+   Creating an optimized production build ...
+ ⚠ Compiled with warnings
+
+./node_modules/@protobufjs/inquire/index.js
+Critical dependency: the request of a dependency is an expression
+
+Import trace for requested module:
+./node_modules/@protobufjs/inquire/index.js
+./node_modules/protobufjs/src/util/minimal.js
+./node_modules/protobufjs/src/util.js
+./node_modules/protobufjs/src/parse.js
+./node_modules/protobufjs/src/index.js
+./node_modules/protobufjs/index.js
+./node_modules/@grpc/proto-loader/build/src/index.js
+./node_modules/@firebase/firestore/dist/index.node.mjs
+./node_modules/firebase/firestore/dist/index.mjs
+./src/lib/torahReflectionService.ts
+./src/app/api/torah/generate-reflection/route.ts
+
+   Linting and checking validity of types ...
+^C
