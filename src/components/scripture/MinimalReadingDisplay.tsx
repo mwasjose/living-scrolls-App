@@ -20,7 +20,7 @@ export function MinimalReadingDisplay({ reading, translation = 'kjv', completed,
 
   return (
     <article className="mx-auto w-full max-w-4xl">
-      <div className="rounded-[18px] bg-[var(--surface)]/80 p-3 sm:p-4 md:p-6">
+      <div className="p-3 sm:p-4 md:p-6">
         <div className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center sm:gap-4">
           <div className="min-w-0 flex-1">
             <h3 className="truncate text-lg font-semibold text-[var(--text-primary)] sm:text-xl">{reading.label}</h3>

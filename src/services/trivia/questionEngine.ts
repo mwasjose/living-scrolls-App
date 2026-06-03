@@ -639,7 +639,7 @@ export function getDailyChallenge(date: string) {
   const startIndex = seed % questionPool.length;
   const rotated = [...questionPool.slice(startIndex), ...questionPool.slice(0, startIndex)];
 
-  return rotated.slice(0, 8).map((question) => ({
+  return rotated.slice(0, 14).map((question) => ({
     ...question,
     options: question.type === 'multiple_choice' ? shuffle(question.options) : question.options,
     metadata: {

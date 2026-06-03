@@ -92,8 +92,8 @@ export function AliyahBottomSheet({ isOpen, onClose, readings, activeReadingId, 
             exit={isDesktop ? { opacity: 0, y: 16 } : { y: '100%' }}
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
             className={isDesktop
-              ? 'fixed right-6 top-1/2 z-50 w-[min(480px,calc(100%-3rem))] -translate-y-1/2 rounded-3xl px-5 py-4 shadow-[0_18px_60px_rgba(6,8,5,0.25)]'
-              : 'fixed inset-x-0 bottom-0 z-50 max-h-[85vh] w-full rounded-t-3xl px-4 pb-safe pt-3 shadow-xl sm:inset-x-auto sm:mx-auto sm:w-[480px]'
+              ? 'fixed left-1/2 top-1/2 z-50 w-[min(480px,calc(100%-3rem))] -translate-x-1/2 -translate-y-1/2 rounded-3xl px-5 py-4 shadow-[0_18px_60px_rgba(6,8,5,0.25)]'
+              : 'fixed left-1/2 top-1/2 z-50 max-h-[85vh] w-[calc(100%-1.5rem)] -translate-x-1/2 -translate-y-1/2 rounded-3xl px-4 pb-safe pt-3 shadow-xl sm:w-[480px]'
             }
             ref={sheetRef}
             role="dialog"

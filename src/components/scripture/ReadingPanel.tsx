@@ -63,7 +63,7 @@ export function ReadingPanel({
         <button
           type="button"
           onClick={() => setSheetOpen(true)}
-          className="flex w-full items-center justify-between gap-3 rounded-2xl border border-[var(--border)] bg-[var(--surface)]/95 px-4 py-3 text-left text-sm shadow-sm hover:shadow-md active:shadow-sm transition"
+          className="flex w-full items-center justify-between gap-3 rounded-2xl border border-transparent px-4 py-3 text-left text-sm transition hover:bg-[var(--surface-soft)]/70"
           aria-haspopup="dialog"
         >
           <div className="flex min-w-0 flex-col items-start">

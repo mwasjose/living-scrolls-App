@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import { Navbar } from '@/components/layout/navbar';
 import { Sidebar } from '@/components/layout/sidebar';
-import { BottomNavigation } from '@/components/layout/BottomNavigation';
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -35,7 +34,6 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       <main className={`relative pt-[72px] transition-all duration-300 ${isSidebarCollapsed ? 'lg:pl-[92px]' : 'lg:pl-[280px]'}`}>
         <div className="responsive-container pb-[96px] lg:pb-14">{children}</div>
       </main>
-      <BottomNavigation />
     </div>
   );
 }

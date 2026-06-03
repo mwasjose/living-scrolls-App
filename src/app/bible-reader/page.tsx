@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { ChevronLeft, ChevronRight, Headphones, Minus, Plus, Search, Settings2 } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Headphones, Minus, PauseCircle, Play, Plus, Search, Settings2 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { ScriptureTextViewer } from '@/components/scripture/ScriptureTextViewer';
 import { useScripturePassage } from '@/hooks/useScripturePassage';
@@ -20,11 +20,73 @@ export default function BibleReaderPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [immersiveMode, setImmersiveMode] = useState(false);
   const [readingProgress, setReadingProgress] = useState(0);
+  const [isReadingAloud, setIsReadingAloud] = useState(false);
+  const [audioError, setAudioError] = useState<string | null>(null);
+  const [audioSupported, setAudioSupported] = useState(false);
   const contentRef = useRef<HTMLDivElement | null>(null);
 
   const selectedBook = useMemo(() => BIBLE_BOOKS.find((b) => b.name === book) || BIBLE_BOOKS[0], [book]);
   const reference = buildChapterReference(book, chapter);
   const { passage, loading } = useScripturePassage(reference, translation, true);
+
+  useEffect(() => {
+    setAudioSupported(typeof window !== 'undefined' && 'speechSynthesis' in window);
+  }, [reference, translation]);
+
+  useEffect(() => {
+    return () => {
+      if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+    };
+  }, []);
+
+  const handleAudioToggle = () => {
+    if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
+      setAudioError('Audio playback is not available in this browser.');
+      return;
+    }
+
+    if (isReadingAloud) {
+      window.speechSynthesis.cancel();
+      setIsReadingAloud(false);
+      setAudioError(null);
+      return;
+    }
+
+    const text = passage.verses
+      .map((verse) => `${verse.verse}. ${verse.text}`)
+      .join(' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+
+    if (!text) {
+      setAudioError('This chapter is not available for audio yet.');
+      return;
+    }
+
+    setAudioError(null);
+    window.speechSynthesis.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'en-US';
+    utterance.rate = 0.95;
+    utterance.pitch = 1;
+    utterance.volume = 1;
+
+    const voices = window.speechSynthesis.getVoices();
+    const preferredVoice = voices.find((voice) => voice.lang.startsWith('en')) || voices[0] || null;
+    if (preferredVoice) utterance.voice = preferredVoice;
+
+    utterance.onstart = () => setIsReadingAloud(true);
+    utterance.onend = () => setIsReadingAloud(false);
+    utterance.onerror = () => {
+      setIsReadingAloud(false);
+      setAudioError('Audio playback stopped unexpectedly.');
+    };
+
+    window.speechSynthesis.speak(utterance);
+  };
   const adjacentReadings = useMemo(() => {
     const candidates = [
       chapter > 1 ? chapter - 1 : null,
@@ -169,8 +231,15 @@ export default function BibleReaderPage() {
                     className="w-full rounded-full border border-[var(--border)] bg-[var(--surface)] py-2 pl-10 pr-4 text-xs font-semibold text-[var(--text-primary)] outline-none focus:ring-2 focus:ring-[var(--accent)] transition-all placeholder:text-[var(--text-secondary)]/50"
                   />
                 </div>
-                <button className="rounded-full border border-[var(--border)] bg-[var(--surface-soft)] p-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors" title="Audio Reading">
-                  <Headphones size={18} />
+                <button
+                  type="button"
+                  onClick={handleAudioToggle}
+                  disabled={!audioSupported}
+                  className={`rounded-full border p-2 transition-colors ${isReadingAloud ? 'border-[var(--accent)] bg-[var(--accent)]/10 text-[var(--accent)]' : 'border-[var(--border)] bg-[var(--surface-soft)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]'} ${audioSupported ? '' : 'cursor-not-allowed opacity-50'}`}
+                  title={isReadingAloud ? 'Stop Audio Reading' : 'Play Audio Reading'}
+                  aria-label={isReadingAloud ? 'Stop Audio Reading' : 'Play Audio Reading'}
+                >
+                  {isReadingAloud ? <PauseCircle size={18} /> : <Headphones size={18} />}
                 </button>
                 <button className="rounded-full border border-[var(--border)] bg-[var(--surface-soft)] p-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors" title="Reading Settings">
                   <Settings2 size={18} />
@@ -181,6 +250,10 @@ export default function BibleReaderPage() {
             <div className="mt-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div className="rounded-[22px] border border-[var(--border)] bg-[var(--surface-soft)] px-4 py-3 text-sm text-[var(--text-secondary)]">
                 <span className="font-semibold text-[var(--text-primary)]">{selectedBook.name} · Chapter {chapter} of {selectedBook.chapters}</span>
+              </div>
+              <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--surface-soft)] px-3 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--text-secondary)]">
+                {isReadingAloud ? <Play className="text-[var(--accent)]" size={14} /> : <Headphones size={14} />}
+                {isReadingAloud ? 'Listening now' : 'Audio ready'}
               </div>
               <button
                 type="button"
@@ -195,6 +268,7 @@ export default function BibleReaderPage() {
                 <div className="h-full rounded-full bg-emerald-400 transition-all" style={{ width: `${readingProgress}%` }} />
               </div>
               <p className="mt-2 text-xs text-[var(--text-secondary)]">Reading progress: {Math.round(readingProgress)}%</p>
+              {audioError ? <p className="mt-2 text-xs text-rose-400">{audioError}</p> : null}
             </div>
           </header>
 

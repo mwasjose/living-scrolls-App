@@ -184,7 +184,7 @@ export function TriviaSlider({
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -400 }}
           transition={{ duration: 0.4, ease: 'easeOut' }}
-          className="card-sacred p-8"
+          className="rounded-[28px] bg-[var(--surface)] p-8 shadow-sm"
         >
           {/* Category and Difficulty Badges */}
           <div className="flex flex-wrap items-center gap-3 mb-6">

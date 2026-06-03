@@ -156,7 +156,7 @@ export default function AILessonsPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 rounded-[24px] border border-[var(--border)] bg-[var(--surface)]/85 p-4 shadow-soft"
+        className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 p-4"
       >
         <div>
           <p className="text-sm uppercase tracking-[0.24em] text-[var(--accent)]">Wisdom Flow</p>
@@ -222,7 +222,7 @@ export default function AILessonsPage() {
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          className="rounded-[24px] border-2 border-dashed border-border p-12 text-center"
+          className="border-2 border-dashed border-border p-12 text-center"
         >
           <Sparkles className="mx-auto h-16 w-16 text-accent/30 mb-4" />
           <p className="text-white font-semibold">No teachings found</p>
@@ -378,7 +378,7 @@ export default function AILessonsPage() {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="mx-auto flex max-w-5xl flex-wrap items-center justify-center gap-3 rounded-[24px] border border-[var(--border)] bg-[var(--surface)]/90 p-3 shadow-soft"
+        className="mx-auto flex max-w-5xl flex-wrap items-center justify-center gap-3 p-3"
       >
         {[
           { key: 'browse', label: 'Browse' },

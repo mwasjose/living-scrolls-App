@@ -17,7 +17,7 @@ export function HeroLessonSection({ lesson, onContinue, onSave }: HeroLessonSect
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.7 }}
-      className="relative overflow-hidden rounded-[32px] border border-[var(--border)] bg-[var(--surface)]/95 p-8 shadow-soft"
+      className="relative overflow-hidden rounded-[32px] border border-[var(--border)] bg-[var(--surface)]/90 p-8"
     >
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(146,213,31,0.12),_transparent_32%)]" />
       {lesson.heroImage && (
@@ -92,7 +92,7 @@ export function HeroLessonSection({ lesson, onContinue, onSave }: HeroLessonSect
           </div>
         </div>
 
-        <div className="space-y-5 rounded-[28px] border border-[var(--border)] bg-[var(--surface)]/90 p-5">
+        <div className="space-y-5 border border-[var(--border)] bg-[var(--surface)]/90 p-5">
           <div className="space-y-2">
             <p className="text-xs uppercase tracking-[0.16em] text-[var(--text-secondary)]">Difficulty</p>
             <p className="text-lg font-semibold text-[var(--text-primary)]">{lesson.difficulty}</p>

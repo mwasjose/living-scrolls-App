@@ -5,7 +5,7 @@ import type { TriviaQuestion } from '@/lib/models';
 import { saveTriviaProgress } from '@/services/trivia/triviaService';
 import { availableLevels, availableModes, TriviaLevel, TriviaMode } from '@/services/trivia/questionEngine';
 
-const QUESTION_BATCH_SIZE = 10;
+const QUESTION_BATCH_SIZE = 14;
 const PREFETCH_REMAINING_THRESHOLD = 3;
 
 function formatGoalLabel(mode: TriviaMode) {

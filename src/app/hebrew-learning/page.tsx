@@ -32,7 +32,7 @@ export default function HebrewLearningPage() {
 
   return (
     <div className="mx-auto max-w-5xl space-y-12 py-6">
-      <header className="rounded-[32px] border border-border bg-surface-soft p-8 shadow-soft backdrop-blur-xl">
+      <header className="space-y-4 border-b border-border pb-8">
         <p className="text-sm uppercase tracking-[0.28em] text-accent">Sacred Language</p>
         <h1 className="mt-4 text-4xl font-semibold text-white">Hebrew Study Circle</h1>
         <p className="mt-4 max-w-2xl text-slate-300 leading-relaxed">
@@ -45,7 +45,7 @@ export default function HebrewLearningPage() {
           key={`${currentWord.id}-${viewMode}`}
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="card-soft relative flex min-h-[420px] flex-col justify-center overflow-hidden rounded-[32px] p-8 pt-24 text-center shadow-soft"
+          className="relative flex min-h-[420px] flex-col justify-center overflow-hidden rounded-[32px] border border-border p-8 pt-24 text-center"
         >
           <div className="absolute left-6 right-6 top-6 flex flex-wrap justify-center gap-2">
             {viewOptions.map(({ id, label, Icon }) => (
@@ -80,7 +80,7 @@ export default function HebrewLearningPage() {
                     </div>
                   ))}
                 </div>
-                <div className="rounded-2xl bg-card-soft p-6 text-left">
+                <div className="border border-border p-6 text-left">
                   <p className="mb-2 text-xs uppercase tracking-widest text-accent">Visual Hint</p>
                   <p className="text-sm italic text-slate-300">&quot;The shape of this word resembles a scroll unfolding from left to right.&quot;</p>
                 </div>
@@ -122,16 +122,14 @@ export default function HebrewLearningPage() {
             </div>
           </div>
 
-          <div className="card-soft rounded-[32px] p-8">
+          <div className="space-y-6 border-t border-border pt-6">
             <h3 className="mb-6 text-sm uppercase tracking-widest text-accent">Study Progress</h3>
             <div className="space-y-4">
-              <div className="flex justify-between text-xs text-slate-400">
-                <span>Category Mastery: {currentWord.category}</span>
-                <span>{mastery}%</span>
-              </div>
-              <div className="h-2 overflow-hidden rounded-full bg-card-soft">
-                <motion.div initial={{ width: 0 }} animate={{ width: `${mastery}%` }} className="h-full bg-accent shadow-sm" />
-              </div>
+              <span>Category Mastery: {currentWord.category}</span>
+              <span>{mastery}%</span>
+            </div>
+            <div className="h-2 overflow-hidden rounded-full bg-card-soft">
+              <motion.div initial={{ width: 0 }} animate={{ width: `${mastery}%` }} className="h-full bg-accent shadow-sm" />
             </div>
           </div>
 
